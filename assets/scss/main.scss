@@ -1,6 +1,8 @@
 .alp-grid {
     display: grid;
     gap: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
 
     // desktop ≥ 1024px: lấy theo class cols-x
     &.cols-2 {
@@ -157,8 +159,8 @@ body {
     background-image: unset !important;
 
     @media (max-width: 767px) {
-        gap: 8px;
-        padding: 8px 16px;
+        gap: 4px;
+        padding: 8px;
         border-radius: 10px 10px 0px 0px;
     }
 
@@ -193,8 +195,8 @@ body {
         position: relative;
 
         @media (max-width: 767px) {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
         }
 
         .tgb-footer-menu__icon-image,
@@ -212,5 +214,9 @@ body {
         line-height: 1.2;
         color: #000000;
         white-space: nowrap;
+
+        @media (max-width: 767px) {
+            font-size: 14px;
+        }
     }
 }
