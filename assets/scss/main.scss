@@ -1,0 +1,216 @@
+.alp-grid {
+    display: grid;
+    gap: 16px;
+
+    // desktop ≥ 1024px: lấy theo class cols-x
+    &.cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    &.cols-5 {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+// dưới 1024px => 2 cột
+@media (max-width: 1024px) {
+    .alp-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+// dưới 768px => 1 cột
+@media (max-width: 768px) {
+    .alp-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* assets/scss/main.scss */
+.alp-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr))
+}
+
+.alp-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px;
+    background: #fff;
+}
+
+.alp-thumb img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    aspect-ratio: 400 / 300;
+}
+
+.alp-title {
+    margin: 10px 0 6px;
+    font-size: 18px;
+}
+
+.alp-title a {
+    text-decoration: none;
+    color: #111 !important;
+}
+
+.alp-title a:hover {
+    text-decoration: underline;
+}
+
+.alp-date {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+.alp-desc {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+.alp-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #111;
+    border-radius: 8px;
+    text-decoration: none !important;
+    color: #111;
+    transition: all 0.3s;
+    background-color: #fff;
+}
+
+.alp-btn:hover {
+    background: #111;
+    color: #fff;
+}
+
+
+.alp-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center
+}
+
+.alp-more-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1px solid #111;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+
+    &:hover {
+        background: #111;
+        color: #fff
+    }
+}
+
+/* nút item đã có .alp-btn, tái dùng cho nút cuối */
+.alp-footer {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* ===== Sticky Footer Menu (SCSS thuần, không biến root) ===== */
+
+/* tránh bị che nội dung cuối trang */
+body {
+    padding-bottom: 86px;
+    /* cao hơn để chừa chỗ thanh footer */
+}
+
+.tgb-footer-menu {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 24px;
+    background-color: #f5a100;
+    box-shadow: 0 -8px 20px rgba(0, 0, 0, .22);
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+    max-width: 800px;
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    background-image: unset !important;
+
+    @media (max-width: 767px) {
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    >a {
+        text-decoration: none;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ===== Item chuẩn (icon tròn + nhãn dưới) ===== */
+.tgb-footer-menu__item {
+    flex: 0 0 70px;
+    width: 70px;
+    min-width: 70px;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+
+    .tgb-footer-menu__icon {
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        border-radius: 50%;
+        background: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+        position: relative;
+
+        @media (max-width: 767px) {
+            width: 40px;
+            height: 40px;
+        }
+
+        .tgb-footer-menu__icon-image,
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+    }
+
+    .tgb-footer-menu__label {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #000000;
+        white-space: nowrap;
+    }
+}
