@@ -148,12 +148,12 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 16px 24px;
+    padding: 8px 24px;
     background-color: #f5a100;
     box-shadow: 0 -8px 20px rgba(0, 0, 0, .22);
     font-family: inherit;
     -webkit-tap-highlight-color: transparent;
-    max-width: 800px;
+    max-width: 700px;
     width: 100%;
     border-radius: 20px 20px 0px 0px;
     background-image: unset !important;
@@ -182,9 +182,13 @@ body {
     text-align: center;
     gap: 10px;
 
+    @media (max-width: 767px) {
+        gap: 4px;
+    }
+
     .tgb-footer-menu__icon {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
         overflow: hidden;
         border-radius: 50%;
         background: #fff;
