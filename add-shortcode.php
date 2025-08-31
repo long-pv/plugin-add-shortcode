@@ -47,6 +47,43 @@ add_action('acf/init', function () {
     }
 });
 
+// Shortcode [lv_service]
+function lv_service_shortcode($atts)
+{
+    // Bắt đầu output
+    ob_start();
+
+    // Lấy dữ liệu từ ACF Options
+    $title_service = get_field('title_service', 'option');
+    $list_service  = get_field('list_service', 'option');
+?>
+
+    <section class="lv_service">
+        <?php if ($title_service) : ?>
+            <h2 class="lv_service_title"><?php echo esc_html($title_service); ?></h2>
+        <?php endif; ?>
+
+        <?php if ($list_service) : ?>
+            <div class="lv_service_list">
+                <?php foreach ($list_service as $row) :
+                    $link = $row['link'];
+                    if ($link) : ?>
+                        <a href="<?php echo esc_url($link['url']); ?>"
+                            class="lv_service_item"
+                            target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
+                            <?php echo esc_html($link['title']); ?>
+                        </a>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+    </section>
+
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('lv_service', 'lv_service_shortcode');
+
 // Shortcode hiển thị FAQ Block từ ACF Options
 function shortcode_lv_faq_block()
 {

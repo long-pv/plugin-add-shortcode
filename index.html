@@ -2,80 +2,70 @@
 <html lang="vi">
 	<head>
 		<meta charset="UTF-8" />
-		<title>FAQ</title>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Dịch vụ 8kbet</title>
 		<style>
-			.faq_block {
-				width: 600px;
-				margin: 30px auto;
-				font-family: Arial, sans-serif;
+			.lv_service {
+				max-width: 1000px;
 			}
 
-			.faq_item {
-				border-bottom: 1px solid #ddd;
-				padding: 15px 0;
-				cursor: pointer;
+			.lv_service_title {
+				font-size: 24px;
+				font-weight: 600;
+				margin-bottom: 20px;
+				margin-top: 0px;
+				color: #ff7a00;
 			}
 
-			.faq_item_question {
+			.lv_service_list {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			.lv_service_item {
+				display: inline-block;
+				padding: 10px 16px;
+				border: 1px solid #ff7a00; /* cam */
+				color: #fff;
+				background-color: #000;
 				font-size: 16px;
-				font-weight: bold;
-				position: relative;
+				text-decoration: none;
+				border-radius: 6px;
+				transition: all 0.2s ease;
 			}
 
-			.faq_item_question::after {
-				content: "+";
-				position: absolute;
-				right: 0;
-				font-size: 20px;
-				transition: transform 0.3s;
-			}
-
-			.faq_item_question_active::after {
-				content: "-";
-			}
-
-			.faq_item_answer {
-				display: none;
-				padding: 10px 0 0 0;
-				font-size: 14px;
-				color: #444;
+			.lv_service_item:hover {
+				text-decoration: underline;
+				color: #fff;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="faq_block">
-			<div class="faq_item">
-				<div class="faq_item_question">Tôi có thể hoàn trả sản phẩm không?</div>
-				<div class="faq_item_answer">Bạn có thể hoàn trả trong vòng 7 ngày kể từ khi nhận hàng.</div>
+		<section class="lv_service">
+			<h2 class="lv_service_title">Dịch vụ 8kbet</h2>
+			<div class="lv_service_list">
+				<a href="#" class="lv_service_item">Cá cược thể thao</a>
+				<a href="#" class="lv_service_item">Casino trực tuyến</a>
+				<a href="#" class="lv_service_item">Game slot</a>
+				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
+				<a href="#" class="lv_service_item">Xổ số lô đề</a>
+				<a href="#" class="lv_service_item">Cá cược thể thao</a>
+				<a href="#" class="lv_service_item">Casino trực tuyến</a>
+				<a href="#" class="lv_service_item">Game slot</a>
+				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
+				<a href="#" class="lv_service_item">Xổ số lô đề</a>
+				<a href="#" class="lv_service_item">Cá cược thể thao</a>
+				<a href="#" class="lv_service_item">Casino trực tuyến</a>
+				<a href="#" class="lv_service_item">Game slot</a>
+				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
+				<a href="#" class="lv_service_item">Xổ số lô đề</a>
+				<a href="#" class="lv_service_item">Cá cược thể thao</a>
+				<a href="#" class="lv_service_item">Casino trực tuyến</a>
+				<a href="#" class="lv_service_item">Game slot</a>
+				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
+				<a href="#" class="lv_service_item">Xổ số lô đề</a>
 			</div>
-			<div class="faq_item">
-				<div class="faq_item_question">Thời gian giao hàng là bao lâu?</div>
-				<div class="faq_item_answer">Thời gian giao hàng thường từ 2-5 ngày làm việc.</div>
-			</div>
-			<div class="faq_item">
-				<div class="faq_item_question">Phí vận chuyển tính như thế nào?</div>
-				<div class="faq_item_answer">Phí vận chuyển được tính dựa trên địa chỉ giao hàng và trọng lượng sản phẩm.</div>
-			</div>
-		</div>
-
-		<script>
-			$(document).ready(function () {
-				$(".faq_item_question").on("click", function () {
-					let $this = $(this);
-					let $answer = $this.next(".faq_item_answer");
-
-					// Đóng tất cả trước
-					$(".faq_item_answer").slideUp();
-					$(".faq_item_question").removeClass("faq_item_question_active");
-
-					// Nếu chưa mở thì mở cái hiện tại
-					if (!$answer.is(":visible")) {
-						$answer.slideDown();
-						$this.addClass("faq_item_question_active");
-					}
-				});
-			});
-		</script>
+		</section>
 	</body>
 </html>

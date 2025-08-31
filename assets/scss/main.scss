@@ -36,6 +36,43 @@
 }
 
 
+.lv_service {
+    max-width: 1000px;
+}
+
+.lv_service_title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    color: #ff7a00;
+}
+
+.lv_service_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lv_service_item {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1px solid #ff7a00;
+    /* cam */
+    color: #fff;
+    background-color: #000;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.lv_service_item:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+
 .alp-grid {
     display: grid;
     gap: 16px;
