@@ -1,41 +1,86 @@
-/* Ẩn mặc định */
-.menu_mobile_bottom {
+/* Ẩn trên desktop */
+.menu_mobile {
     display: none;
 }
 
-/* Chỉ hiển thị khi màn hình nhỏ hơn 850px */
 @media (max-width: 850px) {
-    .menu_mobile_bottom {
+    .menu_mobile {
         display: block;
-        width: 100%;
-        background: transparent;
     }
 
+    /* Menu cấp 1: nằm ngang, căn giữa */
     .menu_mobile_list {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 8px;
+        gap: 16px;
         list-style: none;
         margin: 0;
-        padding: 0;
-        flex-wrap: wrap;
+        padding: 8px 0;
     }
 
     .menu_mobile_item {
-        margin: 0;
+        position: relative;
     }
 
     .menu_mobile_link {
-        display: inline-block;
         text-decoration: none;
         font-size: 14px;
         color: #ff6600 !important;
         padding: 4px 8px;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-        background: #ffe6cc !important;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: #fff !important;
+        border-radius: 8px;
+        border: 1px solid #ff6600;
+    }
+
+    .toggle-submenu {
+        font-size: 12px;
+        display: inline-flex;
+
+        svg {
+            width: 14px;
+
+            path {
+                fill: #ff6600;
+            }
+        }
+    }
+
+    /* Submenu ẩn mặc định */
+    .submenu_list {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        border-radius: 8px;
+        margin-top: 8px;
+        padding: 8px;
+        list-style: none;
+        min-width: 180px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        z-index: 999;
+    }
+
+    .submenu_item {
+        text-align: center;
+    }
+
+    .submenu_link {
+        display: block;
+        padding: 8px 12px;
+        font-size: 14px;
         color: #ff6600 !important;
+        text-decoration: none;
+    }
+
+    /* Khi active → hiển thị submenu */
+    .menu_mobile_item.active>.submenu_list {
+        display: block;
     }
 }
 

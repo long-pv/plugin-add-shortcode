@@ -13,4 +13,27 @@
 			$this.addClass("lv_faq_item_question_active");
 		}
 	});
+
+	// click vào item có submenu
+	$(".menu_mobile_item.has-sub > .menu_mobile_link").on("click", function (e) {
+		e.preventDefault();
+
+		var parent = $(this).closest(".menu_mobile_item");
+
+		// đóng tất cả submenu khác
+		$(".menu_mobile_item").not(parent).removeClass("active").find(".submenu_list").hide();
+
+		// toggle submenu hiện tại
+		parent.toggleClass("active");
+		parent.find(".submenu_list").toggle();
+
+		e.stopPropagation(); // chặn sự kiện lan ra ngoài
+	});
+
+	// click bất kỳ chỗ nào ngoài menu_mobile -> đóng hết
+	$(document).on("click", function (e) {
+		if (!$(e.target).closest(".menu_mobile").length) {
+			$(".menu_mobile_item").removeClass("active").find(".submenu_list").hide();
+		}
+	});
 })(jQuery, window);

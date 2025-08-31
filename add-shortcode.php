@@ -47,25 +47,51 @@ add_action('acf/init', function () {
     }
 });
 
-// Shortcode: [lv_menu_mobile_bottom]
-function render_menu_mobile_bottom_shortcode()
+// Shortcode: [lv_menu_mobile]
+function render_menu_mobile_shortcode()
 {
     ob_start();
 ?>
-    <nav class="menu_mobile_bottom">
-        <ul class="menu_mobile_list" style="display:flex; justify-content:center; gap:20px; list-style:none; padding:0; margin:0;">
-            <?php if (have_rows('menu_sidebar', 'option')): ?>
-                <?php while (have_rows('menu_sidebar', 'option')): the_row();
-                    $link = get_sub_field('link');
-                    if ($link):
-                        $url    = esc_url($link['url']);
-                        $title  = esc_html($link['title']);
-                        $target = $link['target'] ? esc_attr($link['target']) : '_self';
+    <nav class="menu_mobile">
+        <ul class="menu_mobile_list">
+            <?php if (have_rows('menu_mobile', 'option')): ?>
+                <?php while (have_rows('menu_mobile', 'option')): the_row();
+                    $primary = get_sub_field('link_primary');
+                    if ($primary):
+                        $url    = esc_url($primary['url']);
+                        $title  = esc_html($primary['title']);
+                        $target = $primary['target'] ? esc_attr($primary['target']) : '_self';
+                        $has_sub = have_rows('submenu');
                 ?>
-                        <li class="menu_mobile_item">
+                        <li class="menu_mobile_item<?php echo $has_sub ? ' has-sub' : ''; ?>">
                             <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="menu_mobile_link">
                                 <?php echo $title; ?>
+                                <?php if ($has_sub): ?>
+                                    <span class="toggle-submenu">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                                            <path d="M480 224C492.9 224 504.6 231.8 509.6 243.8C514.6 255.8 511.8 269.5 502.7 278.7L342.7 438.7C330.2 451.2 309.9 451.2 297.4 438.7L137.4 278.7C128.2 269.5 125.5 255.8 130.5 243.8C135.5 231.8 147.1 224 160 224L480 224z" />
+                                        </svg>
+                                    </span>
+                                <?php endif; ?>
                             </a>
+                            <?php if ($has_sub): ?>
+                                <ul class="submenu_list">
+                                    <?php while (have_rows('submenu')): the_row();
+                                        $sub = get_sub_field('link');
+                                        if ($sub):
+                                            $sub_url    = esc_url($sub['url']);
+                                            $sub_title  = esc_html($sub['title']);
+                                            $sub_target = $sub['target'] ? esc_attr($sub['target']) : '_self';
+                                    ?>
+                                            <li class="submenu_item">
+                                                <a href="<?php echo $sub_url; ?>" target="<?php echo $sub_target; ?>" class="submenu_link">
+                                                    <?php echo $sub_title; ?>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    <?php endwhile; ?>
+                                </ul>
+                            <?php endif; ?>
                         </li>
                     <?php endif; ?>
                 <?php endwhile; ?>
@@ -77,7 +103,7 @@ function render_menu_mobile_bottom_shortcode()
 <?php
     return ob_get_clean();
 }
-add_shortcode('lv_menu_mobile_bottom', 'render_menu_mobile_bottom_shortcode');
+add_shortcode('lv_menu_mobile', 'render_menu_mobile_shortcode');
 
 // Shortcode: [sidebar_left]
 function render_sidebar_left_shortcode()
