@@ -17,10 +17,20 @@ add_action('wp_enqueue_scripts', function () {
     // đăng ký trước, lấy version từ mtime để bust cache
     $css = ADD_SC_PATH . 'assets/css/main.css';
     $js  = ADD_SC_PATH . 'assets/js/main.js';
-    $ver = max(file_exists($css) ? filemtime($css) : 0, file_exists($js) ? filemtime($js) : 0, time());
+    $ver = max(
+        file_exists($css) ? filemtime($css) : 0,
+        file_exists($js) ? filemtime($js) : 0,
+        time()
+    );
+
     wp_register_style('addsc-main-css', ADD_SC_URL . 'assets/css/main.css', [], $ver);
-    wp_register_script('addsc-main-js', ADD_SC_URL . 'assets/js/main.js', [], $ver, true);
-});
+    wp_register_script('addsc-main-js', ADD_SC_URL . 'assets/js/main.js', ['jquery'], $ver, true);
+
+    // enqueue để thực sự load ra ngoài
+    wp_enqueue_style('addsc-main-css');
+    wp_enqueue_script('addsc-main-js');
+}, 99);
+
 
 // ACF Options Page
 add_action('acf/init', function () {
@@ -36,6 +46,40 @@ add_action('acf/init', function () {
         ]);
     }
 });
+
+// Shortcode hiển thị FAQ Block từ ACF Options
+function shortcode_lv_faq_block()
+{
+    $faqs = get_field('list_faqs', 'option'); // lấy từ ACF Options
+
+    if ($faqs && is_array($faqs)) {
+        ob_start(); ?>
+
+        <div class="lv_faq_block">
+            <?php foreach ($faqs as $faq) :
+                $title   = $faq['title'] ?? '';
+                $content = $faq['content'] ?? '';
+            ?>
+                <?php if ($title || $content) : ?>
+                    <div class="lv_faq_item">
+                        <?php if ($title) : ?>
+                            <div class="lv_faq_item_question"><?php echo $title; ?></div>
+                        <?php endif; ?>
+
+                        <?php if ($content) : ?>
+                            <div class="lv_faq_item_answer"><?php echo $content; ?></div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+
+    <?php
+        return ob_get_clean();
+    }
+    return ''; // không có dữ liệu thì trả về rỗng
+}
+add_shortcode('lv_faq_block', 'shortcode_lv_faq_block');
 
 // add_latest_posts
 add_shortcode('add_latest_posts', function ($atts = []) {

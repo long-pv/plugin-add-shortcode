@@ -1,3 +1,41 @@
+.lv_faq_block {
+    max-width: 600px;
+    width: 100%;
+    margin: 30px auto;
+}
+
+.lv_faq_item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.lv_faq_item_question {
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+}
+
+.lv_faq_item_question::after {
+    content: "+";
+    position: absolute;
+    right: 0;
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.lv_faq_item_question.lv_faq_item_question_active::after {
+    content: "-";
+}
+
+.lv_faq_item_answer {
+    display: none;
+    padding: 10px 0 0 0;
+    font-size: 14px;
+    color: #fff;
+}
+
+
 .alp-grid {
     display: grid;
     gap: 16px;
