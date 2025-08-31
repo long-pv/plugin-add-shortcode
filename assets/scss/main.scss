@@ -1,3 +1,88 @@
+/* Ẩn mặc định */
+.menu_mobile_bottom {
+    display: none;
+}
+
+/* Chỉ hiển thị khi màn hình nhỏ hơn 850px */
+@media (max-width: 850px) {
+    .menu_mobile_bottom {
+        display: block;
+        width: 100%;
+        background: transparent;
+    }
+
+    .menu_mobile_list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+    }
+
+    .menu_mobile_item {
+        margin: 0;
+    }
+
+    .menu_mobile_link {
+        display: inline-block;
+        text-decoration: none;
+        font-size: 14px;
+        color: #ff6600 !important;
+        padding: 4px 8px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        background: #ffe6cc !important;
+        color: #ff6600 !important;
+    }
+}
+
+.sidebar_logo {
+    margin-bottom: 40px;
+    flex-shrink: 0;
+}
+
+.sidebar_logo_img {
+    max-width: 150px;
+    height: auto;
+    display: block;
+}
+
+.sidebar_menu {
+    width: 100%;
+    flex: 1;
+}
+
+.sidebar_menu_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar_menu_item {
+    width: 100%;
+    margin: 0px;
+}
+
+.sidebar_menu_link {
+    display: block;
+    padding: 8px 16px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar_menu_link:hover {
+    background-color: #ff6600;
+}
+
 .lv_faq_block {
     max-width: 600px;
     width: 100%;

@@ -3,69 +3,107 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Dịch vụ 8kbet</title>
+		<title>Sidebar Demo</title>
 		<style>
-			.lv_service {
-				max-width: 1000px;
+			body {
+				margin: 0;
+				font-family: Arial, Helvetica, sans-serif;
+				background-color: #f4f4f4;
 			}
 
-			.lv_service_title {
-				font-size: 24px;
-				font-weight: 600;
-				margin-bottom: 20px;
-				margin-top: 0px;
-				color: #ff7a00;
-			}
-
-			.lv_service_list {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 8px;
-			}
-
-			.lv_service_item {
-				display: inline-block;
-				padding: 10px 16px;
-				border: 1px solid #ff7a00; /* cam */
-				color: #fff;
+			.sidebar {
+				position: fixed; /* cố định */
+				top: 0;
+				left: 0;
+				width: 260px;
+				height: 100vh; /* chiếm toàn màn hình */
 				background-color: #000;
-				font-size: 16px;
-				text-decoration: none;
-				border-radius: 6px;
-				transition: all 0.2s ease;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 20px 0;
+				overflow-y: auto; /* scroll khi dài quá */
 			}
 
-			.lv_service_item:hover {
-				text-decoration: underline;
+			.sidebar_logo {
+				margin-bottom: 40px;
+				flex-shrink: 0; /* logo không bị co lại khi scroll */
+			}
+
+			.sidebar_logo_img {
+				max-width: 150px;
+				height: auto;
+				display: block;
+			}
+
+			.sidebar_menu {
+				width: 100%;
+				flex: 1; /* cho menu chiếm hết còn lại */
+			}
+
+			.sidebar_menu_list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			.sidebar_menu_item {
+				width: 100%;
+			}
+
+			.sidebar_menu_link {
+				display: block;
+				padding: 12px 20px;
 				color: #fff;
+				text-decoration: none;
+				font-size: 16px;
+				border-radius: 6px;
+				transition: background-color 0.3s ease;
+			}
+
+			.sidebar_menu_link:hover {
+				background-color: #ff6600;
+			}
+
+			/* Nội dung chính để test layout */
+			.main_content {
+				margin-left: 260px; /* chừa chỗ cho sidebar */
+				padding: 20px;
 			}
 		</style>
 	</head>
 	<body>
-		<section class="lv_service">
-			<h2 class="lv_service_title">Dịch vụ 8kbet</h2>
-			<div class="lv_service_list">
-				<a href="#" class="lv_service_item">Cá cược thể thao</a>
-				<a href="#" class="lv_service_item">Casino trực tuyến</a>
-				<a href="#" class="lv_service_item">Game slot</a>
-				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
-				<a href="#" class="lv_service_item">Xổ số lô đề</a>
-				<a href="#" class="lv_service_item">Cá cược thể thao</a>
-				<a href="#" class="lv_service_item">Casino trực tuyến</a>
-				<a href="#" class="lv_service_item">Game slot</a>
-				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
-				<a href="#" class="lv_service_item">Xổ số lô đề</a>
-				<a href="#" class="lv_service_item">Cá cược thể thao</a>
-				<a href="#" class="lv_service_item">Casino trực tuyến</a>
-				<a href="#" class="lv_service_item">Game slot</a>
-				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
-				<a href="#" class="lv_service_item">Xổ số lô đề</a>
-				<a href="#" class="lv_service_item">Cá cược thể thao</a>
-				<a href="#" class="lv_service_item">Casino trực tuyến</a>
-				<a href="#" class="lv_service_item">Game slot</a>
-				<a href="#" class="lv_service_item">Bắn cá đổi thưởng</a>
-				<a href="#" class="lv_service_item">Xổ số lô đề</a>
+		<aside class="sidebar">
+			<div class="sidebar_logo">
+				<a href="/" class="sidebar_logo_link">
+					<img src="https://via.placeholder.com/150x50?text=LOGO" alt="Site Logo" class="sidebar_logo_img" />
+				</a>
 			</div>
-		</section>
+			<nav class="sidebar_menu">
+				<ul class="sidebar_menu_list">
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Trang chủ</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Giới thiệu</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Dịch vụ</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Liên hệ</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Tin tức</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Blog</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">FAQ</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Tuyển dụng</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Hỗ trợ</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Cài đặt</a></li>
+					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Khác...</a></li>
+				</ul>
+			</nav>
+		</aside>
+
+		<main class="main_content">
+			<h1>Nội dung trang</h1>
+			<p>Đây là phần nội dung chính để test. Sidebar cố định bên trái, khi danh sách menu dài quá sẽ tự scroll riêng trong sidebar.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt nulla nec justo hendrerit, sed tristique nisl luctus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+			<p>Thêm nhiều nội dung để test layout...</p>
+		</main>
 	</body>
 </html>

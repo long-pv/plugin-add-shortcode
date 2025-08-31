@@ -47,6 +47,82 @@ add_action('acf/init', function () {
     }
 });
 
+// Shortcode: [lv_menu_mobile_bottom]
+function render_menu_mobile_bottom_shortcode()
+{
+    ob_start();
+?>
+    <nav class="menu_mobile_bottom">
+        <ul class="menu_mobile_list" style="display:flex; justify-content:center; gap:20px; list-style:none; padding:0; margin:0;">
+            <?php if (have_rows('menu_sidebar', 'option')): ?>
+                <?php while (have_rows('menu_sidebar', 'option')): the_row();
+                    $link = get_sub_field('link');
+                    if ($link):
+                        $url    = esc_url($link['url']);
+                        $title  = esc_html($link['title']);
+                        $target = $link['target'] ? esc_attr($link['target']) : '_self';
+                ?>
+                        <li class="menu_mobile_item">
+                            <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="menu_mobile_link">
+                                <?php echo $title; ?>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <li class="menu_mobile_item"><a href="#" class="menu_mobile_link">Chưa có menu</a></li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+<?php
+    return ob_get_clean();
+}
+add_shortcode('lv_menu_mobile_bottom', 'render_menu_mobile_bottom_shortcode');
+
+// Shortcode: [sidebar_left]
+function render_sidebar_left_shortcode()
+{
+    // Lấy logo
+    $logo_id  = get_field('image_logo', 'option');
+    $logo_url = $logo_id ? wp_get_attachment_image_url($logo_id, 'full') : 'https://via.placeholder.com/150x50?text=LOGO';
+
+    // Bắt đầu output
+    ob_start();
+?>
+    <aside class="sidebar">
+        <div class="sidebar_logo">
+            <a href="/" class="sidebar_logo_link">
+                <img src="<?php echo esc_url($logo_url); ?>" alt="Site Logo" class="sidebar_logo_img" />
+            </a>
+        </div>
+        <nav class="sidebar_menu">
+            <ul class="sidebar_menu_list">
+                <?php if (have_rows('menu_sidebar', 'option')): ?>
+                    <?php while (have_rows('menu_sidebar', 'option')): the_row();
+                        $link = get_sub_field('link');
+                        if ($link):
+                            $url    = esc_url($link['url']);
+                            $title  = esc_html($link['title']);
+                            $target = $link['target'] ? esc_attr($link['target']) : '_self';
+                    ?>
+                            <li class="sidebar_menu_item">
+                                <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="sidebar_menu_link">
+                                    <?php echo $title; ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Chưa có menu</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </aside>
+<?php
+    return ob_get_clean();
+}
+add_shortcode('lv_sidebar_left', 'render_sidebar_left_shortcode');
+
 // Shortcode [lv_service]
 function lv_service_shortcode($atts)
 {
