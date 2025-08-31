@@ -26,14 +26,14 @@
     .menu_mobile_link {
         text-decoration: none;
         font-size: 14px;
-        color: #ff6600 !important;
+        color: #f6d402 !important;
         padding: 4px 8px;
         display: flex;
         align-items: center;
         gap: 4px;
-        background-color: #fff !important;
+        background-color: transparent !important;
         border-radius: 8px;
-        border: 1px solid #ff6600;
+        border: 1px solid #f6d402;
     }
 
     .toggle-submenu {
@@ -44,7 +44,7 @@
             width: 14px;
 
             path {
-                fill: #ff6600;
+                fill: #f6d402;
             }
         }
     }
@@ -61,7 +61,7 @@
         margin-top: 8px;
         padding: 8px;
         list-style: none;
-        min-width: 180px;
+        min-width: 100px;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         z-index: 999;
     }
@@ -74,7 +74,7 @@
         display: block;
         padding: 8px 12px;
         font-size: 14px;
-        color: #ff6600 !important;
+        color: #f6d402 !important;
         text-decoration: none;
     }
 
@@ -125,7 +125,7 @@
 }
 
 .sidebar_menu_link:hover {
-    background-color: #ff6600;
+    background-color: #f6d402;
 }
 
 .lv_faq_block {
@@ -175,7 +175,7 @@
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 0px;
-    color: #ff7a00;
+    color: #f6d402;
 }
 
 .lv_service_list {
@@ -187,7 +187,7 @@
 .lv_service_item {
     display: inline-block;
     padding: 10px 16px;
-    border: 1px solid #ff7a00;
+    border: 1px solid #f6d402;
     /* cam */
     color: #fff;
     background-color: #000;
