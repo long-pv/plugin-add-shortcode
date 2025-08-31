@@ -3,107 +3,111 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Sidebar Demo</title>
+		<title>Menu PC</title>
 		<style>
-			body {
-				margin: 0;
-				font-family: Arial, Helvetica, sans-serif;
-				background-color: #f4f4f4;
-			}
-
-			.sidebar {
-				position: fixed; /* cố định */
-				top: 0;
-				left: 0;
-				width: 260px;
-				height: 100vh; /* chiếm toàn màn hình */
-				background-color: #000;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				padding: 20px 0;
-				overflow-y: auto; /* scroll khi dài quá */
-			}
-
-			.sidebar_logo {
-				margin-bottom: 40px;
-				flex-shrink: 0; /* logo không bị co lại khi scroll */
-			}
-
-			.sidebar_logo_img {
-				max-width: 150px;
-				height: auto;
-				display: block;
-			}
-
-			.sidebar_menu {
-				width: 100%;
-				flex: 1; /* cho menu chiếm hết còn lại */
-			}
-
-			.sidebar_menu_list {
-				list-style: none;
+			/* RESET */
+			* {
 				margin: 0;
 				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: Arial, sans-serif;
+				background: #f5f5f5;
+			}
+
+			/* MENU */
+			.lv_menu {
+				background: #0157c2;
+			}
+
+			.lv_menu_list {
 				display: flex;
-				flex-direction: column;
-				gap: 10px;
+				justify-content: center; /* căn giữa */
+				align-items: center;
+				list-style: none;
+				padding: 0;
 			}
 
-			.sidebar_menu_item {
-				width: 100%;
+			.lv_menu_item {
+				position: relative;
 			}
 
-			.sidebar_menu_link {
+			.lv_menu_link {
 				display: block;
-				padding: 12px 20px;
-				color: #fff;
+				padding: 8px 8px; /* trên dưới 8px, trái phải 8px */
+				font-size: 14px;
+				font-weight: 500;
+				color: #ffffff;
 				text-decoration: none;
-				font-size: 16px;
-				border-radius: 6px;
-				transition: background-color 0.3s ease;
+				transition: color 0.3s ease;
 			}
 
-			.sidebar_menu_link:hover {
-				background-color: #ff6600;
+			.lv_menu_link:hover {
+				color: #fafa1e;
 			}
 
-			/* Nội dung chính để test layout */
-			.main_content {
-				margin-left: 260px; /* chừa chỗ cho sidebar */
-				padding: 20px;
+			/* SUBMENU */
+			.lv_menu_submenu {
+				display: none;
+				position: absolute;
+				top: 100%;
+				left: 0;
+				background: #0157c2;
+				min-width: 180px;
+				list-style: none;
+				flex-direction: column;
+			}
+
+			.lv_menu_item:hover .lv_menu_submenu {
+				display: flex;
+			}
+
+			.lv_menu_subitem {
+				border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			}
+
+			.lv_menu_subitem:last-child {
+				border-bottom: none;
+			}
+
+			.lv_menu_sublink {
+				display: block;
+				padding: 12px 8px; /* submenu giữ nguyên */
+				font-size: 14px;
+				font-weight: 500;
+				color: #ffffff;
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+
+			.lv_menu_sublink:hover {
+				color: #fafa1e;
 			}
 		</style>
 	</head>
 	<body>
-		<aside class="sidebar">
-			<div class="sidebar_logo">
-				<a href="/" class="sidebar_logo_link">
-					<img src="https://via.placeholder.com/150x50?text=LOGO" alt="Site Logo" class="sidebar_logo_img" />
-				</a>
-			</div>
-			<nav class="sidebar_menu">
-				<ul class="sidebar_menu_list">
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Trang chủ</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Giới thiệu</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Dịch vụ</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Liên hệ</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Tin tức</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Blog</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">FAQ</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Tuyển dụng</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Hỗ trợ</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Cài đặt</a></li>
-					<li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Khác...</a></li>
-				</ul>
-			</nav>
-		</aside>
-
-		<main class="main_content">
-			<h1>Nội dung trang</h1>
-			<p>Đây là phần nội dung chính để test. Sidebar cố định bên trái, khi danh sách menu dài quá sẽ tự scroll riêng trong sidebar.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque tincidunt nulla nec justo hendrerit, sed tristique nisl luctus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-			<p>Thêm nhiều nội dung để test layout...</p>
-		</main>
+		<nav class="lv_menu">
+			<ul class="lv_menu_list">
+				<li class="lv_menu_item">
+					<a href="#" class="lv_menu_link">Trang chủ</a>
+				</li>
+				<li class="lv_menu_item">
+					<a href="#" class="lv_menu_link">Sản phẩm</a>
+					<ul class="lv_menu_submenu">
+						<li class="lv_menu_subitem"><a href="#" class="lv_menu_sublink">Sản phẩm A</a></li>
+						<li class="lv_menu_subitem"><a href="#" class="lv_menu_sublink">Sản phẩm B</a></li>
+						<li class="lv_menu_subitem"><a href="#" class="lv_menu_sublink">Sản phẩm C</a></li>
+					</ul>
+				</li>
+				<li class="lv_menu_item">
+					<a href="#" class="lv_menu_link">Dịch vụ</a>
+				</li>
+				<li class="lv_menu_item">
+					<a href="#" class="lv_menu_link">Liên hệ</a>
+				</li>
+			</ul>
+		</nav>
 	</body>
 </html>

@@ -47,6 +47,71 @@ add_action('acf/init', function () {
     }
 });
 
+
+
+// Shortcode: [lv_menu_pc]
+function lv_menu_pc_shortcode()
+{
+    $menu_items = get_field('menu_pc', 'option');
+
+    if (!$menu_items || !is_array($menu_items)) {
+        return '';
+    }
+
+    ob_start();
+?>
+    <nav class="lv_menu">
+        <ul class="lv_menu_list">
+            <?php foreach ($menu_items as $item): ?>
+                <?php
+                $link_primary = isset($item['link_primary']) ? $item['link_primary'] : null;
+                $submenu      = isset($item['submenu']) ? $item['submenu'] : null;
+                $image        = isset($item['image']) ? $item['image'] : null; // giả sử bạn thêm field "image"
+                ?>
+
+                <?php if ($link_primary && isset($link_primary['url'], $link_primary['title'])): ?>
+                    <li class="lv_menu_item">
+                        <a href="<?php echo $link_primary['url']; ?>"
+                            class="lv_menu_link"
+                            <?php if (!empty($link_primary['target'])): ?>target="<?php echo $link_primary['target']; ?>" <?php endif; ?>>
+
+                            <?php
+                            // Hiển thị ảnh nếu có
+                            if ($image) {
+                                echo wp_get_attachment_image($image, 'full', false, ['class' => 'lv_menu_icon']);
+                            }
+                            ?>
+                            <?php echo $link_primary['title']; ?>
+                        </a>
+
+                        <?php if ($submenu && is_array($submenu)): ?>
+                            <ul class="lv_menu_submenu">
+                                <?php foreach ($submenu as $sub): ?>
+                                    <?php $link = isset($sub['link']) ? $sub['link'] : null; ?>
+                                    <?php if ($link && isset($link['url'], $link['title'])): ?>
+                                        <li class="lv_menu_subitem">
+                                            <a href="<?php echo $link['url']; ?>"
+                                                class="lv_menu_sublink"
+                                                <?php if (!empty($link['target'])): ?>target="<?php echo $link['target']; ?>" <?php endif; ?>>
+                                                <?php echo $link['title']; ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+<?php
+    return ob_get_clean();
+}
+add_shortcode('lv_menu_pc', 'lv_menu_pc_shortcode');
+
+
+
 // Shortcode: [lv_menu_mobile]
 function render_menu_mobile_shortcode()
 {
