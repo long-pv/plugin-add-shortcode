@@ -7,6 +7,10 @@
     }
 }
 
+.lv_menu_arrow {
+    display: inline-flex;
+}
+
 .lv_menu_list {
     display: flex;
     justify-content: center;
@@ -18,21 +22,35 @@
 .lv_menu_item {
     position: relative;
     margin: 0px;
+
+    &:hover {
+        .lv_menu_link {
+            color: #0157c2;
+
+            .lv_menu_arrow {
+                svg {
+                    path {
+                        fill: #0157c2;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .lv_menu_link {
-    display: block;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
     padding: 8px;
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
     color: #000;
     text-decoration: none;
-    transition: color 0.3s;
-}
-
-.lv_menu_link:hover {
-    color: #0157c2;
+    transition: all 0.3s;
+    white-space: nowrap;
 }
 
 /* SUBMENU */
@@ -73,6 +91,7 @@
     color: #000;
     text-decoration: none;
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
 .lv_menu_sublink:hover {
@@ -115,6 +134,7 @@
         background-color: transparent !important;
         border-radius: 8px;
         border: 1px solid #0157c2;
+        white-space: nowrap;
     }
 
     .toggle-submenu {
@@ -157,6 +177,7 @@
         font-size: 14px;
         color: #0157c2 !important;
         text-decoration: none;
+        white-space: nowrap;
     }
 
     /* Khi active → hiển thị submenu */
