@@ -422,16 +422,17 @@ $primary : #0157c2;
 }
 
 .lv_latest_posts_btn_more {
-    display: inline-block;
-    padding: 10px 16px;
-    border: 1px solid #111;
-    border-radius: 10px;
-    text-decoration: none;
-    color: #111;
+    display: inline-flex;
+    padding: 8px 16px;
+    border: 1px solid $primary;
+    border-radius: 8px;
+    text-decoration: none !important;
+    color: $primary;
     font-weight: 500;
+    text-transform: capitalize;
 
     &:hover {
-        background: #111;
+        background: $primary;
         color: #fff;
     }
 }
