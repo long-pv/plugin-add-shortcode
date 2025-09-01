@@ -292,70 +292,93 @@ function shortcode_lv_faq_block()
 add_shortcode('lv_faq_block', 'shortcode_lv_faq_block');
 
 // add_latest_posts
-add_shortcode('add_latest_posts', function ($atts = []) {
-    $atts = shortcode_atts([
-        'cols'      => 3,
-        'read_more' => 'Xem thêm',
-    ], $atts, 'add_latest_posts');
+add_shortcode('lv_latest_posts', function ($atts = []) {
+    // Lấy setting từ ACF Options
+    $list_title = get_field('list_of_articles_title', 'option');
+    $num_posts  = (int) get_field('number_of_posts', 'option');
+    $num_posts  = $num_posts > 0 ? $num_posts : 6;
 
-    // ACF: số bài viết
-    $post_count = function_exists('get_field') ? (int) get_field('number_latest_posts', 'option') : 3;
-    if ($post_count < 1) $post_count = 3;
+    $num_cols   = (int) get_field('number_of_columns', 'option');
+    $num_cols   = in_array($num_cols, [2, 3, 4]) ? $num_cols : 3;
 
-    // ACF: link Xem thêm toàn bộ
-    $see_more = function_exists('get_field') ? get_field('see_more', 'option') : null; // array: url,title,target
+    $category   = get_field('article_categories', 'option');
+    $see_more   = get_field('see_more_button', 'option');
 
-    $q = new WP_Query([
-        'posts_per_page'      => $post_count,
-        'post_status'         => 'publish',
-        'ignore_sticky_posts' => true,
-        'no_found_rows'       => true,
-    ]);
-    if (!$q->have_posts()) return '';
+    // Query bài viết
+    $args = [
+        'posts_per_page' => $num_posts,
+        'post_status'    => 'publish',
+    ];
+    if (!empty($category)) {
+        $args['cat'] = (int) $category;
+    }
 
-    wp_enqueue_style('addsc-main-css');
-    wp_enqueue_script('addsc-main-js');
+    $q = new WP_Query($args);
+    if (!$q->have_posts()) {
+        return '';
+    }
 
     ob_start(); ?>
-    <div class="alp-grid cols-<?php echo (int)$atts['cols']; ?>">
-        <?php while ($q->have_posts()): $q->the_post();
-            $url   = get_permalink();
-            $title = get_the_title();
-            $date  = get_the_date(get_option('date_format'));
-            $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
-            $thumb = get_the_post_thumbnail_url(get_the_ID(), 'large');
-            if (!$thumb) $thumb = ADD_SC_URL . 'assets/img/placeholder.jpg'; ?>
-            <article class="alp-card">
-                <a class="alp-thumb" href="<?php echo esc_url($url); ?>">
-                    <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
+
+    <div class="lv_latest_posts_wrap">
+        <?php if (!empty($list_title)): ?>
+            <h2 class="lv_latest_posts_heading"><?php echo $list_title; ?></h2>
+        <?php endif; ?>
+
+        <div class="lv_latest_posts_grid lv_cols_<?php echo $num_cols; ?>">
+            <?php while ($q->have_posts()): $q->the_post();
+                $url   = get_permalink();
+                $title = get_the_title();
+                $date = get_the_date('d/m/Y');
+                $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
+            ?>
+                <article class="lv_latest_posts_card">
+                    <?php if (has_post_thumbnail()): ?>
+                        <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
+                            <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if ($title): ?>
+                        <h3 class="lv_latest_posts_title">
+                            <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+                        </h3>
+                    <?php endif; ?>
+
+                    <?php if ($date): ?>
+                        <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                    <?php endif; ?>
+
+                    <?php if ($desc): ?>
+                        <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
+                    <?php endif; ?>
+
+                    <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
+                        <?php echo !empty($atts['read_more']) ? $atts['read_more'] : 'Xem thêm'; ?>
+                    </a>
+                </article>
+            <?php endwhile;
+            wp_reset_postdata(); ?>
+        </div>
+
+        <?php if (!empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
+            $sm_url    = $see_more['url'];
+            $sm_title  = $see_more['title'] ?: 'Xem thêm';
+            $sm_target = $see_more['target'] ?: '_self'; ?>
+            <div class="lv_latest_posts_footer">
+                <a class="lv_latest_posts_btn lv_latest_posts_btn_more"
+                    href="<?php echo $sm_url; ?>"
+                    target="<?php echo $sm_target; ?>"
+                    <?php if ($sm_target === '_blank') echo 'rel="noopener noreferrer"'; ?>>
+                    <?php echo $sm_title; ?>
                 </a>
-                <h3 class="alp-title"><a href="<?php echo esc_url($url); ?>"><?php echo esc_html($title); ?></a></h3>
-                <div class="alp-date"><?php echo esc_html($date); ?></div>
-                <div class="alp-desc"><?php echo esc_html($desc); ?></div>
-                <a class="alp-btn" href="<?php echo esc_url($url); ?>"><?php echo esc_html($atts['read_more']); ?></a>
-            </article>
-        <?php endwhile;
-        wp_reset_postdata(); ?>
+            </div>
+        <?php endif; ?>
     </div>
 
-    <?php if (is_array($see_more) && !empty($see_more['url'])):
-        $sm_url = $see_more['url'];
-        $sm_title = $see_more['title'] ?: 'Xem thêm';
-        $sm_target = $see_more['target'] ?: '_self';
-        $rel = ($sm_target === '_blank') ? 'noopener noreferrer' : ''; ?>
-        <div class="alp-footer">
-            <a class="alp-btn alp-more-btn"
-                href="<?php echo esc_url($sm_url); ?>"
-                target="<?php echo esc_attr($sm_target); ?>"
-                <?php if ($rel) echo 'rel="' . esc_attr($rel) . '"'; ?>>
-                <?php echo esc_html($sm_title); ?>
-            </a>
-        </div>
-    <?php endif; ?>
-
-<?php return ob_get_clean();
+<?php
+    return ob_get_clean();
 });
-
 
 /**
  * Sticky Footer Menu from ACF Options (không cần shortcode atts)
