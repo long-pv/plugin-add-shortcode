@@ -376,56 +376,55 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
         <?php endif; ?>
     </div>
 
-<?php
+    <?php
     return ob_get_clean();
 });
 
-/**
- * Sticky Footer Menu from ACF Options (không cần shortcode atts)
- * Field: menu_bottom (repeater trong Options Page)
- * Sub-fields: icon (image ID), title (text), url (text)
- */
-add_shortcode('tgb_footer_menu', function () {
-    if (!function_exists('get_field')) {
-        return ''; // chưa có ACF thì bỏ qua
-    }
 
+add_shortcode('lv_menu_bottom', function () {
     $items = get_field('menu_bottom', 'option');
-    if (empty($items) || !is_array($items)) {
-        return '';
-    }
 
-    ob_start(); ?>
-    <nav class="tgb-footer-menu" aria-label="Footer quick actions">
-        <?php foreach ($items as $row):
-            $title = isset($row['title']) ? trim($row['title']) : '';
-            $url   = isset($row['url']) ? trim($row['url']) : '#';
-            $icon  = isset($row['icon']) ? $row['icon'] : 0;
-        ?>
-            <a class="tgb-footer-menu__item" href="<?= esc_url($url); ?>" target="_blank" rel="noopener nofollow sponsored">
-                <span class="tgb-footer-menu__icon" aria-hidden="true">
-                    <?php
-                    if ($icon) {
-                        echo wp_get_attachment_image(
-                            $icon,
-                            'thumbnail',
-                            false,
-                            [
-                                'class' => 'tgb-footer-menu__icon-image',
-                                'alt'   => esc_attr($title ?: 'icon')
-                            ]
-                        );
-                    } else {
-                        echo '<span class="tgb-footer-menu__icon-placeholder"></span>';
-                    }
-                    ?>
-                </span>
-                <?php if ($title): ?>
-                    <span class="tgb-footer-menu__label"><?= esc_html($title); ?></span>
-                <?php endif; ?>
-            </a>
-        <?php endforeach; ?>
-    </nav>
-<?php
+    ob_start();
+
+    if ($items && is_array($items)) : ?>
+        <nav class="lv_footer_menu" aria-label="Footer quick actions">
+            <?php foreach ($items as $row) :
+                $icon  = isset($row['icon']) ? $row['icon'] : 0;
+                $link  = isset($row['link']) && is_array($row['link']) ? $row['link'] : [];
+
+                $url    = isset($link['url']) ? trim($link['url']) : '#';
+                $title  = isset($link['title']) ? trim($link['title']) : '';
+                $target = isset($link['target']) && $link['target'] ? $link['target'] : '_self';
+
+                if (!$icon && !$title) {
+                    continue; // bỏ qua nếu trống hết
+                }
+            ?>
+                <a class="lv_footer_menu_item"
+                    href="<?php echo $url; ?>"
+                    target="<?php echo $target; ?>"
+                    rel="noopener nofollow sponsored">
+                    <span class="lv_footer_menu_icon" aria-hidden="true">
+                        <?php
+                        if ($icon) {
+                            echo wp_get_attachment_image(
+                                $icon,
+                                'thumbnail',
+                                false,
+                                ['class' => 'lv_footer_menu_icon_image']
+                            );
+                        } else {
+                            echo '<span class="lv_footer_menu_icon_placeholder"></span>';
+                        }
+                        ?>
+                    </span>
+                    <?php if ($title) : ?>
+                        <span class="lv_footer_menu_label"><?php echo $title; ?></span>
+                    <?php endif; ?>
+                </a>
+            <?php endforeach; ?>
+        </nav>
+<?php endif;
+
     return ob_get_clean();
 });
