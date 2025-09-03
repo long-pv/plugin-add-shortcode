@@ -47,6 +47,64 @@ add_action('acf/init', function () {
     }
 });
 
+// Shortcode Tabs [lv_tabs]
+function lv_tabs_shortcode()
+{
+    ob_start();
+
+    $tabs_title = get_field('tabs_title', 'option');
+    $list_tabs  = get_field('list_tab', 'option');
+
+    if ($tabs_title || $list_tabs) : ?>
+        <section class="lv_tabs">
+            <?php if ($tabs_title) : ?>
+                <h2 class="lv_tabs_title"><?php echo $tabs_title; ?></h2>
+            <?php endif; ?>
+
+            <?php if ($list_tabs) : ?>
+                <div class="lv_tabs_wrapper">
+                    <div class="lv_tabs_links">
+                        <?php
+                        $i = 1;
+                        foreach ($list_tabs as $row) :
+                            if (!empty($row['title'])) :
+                                $active_class = ($i === 1) ? ' lv_tabs_link_active' : '';
+                        ?>
+                                <div class="lv_tabs_link<?php echo $active_class; ?>" data-tab="tab<?php echo $i; ?>">
+                                    <?php echo $row['title']; ?>
+                                </div>
+                        <?php
+                            endif;
+                            $i++;
+                        endforeach;
+                        ?>
+                    </div>
+
+                    <div class="lv_tabs_content">
+                        <?php
+                        $i = 1;
+                        foreach ($list_tabs as $row) :
+                            if (!empty($row['content'])) :
+                                $active_class = ($i === 1) ? ' lv_tabs_panel_active' : '';
+                        ?>
+                                <div class="lv_tabs_panel<?php echo $active_class; ?>" id="tab<?php echo $i; ?>">
+                                    <?php echo $row['content']; ?>
+                                </div>
+                        <?php
+                            endif;
+                            $i++;
+                        endforeach;
+                        ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </section>
+    <?php endif;
+
+    return ob_get_clean();
+}
+add_shortcode("lv_tabs", "lv_tabs_shortcode");
+
 // Shortcode: [lv_menu_pc]
 function lv_menu_pc_shortcode()
 {
@@ -57,7 +115,7 @@ function lv_menu_pc_shortcode()
     }
 
     ob_start();
-?>
+    ?>
     <nav class="lv_menu">
         <ul class="lv_menu_list">
             <?php foreach ($menu_items as $item): ?>

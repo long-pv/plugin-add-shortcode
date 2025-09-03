@@ -36,4 +36,19 @@
 			$(".menu_mobile_item").removeClass("active").find(".submenu_list").hide();
 		}
 	});
+
+	/* ===== Tabs ===== */
+	$(".lv_tabs .lv_tabs_link").click(function (e) {
+		e.preventDefault();
+		var $tabs = $(this).closest(".lv_tabs");
+		var target = $(this).data("tab");
+
+		// reset active link
+		$tabs.find(".lv_tabs_link").removeClass("lv_tabs_link_active");
+		$(this).addClass("lv_tabs_link_active");
+
+		// reset active panel
+		$tabs.find(".lv_tabs_panel").removeClass("lv_tabs_panel_active");
+		$tabs.find("#" + target).addClass("lv_tabs_panel_active");
+	});
 })(jQuery, window);
