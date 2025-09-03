@@ -231,9 +231,9 @@ function lv_service_shortcode($atts)
     $list_service  = get_field('list_service', 'option');
 ?>
 
-    <section class="lv_service">
+    <section class="lv_service lv_service_style_2">
         <?php if ($title_service) : ?>
-            <h2 class="lv_service_title"><?php echo esc_html($title_service); ?></h2>
+            <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
         <?php endif; ?>
 
         <?php if ($list_service) : ?>
@@ -269,7 +269,7 @@ function shortcode_lv_faq_block()
         ob_start(); ?>
 
         <?php if ($faqs_title) : ?>
-            <h2 class="lv_faq_title">
+            <h2 class="lv_faq_title text_center">
                 <?php echo $faqs_title; ?>
             </h2>
         <?php endif; ?>
@@ -336,7 +336,9 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
 
     <div class="lv_latest_posts_wrap">
         <?php if (!empty($list_title)): ?>
-            <h2 class="lv_latest_posts_heading"><?php echo $list_title; ?></h2>
+            <h2 class="lv_latest_posts_heading text_center">
+                <?php echo $list_title; ?>
+            </h2>
         <?php endif; ?>
 
         <div class="lv_latest_posts_grid lv_cols_<?php echo $num_cols; ?>">

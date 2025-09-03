@@ -285,7 +285,8 @@ $menu_link : #fff;
 
 
 .lv_service {
-    max-width: 1000px;
+    width: 100%;
+    position: relative;
 }
 
 .lv_service_title {
@@ -573,4 +574,49 @@ $menu_link : #fff;
     width: 24px !important;
     height: auto !important;
     object-fit: cover;
+}
+
+.lv_service_style_2 {
+    .lv_service_item {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-weight: 700;
+        font-size: 18px;
+        text-transform: uppercase;
+        border: 2px solid $primary;
+        background-color: #fff !important;
+        color: $primary !important;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    .lv_service_item_icon {
+        width: 60px !important;
+        height: auto !important;
+        object-fit: cover !important;
+    }
+
+    .lv_service_list {
+        width: 100%;
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(5, 1fr);
+
+        // dưới 1024px => 2 cột
+        @media (max-width: 850px) {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+
+        // dưới 768px => 1 cột
+        @media (max-width: 767px) {
+            grid-template-columns: 1fr !important;
+        }
+    }
+}
+
+.text_center {
+    text-align: center !important;
 }
