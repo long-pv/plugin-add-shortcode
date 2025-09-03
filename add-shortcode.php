@@ -240,10 +240,12 @@ function lv_service_shortcode($atts)
             <div class="lv_service_list">
                 <?php foreach ($list_service as $row) :
                     $link = $row['link'];
+                    $icon = $row['icon'];
                     if ($link) : ?>
                         <a href="<?php echo esc_url($link['url']); ?>"
                             class="lv_service_item"
                             target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
+                            <?php echo wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']); ?>
                             <?php echo esc_html($link['title']); ?>
                         </a>
                     <?php endif; ?>
@@ -261,11 +263,18 @@ add_shortcode('lv_service', 'lv_service_shortcode');
 function shortcode_lv_faq_block()
 {
     $faqs = get_field('list_faqs', 'option'); // lấy từ ACF Options
+    $faqs_title = get_field('faqs_title', 'option');
 
     if ($faqs && is_array($faqs)) {
         ob_start(); ?>
 
-        <div class="lv_faq_block">
+        <?php if ($faqs_title) : ?>
+            <h2 class="lv_faq_title">
+                <?php echo $faqs_title; ?>
+            </h2>
+        <?php endif; ?>
+
+        <div class="lv_faq_block lv_faq_block_style_2">
             <?php foreach ($faqs as $faq) :
                 $title   = $faq['title'] ?? '';
                 $content = $faq['content'] ?? '';
@@ -304,6 +313,11 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
     $category   = get_field('article_categories', 'option');
     $see_more   = get_field('see_more_button', 'option');
 
+    // Settings mới
+    $show_date     = (int) get_field('show_post_date', 'option');
+    $show_button   = (int) get_field('show_button_post', 'option');
+    $show_excerpt  = (int) get_field('show_excerpt_post', 'option');
+
     // Query bài viết
     $args = [
         'posts_per_page' => $num_posts,
@@ -329,7 +343,7 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
             <?php while ($q->have_posts()): $q->the_post();
                 $url   = get_permalink();
                 $title = get_the_title();
-                $date = get_the_date('d/m/Y');
+                $date  = get_the_date('d/m/Y');
                 $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
             ?>
                 <article class="lv_latest_posts_card">
@@ -339,23 +353,25 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
                         </a>
                     <?php endif; ?>
 
-                    <?php if ($title): ?>
+                    <?php if (!empty($title)): ?>
                         <h3 class="lv_latest_posts_title">
                             <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
                         </h3>
                     <?php endif; ?>
 
-                    <?php if ($date): ?>
+                    <?php if ($show_date && !empty($date)): ?>
                         <div class="lv_latest_posts_date"><?php echo $date; ?></div>
                     <?php endif; ?>
 
-                    <?php if ($desc): ?>
+                    <?php if ($show_excerpt && !empty($desc)): ?>
                         <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
                     <?php endif; ?>
 
-                    <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
-                        <?php echo !empty($atts['read_more']) ? $atts['read_more'] : 'Xem thêm'; ?>
-                    </a>
+                    <?php if ($show_button): ?>
+                        <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
+                            <?php echo !empty($atts['read_more']) ? $atts['read_more'] : 'Xem thêm'; ?>
+                        </a>
+                    <?php endif; ?>
                 </article>
             <?php endwhile;
             wp_reset_postdata(); ?>
@@ -379,6 +395,7 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
     <?php
     return ob_get_clean();
 });
+
 
 
 add_shortcode('lv_menu_bottom', function () {

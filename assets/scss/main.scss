@@ -304,6 +304,8 @@ $menu_link : #fff;
 
 .lv_service_item {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px 16px;
     border: 1px solid $primary;
     color: $primary;
@@ -312,6 +314,7 @@ $menu_link : #fff;
     text-decoration: none !important;
     border-radius: 6px;
     transition: all 0.3s;
+    gap: 8px;
 
     &:hover {
         background-color: $primary;
@@ -471,7 +474,7 @@ $menu_link : #fff;
     justify-content: space-between;
     gap: 4px;
     padding: 8px;
-    background-color: #f5a100;
+    background-color: rgba($color: $primary, $alpha: 0.85);
     box-shadow: 0 -8px 20px rgba(0, 0, 0, .22);
     width: 100%;
     background-image: unset !important;
@@ -538,4 +541,36 @@ $menu_link : #fff;
         white-space: nowrap;
         text-transform: capitalize;
     }
+}
+
+.lv_faq_block_style_2 {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .lv_faq_item {
+        padding: 8px 16px;
+        background-color: #fff;
+        border-radius: 8px;
+    }
+
+    .lv_faq_item_answer {
+        color: #000;
+    }
+}
+
+
+.lv_faq_title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    color: $primary;
+}
+
+.lv_service_item_icon {
+    display: inline-flex;
+    width: 24px !important;
+    height: auto !important;
+    object-fit: cover;
 }
