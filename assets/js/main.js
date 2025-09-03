@@ -51,4 +51,17 @@
 		$tabs.find(".lv_tabs_panel").removeClass("lv_tabs_panel_active");
 		$tabs.find("#" + target).addClass("lv_tabs_panel_active");
 	});
+
+	$(".lv_latest_posts_slider").slick({
+		slidesToShow: 3,
+		slidesToScroll: 1,
+		arrows: true,
+		dots: false,
+		prevArrow: '<button type="button" class="lv-arrow lv-prev"></button>',
+		nextArrow: '<button type="button" class="lv-arrow lv-next"></button>',
+		responsive: [
+			{ breakpoint: 850, settings: { slidesToShow: 2 } },
+			{ breakpoint: 768, settings: { slidesToShow: 1 } },
+		],
+	});
 })(jQuery, window);

@@ -31,6 +31,32 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script('addsc-main-js');
 }, 99);
 
+add_action('wp_enqueue_scripts', function () {
+    // Slick CSS/JS
+    wp_enqueue_style(
+        'slick',
+        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css',
+        [],
+        '1.8.1'
+    );
+    wp_enqueue_script(
+        'slick',
+        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js',
+        ['jquery'],
+        '1.8.1',
+        true
+    );
+
+    // MatchHeight
+    wp_enqueue_script(
+        'matchheight',
+        'https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js',
+        ['jquery'],
+        '0.7.2',
+        true
+    );
+}, 98);
+
 
 // ACF Options Page
 add_action('acf/init', function () {
@@ -359,7 +385,7 @@ function shortcode_lv_faq_block()
 add_shortcode('lv_faq_block', 'shortcode_lv_faq_block');
 
 // add_latest_posts
-add_shortcode('lv_latest_posts', function ($atts = []) {
+add_shortcode('lv_latest_posts', function () {
     // Lấy setting từ ACF Options
     $list_title = get_field('list_of_articles_title', 'option');
     $num_posts  = (int) get_field('number_of_posts', 'option');
@@ -375,6 +401,7 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
     $show_date     = (int) get_field('show_post_date', 'option');
     $show_button   = (int) get_field('show_button_post', 'option');
     $show_excerpt  = (int) get_field('show_excerpt_post', 'option');
+    $layout_post   = get_field('layout_post', 'option'); // grid | slider
 
     // Query bài viết
     $args = [
@@ -392,20 +419,21 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
 
     ob_start(); ?>
 
-    <div class="lv_latest_posts_wrap">
+    <div class="lv_latest_posts_wrap <?php echo $layout_post === 'slider' ? 'is-slider' : 'is-grid'; ?>">
         <?php if (!empty($list_title)): ?>
             <h2 class="lv_latest_posts_heading text_center">
                 <?php echo $list_title; ?>
             </h2>
         <?php endif; ?>
 
-        <div class="lv_latest_posts_grid lv_cols_<?php echo $num_cols; ?>">
+        <div class="<?php echo $layout_post === 'slider' ? 'lv_latest_posts_slider' : 'lv_latest_posts_grid lv_cols_' . $num_cols; ?>">
             <?php while ($q->have_posts()): $q->the_post();
                 $url   = get_permalink();
                 $title = get_the_title();
                 $date  = get_the_date('d/m/Y');
                 $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
             ?>
+                <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="lv_latest_posts_slide_item">' : ''; ?>
                 <article class="lv_latest_posts_card">
                     <?php if (has_post_thumbnail()): ?>
                         <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
@@ -429,15 +457,16 @@ add_shortcode('lv_latest_posts', function ($atts = []) {
 
                     <?php if ($show_button): ?>
                         <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
-                            <?php echo !empty($atts['read_more']) ? $atts['read_more'] : 'Xem thêm'; ?>
+                            <?php echo 'Xem thêm'; ?>
                         </a>
                     <?php endif; ?>
                 </article>
+                <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
             <?php endwhile;
             wp_reset_postdata(); ?>
         </div>
 
-        <?php if (!empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
+        <?php if ($layout_post === 'grid' && !empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
             $sm_url    = $see_more['url'];
             $sm_title  = $see_more['title'] ?: 'Xem thêm';
             $sm_target = $see_more['target'] ?: '_self'; ?>
