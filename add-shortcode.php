@@ -314,10 +314,10 @@ function lv_service_shortcode($atts)
     $title_service = get_field('title_service', 'option');
     $list_service  = get_field('list_service', 'option');
 ?>
-
-    <section class="lv_service lv_service_style_2">
+    <!-- lv_service_style_2 -->
+    <section class="lv_service">
         <?php if ($title_service) : ?>
-            <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
+            <h2 class="lv_service_title"><?php echo esc_html($title_service); ?></h2>
         <?php endif; ?>
 
         <?php if ($list_service) : ?>
@@ -358,7 +358,7 @@ function shortcode_lv_faq_block()
             </h2>
         <?php endif; ?>
 
-        <div class="lv_faq_block lv_faq_block_style_2">
+        <div class="lv_faq_block">
             <?php foreach ($faqs as $faq) :
                 $title   = $faq['title'] ?? '';
                 $content = $faq['content'] ?? '';
