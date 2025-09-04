@@ -1,4 +1,4 @@
-$primary : #f1df17;
+$primary : #FDB813;
 $menu_link : #fff;
 
 /* MENU */
@@ -281,6 +281,11 @@ $menu_link : #fff;
     padding: 10px 0 0 0;
     font-size: 14px;
     color: #fff;
+
+    ol,
+    ul {
+        padding-left: 16px;
+    }
 }
 
 
@@ -316,6 +321,7 @@ $menu_link : #fff;
     border-radius: 6px;
     transition: all 0.3s;
     gap: 8px;
+    font-weight: 700;
 
     &:hover {
         background-color: $primary;
