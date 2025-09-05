@@ -84,7 +84,7 @@ function lv_tabs_shortcode()
     if ($tabs_title || $list_tabs) : ?>
         <section class="lv_tabs">
             <?php if ($tabs_title) : ?>
-                <h2 class="lv_tabs_title"><?php echo $tabs_title; ?></h2>
+                <h2 class="lv_tabs_title text_center"><?php echo $tabs_title; ?></h2>
             <?php endif; ?>
 
             <?php if ($list_tabs) : ?>
@@ -337,9 +337,9 @@ function lv_service_shortcode($atts)
     $list_service  = get_field('list_service', 'option');
 ?>
     <!-- lv_service_style_2 -->
-    <section class="lv_service">
+    <section class="lv_service lv_service_style_2">
         <?php if ($title_service) : ?>
-            <h2 class="lv_service_title"><?php echo esc_html($title_service); ?></h2>
+            <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
         <?php endif; ?>
 
         <?php if ($list_service) : ?>

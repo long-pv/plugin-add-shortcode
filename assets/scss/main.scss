@@ -791,11 +791,16 @@ $menu_link : #fff;
 .lv_timer_countdown {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 16px;
     color: #fff;
-    background-color: #000;
+    background-color: transparent;
     padding: 16px;
     border-radius: 8px;
+
+    @media (max-width: 850px) {
+        flex-direction: column;
+    }
 }
 
 .lv_timer_countdown_item {
@@ -803,7 +808,9 @@ $menu_link : #fff;
     padding: 16px;
     background-color: $primary;
     border-radius: 6px;
-    width: 80px;
+    max-width: 150px;
+    flex: 1;
+    width: 100%;
 }
 
 .lv_timer_countdown_value {
