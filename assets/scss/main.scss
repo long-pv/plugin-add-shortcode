@@ -1,4 +1,4 @@
-$primary : #f99f29;
+$primary : #ee1515;
 $menu_link : #fff;
 
 /* MENU */
@@ -307,6 +307,7 @@ $menu_link : #fff;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    justify-content: center;
 }
 
 .lv_service_item {
@@ -648,6 +649,8 @@ $menu_link : #fff;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 8px;
+    justify-content: center;
+    align-items: center;
 }
 
 .lv_tabs_link {

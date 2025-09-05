@@ -380,7 +380,7 @@ function shortcode_lv_faq_block()
             </h2>
         <?php endif; ?>
 
-        <div class="lv_faq_block">
+        <div class="lv_faq_block lv_faq_block_style_2">
             <?php foreach ($faqs as $faq) :
                 $title   = $faq['title'] ?? '';
                 $content = $faq['content'] ?? '';
