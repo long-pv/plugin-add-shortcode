@@ -254,6 +254,28 @@ function render_menu_mobile_shortcode()
                 <li class="menu_mobile_item"><a href="#" class="menu_mobile_link">Chưa có menu</a></li>
             <?php endif; ?>
         </ul>
+
+        <!-- Thêm danh sách các nút ở phía dưới -->
+        <?php if (have_rows('menu_list_button', 'option')): ?>
+            <div class="menu_mobile_buttons">
+                <ul class="menu_mobile_button_list">
+                    <?php while (have_rows('menu_list_button', 'option')): the_row();
+                        $button_link = get_sub_field('link');
+                        if ($button_link):
+                            $button_url = esc_url($button_link['url']);
+                            $button_title = esc_html($button_link['title']);
+                            $button_target = $button_link['target'] ? esc_attr($button_link['target']) : '_self';
+                    ?>
+                            <li class="menu_mobile_button_item">
+                                <a href="<?php echo $button_url; ?>" target="<?php echo $button_target; ?>" class="menu_mobile_button_link">
+                                    <?php echo $button_title; ?>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endwhile; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
     </nav>
 <?php
     return ob_get_clean();
@@ -534,3 +556,81 @@ add_shortcode('lv_menu_bottom', function () {
 
     return ob_get_clean();
 });
+
+function lv_countdown_shortcode($atts)
+{
+    // Thiết lập giá trị mặc định cho tham số "date"
+    $atts = shortcode_atts(
+        array(
+            'date' => '31/12/2025', // Ngày mặc định
+        ),
+        $atts,
+        'lv_countdown'
+    );
+
+    // Chuyển đổi định dạng d/m/Y sang Y-m-d để JavaScript hiểu được
+    $date_parts = explode('/', $atts['date']);
+    $formatted_date = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0] . 'T23:59:59';
+
+    // HTML cấu trúc countdown
+    $output = '<div class="lv_timer_countdown">
+                <div class="lv_timer_countdown_item lv_timer_countdown_weeks">
+                    <span class="lv_timer_countdown_value" id="weeks">0</span>
+                    <span class="lv_timer_countdown_label">WEEKS</span>
+                </div>
+                <div class="lv_timer_countdown_item lv_timer_countdown_days">
+                    <span class="lv_timer_countdown_value" id="days">0</span>
+                    <span class="lv_timer_countdown_label">DAYS</span>
+                </div>
+                <div class="lv_timer_countdown_item lv_timer_countdown_hours">
+                    <span class="lv_timer_countdown_value" id="hours">0</span>
+                    <span class="lv_timer_countdown_label">HOURS</span>
+                </div>
+                <div class="lv_timer_countdown_item lv_timer_countdown_minutes">
+                    <span class="lv_timer_countdown_value" id="minutes">0</span>
+                    <span class="lv_timer_countdown_label">MIN</span>
+                </div>
+                <div class="lv_timer_countdown_item lv_timer_countdown_seconds">
+                    <span class="lv_timer_countdown_value" id="seconds">0</span>
+                    <span class="lv_timer_countdown_label">SEC</span>
+                </div>
+            </div>';
+
+    // Đoạn script để tính toán và cập nhật countdown
+    $output .= "
+        <script type='text/javascript'>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Định dạng ngày đích cho countdown
+                var targetDate = new Date('{$formatted_date}');
+
+                function updateCountdown() {
+                    var now = new Date();
+                    var timeRemaining = targetDate - now;
+
+                    if (timeRemaining <= 0) {
+                        clearInterval(countdownInterval);
+                        document.getElementById('lv-countdown').innerHTML = 'Countdown Completed';
+                    } else {
+                        var weeks = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 7));
+                        var days = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                        document.getElementById('weeks').innerHTML = weeks;
+                        document.getElementById('days').innerHTML = days;
+                        document.getElementById('hours').innerHTML = hours;
+                        document.getElementById('minutes').innerHTML = minutes;
+                        document.getElementById('seconds').innerHTML = seconds;
+                    }
+                }
+
+                // Cập nhật countdown mỗi giây
+                var countdownInterval = setInterval(updateCountdown, 1000);
+            });
+        </script>
+    ";
+
+    return $output;
+}
+add_shortcode('lv_countdown', 'lv_countdown_shortcode');
