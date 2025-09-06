@@ -4,7 +4,7 @@
  * Plugin Name: add-shortcode
  * Description: Thêm short code để nhúng vào website
  * Version: 1.0.0
- * Author: LogBear
+ * Author: PEPTI-IT
  * Text Domain: add-shortcode
  */
 
