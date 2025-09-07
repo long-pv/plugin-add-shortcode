@@ -1,29 +1,11 @@
 {
-    "key": "group_68b3c56aaa95a",
-    "title": "Shortcode Service",
+    "key": "group_68bd44157ba4d",
+    "title": "Shortcode card category",
     "fields": [
         {
-            "key": "field_68b4802f426fa",
-            "label": "Label",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "Short code: [lv_service]",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_68bd3c351514f",
-            "label": "Style service",
-            "name": "style_service",
+            "key": "field_68bd4415873d4",
+            "label": "Style category",
+            "name": "style_category",
             "aria-label": "",
             "type": "select",
             "instructions": "",
@@ -50,33 +32,12 @@
             "save_options": 0
         },
         {
-            "key": "field_68b3c618df60b",
-            "label": "Title Service",
-            "name": "title_service",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68b3c56acfb42",
-            "label": "List Service",
-            "name": "list_service",
+            "key": "field_68bd44158e8e9",
+            "label": "List Category",
+            "name": "list_category",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "shortcode: [lv_card_category]",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -93,9 +54,49 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_68b8180e5156b",
-                    "label": "Icon",
-                    "name": "icon",
+                    "key": "field_68bd44e9a6504",
+                    "label": "Link",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 0,
+                    "parent_repeater": "field_68bd44158e8e9"
+                },
+                {
+                    "key": "field_68bd4466a6500",
+                    "label": "Description",
+                    "name": "description",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 2,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_68bd44158e8e9"
+                },
+                {
+                    "key": "field_68bd447aa6501",
+                    "label": "Image",
+                    "name": "image",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
@@ -117,14 +118,14 @@
                     "mime_types": "",
                     "allow_in_bindings": 0,
                     "preview_size": "medium",
-                    "parent_repeater": "field_68b3c56acfb42"
+                    "parent_repeater": "field_68bd44158e8e9"
                 },
                 {
-                    "key": "field_68b3c606df60a",
-                    "label": "Link",
-                    "name": "link",
+                    "key": "field_68bd4498a6503",
+                    "label": "Background color",
+                    "name": "background_color",
                     "aria-label": "",
-                    "type": "link",
+                    "type": "color_picker",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -133,9 +134,11 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "array",
+                    "default_value": "#2563EB",
+                    "enable_opacity": 0,
+                    "return_format": "string",
                     "allow_in_bindings": 0,
-                    "parent_repeater": "field_68b3c56acfb42"
+                    "parent_repeater": "field_68bd44158e8e9"
                 }
             ]
         }
@@ -158,5 +161,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757232219
+    "modified": 1757235130
 }

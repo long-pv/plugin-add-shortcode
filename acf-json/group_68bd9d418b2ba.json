@@ -1,32 +1,14 @@
 {
-    "key": "group_68b3c56aaa95a",
-    "title": "Shortcode Service",
+    "key": "group_68bd9d418b2ba",
+    "title": "Shortcode testimonial",
     "fields": [
         {
-            "key": "field_68b4802f426fa",
-            "label": "Label",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "Short code: [lv_service]",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_68bd3c351514f",
-            "label": "Style service",
-            "name": "style_service",
+            "key": "field_68bd9d4190aaa",
+            "label": "Style testimonial",
+            "name": "style_testimonial",
             "aria-label": "",
             "type": "select",
-            "instructions": "",
+            "instructions": "shortcode: [lv_testimonial]",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -36,7 +18,8 @@
             },
             "choices": {
                 "1": "1",
-                "2": "2"
+                "2": "2",
+                "3": "3"
             },
             "default_value": 1,
             "return_format": "value",
@@ -50,9 +33,9 @@
             "save_options": 0
         },
         {
-            "key": "field_68b3c618df60b",
-            "label": "Title Service",
-            "name": "title_service",
+            "key": "field_68bd9d41946e4",
+            "label": "Testimonial title",
+            "name": "testimonial_title",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -71,9 +54,9 @@
             "append": ""
         },
         {
-            "key": "field_68b3c56acfb42",
-            "label": "List Service",
-            "name": "list_service",
+            "key": "field_68bd9d41957ae",
+            "label": "Testimonials",
+            "name": "testimonials",
             "aria-label": "",
             "type": "repeater",
             "instructions": "",
@@ -93,14 +76,66 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_68b8180e5156b",
-                    "label": "Icon",
-                    "name": "icon",
+                    "key": "field_68bd9d419dad5",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_68bd9d41957ae"
+                },
+                {
+                    "key": "field_68bd9d41a163d",
+                    "label": "Quote",
+                    "name": "content",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "rows": 2,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_68bd9d41957ae"
+                },
+                {
+                    "key": "field_68bd9d8f710aa",
+                    "label": "Avatar",
+                    "name": "avatar",
                     "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68bd9d4190aaa",
+                                "operator": "!=",
+                                "value": "1"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -117,25 +152,7 @@
                     "mime_types": "",
                     "allow_in_bindings": 0,
                     "preview_size": "medium",
-                    "parent_repeater": "field_68b3c56acfb42"
-                },
-                {
-                    "key": "field_68b3c606df60a",
-                    "label": "Link",
-                    "name": "link",
-                    "aria-label": "",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array",
-                    "allow_in_bindings": 0,
-                    "parent_repeater": "field_68b3c56acfb42"
+                    "parent_repeater": "field_68bd9d41957ae"
                 }
             ]
         }
@@ -158,5 +175,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757232219
+    "modified": 1757257410
 }

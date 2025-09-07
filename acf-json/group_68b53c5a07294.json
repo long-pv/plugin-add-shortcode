@@ -8,7 +8,7 @@
             "name": "layout_post",
             "aria-label": "",
             "type": "select",
-            "instructions": "",
+            "instructions": "Shortcode: [lv_latest_posts]",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -246,5 +246,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756921601
+    "modified": 1757231365
 }
