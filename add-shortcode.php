@@ -13,6 +13,26 @@ if (!defined('ABSPATH')) exit;
 define('ADD_SC_URL', plugin_dir_url(__FILE__));
 define('ADD_SC_PATH', plugin_dir_path(__FILE__));
 
+// Hook thêm CSS variable vào <head>
+add_action('wp_head', 'mytheme_add_global_colors');
+function mytheme_add_global_colors()
+{
+    // Lấy giá trị từ ACF Options
+    $color_primary = get_field('color_primary', 'option') ?: '#FEA800';
+    $color_menu = get_field('color_menu', 'option') ?: '#ffffff';
+    $color_countdown = get_field('color_countdown', 'option') ?: '#FEA800';
+
+?>
+    <style>
+        :root {
+            --lv-color-primary: <?php echo esc_html($color_primary); ?>;
+            --lv-color-menu: <?php echo esc_html($color_menu); ?>;
+            --lv-color-countdown: <?php echo esc_html($color_countdown); ?>;
+        }
+    </style>
+    <?php
+}
+
 add_action('wp_enqueue_scripts', function () {
     // đăng ký trước, lấy version từ mtime để bust cache
     $css = ADD_SC_PATH . 'assets/css/main.css';
@@ -335,9 +355,10 @@ function lv_service_shortcode($atts)
     // Lấy dữ liệu từ ACF Options
     $title_service = get_field('title_service', 'option');
     $list_service  = get_field('list_service', 'option');
+    $style_service  = get_field('style_service', 'option') ?? '1';
 ?>
     <!-- lv_service_style_2 -->
-    <section class="lv_service lv_service_style_2">
+    <section class="lv_service lv_service_style_<?php echo $style_service; ?>">
         <?php if ($title_service) : ?>
             <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
         <?php endif; ?>
@@ -370,6 +391,7 @@ function shortcode_lv_faq_block()
 {
     $faqs = get_field('list_faqs', 'option'); // lấy từ ACF Options
     $faqs_title = get_field('faqs_title', 'option');
+    $style_faqs = get_field('style_faqs', 'option') ?? '1';
 
     if ($faqs && is_array($faqs)) {
         ob_start(); ?>
@@ -380,7 +402,7 @@ function shortcode_lv_faq_block()
             </h2>
         <?php endif; ?>
 
-        <div class="lv_faq_block lv_faq_block_style_2">
+        <div class="lv_faq_block lv_faq_block_style_<?php echo $style_faqs; ?>">
             <?php foreach ($faqs as $faq) :
                 $title   = $faq['title'] ?? '';
                 $content = $faq['content'] ?? '';
@@ -634,3 +656,65 @@ function lv_countdown_shortcode($atts)
     return $output;
 }
 add_shortcode('lv_countdown', 'lv_countdown_shortcode');
+
+function lv_card_category_shortcode($atts)
+{
+    // Get the ACF fields
+    $style_category = get_field('style_category', 'option'); // Get the selected style
+    $list_category = get_field('list_category', 'option'); // Get the list of categories
+
+    // Start output buffering
+    ob_start();
+
+    if ($list_category) {
+        // Add the dynamic class for style category if selected
+        $style_class = $style_category ? 'lv_block_card_category_style_' . $style_category : '';
+        echo '<div class="lv_block_card_category ' . $style_class . '">';
+
+        foreach ($list_category as $category) {
+            // Extract the values from the ACF repeater sub-fields
+            $link = $category['link']; // Get the link
+            $description = $category['description']; // Get the description
+            $image_id = $category['image']; // Get the image ID
+            $background_color = $category['background_color']; // Get the background color
+
+            // Check if the link exists
+            $link_url = !empty($link) ? $link['url'] : '#';
+            $link_title = !empty($link) ? $link['title'] : '';
+            $link_target = !empty($link) ? $link['target'] : '';
+
+            // Set the default background color if not provided
+            $background_color = !empty($background_color) ? $background_color : '#2563EB';
+
+            // Check if an image exists and get its HTML
+            $image_html = '';
+            if (!empty($image_id)) {
+                $image_html = wp_get_attachment_image($image_id, 'medium'); // Get image HTML using default WP function
+            }
+
+            // Check if the description exists, if not, skip the card
+            if (!empty($description)) {
+                // Start rendering each card with dynamic content
+                echo '<a target="' . $link_target . '" href="' . $link_url . '" class="lv_block_card_category_card" style="background-color:' . $background_color . ';">';
+
+                // Display image if available
+                if ($image_html) {
+                    echo '<div class="lv_block_card_category_icon">' . $image_html . '</div>';
+                }
+
+                // Display title and description
+                echo '<div class="lv_block_card_category_title">' . $link_title . '</div>';
+                echo '<div class="lv_block_card_category_desc">' . $description . '</div>';
+
+                echo '</a>'; // End of card
+            }
+        }
+
+        echo '</div>'; // End of card category container
+    }
+
+    // Return the output
+    return ob_get_clean();
+}
+
+add_shortcode('lv_card_category', 'lv_card_category_shortcode');

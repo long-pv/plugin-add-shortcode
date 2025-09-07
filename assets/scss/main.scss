@@ -1,5 +1,6 @@
-$primary : #FEA800;
-$menu_link : #fff;
+$primary : var(--lv-color-primary);
+$menu_link : var(--lv-color-menu);
+$countdown : var(--lv-color-countdown);
 
 /* MENU */
 .lv_menu {
@@ -809,7 +810,7 @@ $menu_link : #fff;
 .lv_timer_countdown_item {
     text-align: center;
     padding: 16px;
-    background-color: $primary;
+    background-color: $countdown;
     border-radius: 6px;
     max-width: 150px;
     flex: 1;
@@ -826,4 +827,65 @@ $menu_link : #fff;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 700;
+}
+
+/* Card category block container */
+.lv_block_card_category {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Styling for each card element */
+.lv_block_card_category_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 100%;
+    max-width: calc(25% - 16px);
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
+    transition: transform 0.3s ease;
+
+    @media (max-width: 850px) {
+        max-width: calc(50% - 16px);
+    }
+
+    @media (max-width: 767px) {
+        max-width: 100%;
+    }
+}
+
+.lv_block_card_category_card:hover {
+    transform: translateY(-10px);
+}
+
+/* Icon styling */
+.lv_block_card_category_icon {
+    margin-bottom: 16px;
+}
+
+/* Title styling */
+.lv_block_card_category_title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    color: #fff !important;
+    text-transform: uppercase;
+}
+
+/* Description styling */
+.lv_block_card_category_desc {
+    font-size: 14px;
+    line-height: 1.2;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff !important;
 }
