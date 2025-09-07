@@ -574,7 +574,7 @@ add_shortcode('lv_menu_bottom', function () {
                 </a>
             <?php endforeach; ?>
         </nav>
-<?php endif;
+    <?php endif;
 
     return ob_get_clean();
 });
@@ -790,3 +790,65 @@ function lv_testimonial_shortcode()
 
 // Đăng ký shortcode
 add_shortcode('lv_testimonial', 'lv_testimonial_shortcode');
+
+add_shortcode('lv_cta', function () {
+
+    if (! function_exists('get_field')) {
+        return '';
+    }
+
+    // Lấy dữ liệu từ ACF Options
+    $title   = get_field('title_cta', 'option');
+    $desc    = get_field('description_cta', 'option');
+    $button  = get_field('button_cta', 'option');        // array: url, title, target
+    $bg_id   = get_field('background_cta', 'option');    // image ID
+
+    // Kiểm tra có gì để hiển thị không
+    $has_btn = (is_array($button) && !empty($button['url']) && !empty($button['title']));
+    $has_bg  = !empty($bg_id);
+    $has_any = ($title || $desc || $has_btn || $has_bg);
+
+    if (! $has_any) {
+        return '';
+    }
+
+    // Ảnh nền
+    $bg_img_url = $has_bg ? wp_get_attachment_url($bg_id) : '';
+
+    // Button
+    $btn_url    = $has_btn ? $button['url'] : '';
+    $btn_title  = $has_btn ? $button['title'] : '';
+    $btn_target = ($has_btn && !empty($button['target'])) ? $button['target'] : '_self';
+
+    ob_start();
+    ?>
+    <section class="lv_cta" <?php if ($title) { ?> aria-labelledby="lv_cta_title" <?php } ?>>
+        <?php if ($has_bg) : ?>
+            <div class="lv_cta_bg" style="background-image: url('<?php echo $bg_img_url; ?>');">
+            </div>
+        <?php endif; ?>
+
+        <div class="lv_cta_overlay" aria-hidden="true"></div>
+
+        <div class="lv_cta_container">
+            <div class="lv_cta_content">
+                <?php if ($title) : ?>
+                    <h2 id="lv_cta_title" class="lv_cta_title"><?php echo $title; ?></h2>
+                <?php endif; ?>
+
+                <?php if ($desc) : ?>
+                    <p class="lv_cta_desc"><?php echo $desc; ?></p>
+                <?php endif; ?>
+
+                <?php if ($has_btn) : ?>
+                    <a class="lv_cta_button lv_cta_button_primary" href="<?php echo $btn_url; ?>" target="<?php echo $btn_target; ?>">
+                        <?php echo $btn_title; ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+<?php
+    // Return the output
+    return ob_get_clean();
+});

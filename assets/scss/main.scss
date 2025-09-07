@@ -1051,3 +1051,100 @@ $countdown : var(--lv-color-countdown);
     border: 1px solid #fff;
     object-fit: cover;
 }
+
+/* ===== CTA Section ===== */
+.lv_cta {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+    padding: 48px;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #0b0b0b;
+
+    @media (max-width: 767px) {
+        padding: 80px 16px;
+    }
+}
+
+/* Ảnh nền */
+.lv_cta_bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.02);
+    z-index: -2;
+}
+
+/* Lớp mờ (overlay) để chữ trắng nổi bật */
+.lv_cta_overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 60%, rgba(0, 0, 0, 0.65) 100%);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+}
+
+/* Khung nội dung */
+.lv_cta_container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lv_cta_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+/* Typography */
+.lv_cta_title {
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0px;
+    color: #fff !important;
+    text-transform: capitalize;
+}
+
+.lv_cta_desc {
+    font-size: 16px;
+    line-height: 1.5;
+    opacity: 0.95;
+    margin: 0px;
+    color: #fff !important;
+}
+
+/* Nút CTA */
+.lv_cta_button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: $primary !important;
+    background: #ffffff;
+    border: 1px solid $primary !important;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+    will-change: transform;
+}
+
+.lv_cta_button_primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
