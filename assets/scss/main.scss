@@ -889,3 +889,165 @@ $countdown : var(--lv-color-countdown);
     font-weight: 400;
     color: #fff !important;
 }
+
+/* General Section Style */
+.testimonial_title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    color: $primary;
+}
+
+.lv_testimonial_section {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Default Testimonial Item Style */
+.lv_testimonial_item {
+    padding: 20px;
+    border-radius: 8px;
+    flex: 1 1 100%;
+    max-width: calc(25% - 16px);
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    gap: 16px;
+}
+
+.lv_testimonial_text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0px;
+    color: #fff;
+}
+
+.lv_testimonial_author {
+    font-size: 14px;
+    font-weight: 700;
+    color: $primary;
+    margin: 0px;
+    text-transform: capitalize;
+}
+
+/* Style Variants */
+/* Style 1: Gradient Background */
+.lv_testimonial_section_style_1 .lv_testimonial_item {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: #fff;
+    border: 2px solid $primary;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lv_testimonial_section_style_1 .lv_testimonial_item:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #2575fc, #6a11cb);
+}
+
+/* Style 2: Circular Image for Testimonial */
+.lv_testimonial_section_style_2 .lv_testimonial_item {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    transform: scale(1);
+    border: 2px solid #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #2575fc, #6a11cb);
+    }
+}
+
+.lv_testimonial_section_style_2 .lv_testimonial_text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    margin: 0px;
+}
+
+.lv_testimonial_section_style_2 .lv_testimonial_author {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0px;
+    text-transform: capitalize;
+}
+
+/* Circle Style for Image */
+.lv_testimonial_section_style_2 .lv_testimonial_author_img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0px;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+/* Style 3: Horizontal Layout with Icon */
+.lv_testimonial_section_style_3 .lv_testimonial_item {
+    flex: 1 1 100%;
+    max-width: calc(33.33333333333% - 16px);
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    gap: 16px;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    transform: scale(1);
+    border: 2px solid #fff;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #2575fc, #6a11cb);
+    }
+}
+
+.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_item_content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: start;
+}
+
+.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0px;
+    text-align: start;
+}
+
+.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_author {
+    font-size: 14px;
+    font-weight: 600;
+    color: $primary;
+    text-transform: capitalize;
+    text-align: start;
+}
+
+.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_icon {
+    flex-shrink: 0;
+}
+
+.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_icon img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #fff;
+    object-fit: cover;
+}

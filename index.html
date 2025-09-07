@@ -3,111 +3,214 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Menu PC</title>
+		<title>Testimonial Section</title>
 		<style>
-			/* RESET */
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
+			/* General Section Style */
+			.lv_testimonial_section {
+				background-color: black;
+				padding: 40px 0;
+				color: white;
 			}
 
-			body {
-				font-family: Arial, sans-serif;
-				background: #f5f5f5;
-			}
-
-			/* MENU */
-			.lv_menu {
-				background: #0157c2;
-			}
-
-			.lv_menu_list {
+			.lv_testimonial_wrapper {
 				display: flex;
-				justify-content: center; /* căn giữa */
-				align-items: center;
-				list-style: none;
-				padding: 0;
+				justify-content: center;
+				gap: 30px;
+				flex-wrap: wrap;
 			}
 
-			.lv_menu_item {
-				position: relative;
+			/* Default Testimonial Item Style */
+			.lv_testimonial_item {
+				padding: 20px;
+				border-radius: 8px;
+				width: 250px;
+				text-align: center;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 			}
 
-			.lv_menu_link {
-				display: block;
-				padding: 8px 8px; /* trên dưới 8px, trái phải 8px */
+			.lv_testimonial_text {
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 1.5;
+				margin-bottom: 15px;
+			}
+
+			.lv_testimonial_author {
 				font-size: 14px;
-				font-weight: 500;
-				color: #ffffff;
-				text-decoration: none;
-				transition: color 0.3s ease;
+				font-weight: bold;
+				color: #f1c40f;
 			}
 
-			.lv_menu_link:hover {
-				color: #fafa1e;
+			/* Style Variants */
+			/* Style 1: Gradient Background */
+			.lv_testimonial_section_style_1 .lv_testimonial_item {
+				background: linear-gradient(45deg, #6a11cb, #2575fc);
+				color: white;
+				border: none;
+				transform: scale(1);
+				transition: transform 0.3s ease-in-out;
 			}
 
-			/* SUBMENU */
-			.lv_menu_submenu {
-				display: none;
-				position: absolute;
-				top: 100%;
-				left: 0;
-				background: #0157c2;
-				min-width: 180px;
-				list-style: none;
+			.lv_testimonial_section_style_1 .lv_testimonial_item:hover {
+				transform: scale(1.05);
+				background: linear-gradient(45deg, #2575fc, #6a11cb);
+			}
+
+			/* Style 2: Circular Image for Testimonial */
+			.lv_testimonial_section_style_2 .lv_testimonial_item {
+				background-color: #555;
+				padding: 30px;
+				display: flex;
 				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				height: 350px;
+				border-radius: 8px;
+				background-image: url("https://via.placeholder.com/350");
+				background-size: cover;
+				background-position: center;
 			}
 
-			.lv_menu_item:hover .lv_menu_submenu {
-				display: flex;
+			.lv_testimonial_section_style_2 .lv_testimonial_text,
+			.lv_testimonial_section_style_2 .lv_testimonial_author {
+				margin-bottom: 10px;
+				width: 100%;
+				color: white;
 			}
 
-			.lv_menu_subitem {
-				border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+			.lv_testimonial_section_style_2 .lv_testimonial_text {
+				font-size: 16px;
+				font-weight: 400;
 			}
 
-			.lv_menu_subitem:last-child {
-				border-bottom: none;
-			}
-
-			.lv_menu_sublink {
-				display: block;
-				padding: 12px 8px; /* submenu giữ nguyên */
+			.lv_testimonial_section_style_2 .lv_testimonial_author {
 				font-size: 14px;
-				font-weight: 500;
-				color: #ffffff;
-				text-decoration: none;
-				transition: color 0.3s ease;
+				font-weight: 600;
+				color: #f39c12;
 			}
 
-			.lv_menu_sublink:hover {
-				color: #fafa1e;
+			/* Circle Style for Image */
+			.lv_testimonial_section_style_2 .lv_testimonial_author_img {
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				margin-top: 15px;
+				border: 4px solid white;
+			}
+
+			/* Style 3: Horizontal Layout with Icon */
+			.lv_testimonial_section_style_3 .lv_testimonial_item {
+				background-color: #666;
+				display: flex;
+				align-items: center;
+				justify-content: start;
+				padding: 20px;
+				gap: 20px;
+				max-width: 400px;
+				width: 100%;
+				border-radius: 8px;
+			}
+
+			.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_text {
+				font-size: 18px;
+				font-weight: 300;
+				color: #ffffff;
+				width: 70%;
+			}
+
+			.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_author {
+				font-size: 16px;
+				font-weight: 600;
+				color: #e74c3c;
+			}
+
+			.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_icon {
+				background-color: #f39c12;
+				border-radius: 50%;
+				padding: 15px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.lv_testimonial_section_style_3 .lv_testimonial_item .lv_testimonial_icon img {
+				width: 30px;
+				height: 30px;
 			}
 		</style>
 	</head>
 	<body>
-		<nav class="lv_menu">
-			<ul class="lv_menu_list">
-				<li class="lv_menu_item">
-					<a href="#" class="lv_menu_link">Trang chủ</a>
-				</li>
-				<li class="lv_menu_item">
-					<a href="#" class="lv_menu_link">Sản phẩm</a>
-					<ul class="lv_menu_submenu">
-						<li class="lv_menu_subitem"><a href="#" class="lv_menu_sublink">Sản phẩm A</a></li>
-						<li class="lv_menu_subitem"><a href="#" class="lv_menu_sublink">Sản phẩm B</a></li>
-						<li class="lv_menu_subitem"><a href="#" class="lv_menu_sublink">Sản phẩm C</a></li>
-					</ul>
-				</li>
-				<li class="lv_menu_item">
-					<a href="#" class="lv_menu_link">Dịch vụ</a>
-				</li>
-				<li class="lv_menu_item">
-					<a href="#" class="lv_menu_link">Liên hệ</a>
-				</li>
-			</ul>
-		</nav>
+		<!-- Testimonial Section with Style 1 (Gradient Background) -->
+		<section class="lv_testimonial_section lv_testimonial_section_style_1">
+			<div class="lv_testimonial_wrapper">
+				<div class="lv_testimonial_item">
+					<p class="lv_testimonial_text">"Sản phẩm tuyệt vời, chất lượng tuyệt hảo!"</p>
+					<p class="lv_testimonial_author">Nguyễn Thị A</p>
+				</div>
+				<div class="lv_testimonial_item">
+					<p class="lv_testimonial_text">"Dịch vụ khách hàng rất chuyên nghiệp và nhiệt tình."</p>
+					<p class="lv_testimonial_author">Lê Văn B</p>
+				</div>
+				<div class="lv_testimonial_item">
+					<p class="lv_testimonial_text">"Tôi đã sử dụng và rất hài lòng với chất lượng của sản phẩm này."</p>
+					<p class="lv_testimonial_author">Trần Thị C</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Testimonial Section with Style 2 (Circular Image for Testimonial) -->
+		<section class="lv_testimonial_section lv_testimonial_section_style_2">
+			<div class="lv_testimonial_wrapper">
+				<div class="lv_testimonial_item">
+					<p class="lv_testimonial_text">"Sản phẩm tuyệt vời, chất lượng tuyệt hảo!"</p>
+					<p class="lv_testimonial_author">Nguyễn Thị A</p>
+					<img src="https://via.placeholder.com/100" alt="User Photo" class="lv_testimonial_author_img" />
+				</div>
+				<div class="lv_testimonial_item">
+					<p class="lv_testimonial_text">"Dịch vụ khách hàng rất chuyên nghiệp và nhiệt tình."</p>
+					<p class="lv_testimonial_author">Lê Văn B</p>
+					<img src="https://via.placeholder.com/100" alt="User Photo" class="lv_testimonial_author_img" />
+				</div>
+				<div class="lv_testimonial_item">
+					<p class="lv_testimonial_text">"Tôi đã sử dụng và rất hài lòng với chất lượng của sản phẩm này."</p>
+					<p class="lv_testimonial_author">Trần Thị C</p>
+					<img src="https://via.placeholder.com/100" alt="User Photo" class="lv_testimonial_author_img" />
+				</div>
+			</div>
+		</section>
+
+		<!-- Testimonial Section with Style 3 (Horizontal Layout with Icon) -->
+		<section class="lv_testimonial_section lv_testimonial_section_style_3">
+			<div class="lv_testimonial_wrapper">
+				<div class="lv_testimonial_item">
+					<div class="lv_testimonial_icon">
+						<img src="https://via.placeholder.com/30" alt="Icon" />
+					</div>
+					<div>
+						<p class="lv_testimonial_text">"Sản phẩm tuyệt vời, chất lượng tuyệt hảo!"</p>
+						<p class="lv_testimonial_author">Nguyễn Thị A</p>
+					</div>
+				</div>
+				<div class="lv_testimonial_item">
+					<div class="lv_testimonial_icon">
+						<img src="https://via.placeholder.com/30" alt="Icon" />
+					</div>
+					<div>
+						<p class="lv_testimonial_text">"Dịch vụ khách hàng rất chuyên nghiệp và nhiệt tình."</p>
+						<p class="lv_testimonial_author">Lê Văn B</p>
+					</div>
+				</div>
+				<div class="lv_testimonial_item">
+					<div class="lv_testimonial_icon">
+						<img src="https://via.placeholder.com/30" alt="Icon" />
+					</div>
+					<div>
+						<p class="lv_testimonial_text">"Tôi đã sử dụng và rất hài lòng với chất lượng của sản phẩm này."</p>
+						<p class="lv_testimonial_author">Trần Thị C</p>
+					</div>
+				</div>
+			</div>
+		</section>
 	</body>
 </html>

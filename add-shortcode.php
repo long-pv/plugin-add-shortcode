@@ -718,3 +718,75 @@ function lv_card_category_shortcode($atts)
 }
 
 add_shortcode('lv_card_category', 'lv_card_category_shortcode');
+
+function lv_testimonial_shortcode()
+{
+    // Lấy giá trị của các trường ACF
+    $style = get_field('style_testimonial', 'option'); // Style testimonial (1, 2, 3)
+    $testimonial_title = get_field('testimonial_title', 'option'); // Tiêu đề testimonial
+    $testimonials = get_field('testimonials', 'option'); // Danh sách testimonials (repeater)
+
+    // Kiểm tra xem có testimonial nào không
+    if (empty($testimonials)) {
+        return ''; // Không có testimonial, không hiển thị gì
+    }
+
+    // Khởi tạo output của shortcode
+    $output = '';
+
+    // Hiển thị tiêu đề nếu có
+    if (!empty($testimonial_title)) {
+        $output .= '<h2 class="testimonial_title text_center">' . $testimonial_title . '</h2>';
+    }
+
+    // Bắt đầu phần testimonial
+    $output .= '<div class="lv_testimonial_section lv_testimonial_section_style_' . esc_attr($style) . '">';
+
+    // Lặp qua các testimonial và tạo HTML
+    foreach ($testimonials as $testimonial) {
+        $title = $testimonial['title']; // Tiêu đề testimonial
+        $content = $testimonial['content']; // Nội dung testimonial
+        $avatar_id = $testimonial['avatar']; // Avatar (ID ảnh)
+        $avatar_url = wp_get_attachment_url($avatar_id); // Lấy URL của ảnh từ ID
+
+        // Kiểm tra style và hiển thị theo kiểu tương ứng
+        if ($style == 1) {
+            // Style 1: Hiển thị dạng bình thường
+            $output .= '<div class="lv_testimonial_item">';
+            $output .= '<p class="lv_testimonial_text">"' . esc_html($content) . '"</p>';
+            $output .= '<p class="lv_testimonial_author">' . esc_html($title) . '</p>';
+            $output .= '</div>';
+        } elseif ($style == 2) {
+            // Style 2: Hiển thị ảnh và nội dung dạng hình tròn
+            $output .= '<div class="lv_testimonial_item">';
+            $output .= '<p class="lv_testimonial_text">"' . esc_html($content) . '"</p>';
+            $output .= '<p class="lv_testimonial_author">' . esc_html($title) . '</p>';
+            if ($avatar_url) {
+                $output .= '<img class="lv_testimonial_author_img" src="' . esc_url($avatar_url) . '" alt="' . esc_attr($title) . '">';
+            }
+            $output .= '</div>';
+        } elseif ($style == 3) {
+            // Style 3: Hiển thị ảnh và nội dung theo layout ngang
+            $output .= '<div class="lv_testimonial_item">';
+            if ($avatar_url) {
+                $output .= '<div class="lv_testimonial_icon">';
+                $output .= '<img src="' . esc_url($avatar_url) . '" alt="' . esc_attr($title) . '" />';
+                $output .= '</div>';
+            }
+            $output .= '<div class="lv_testimonial_item_content">';
+            $output .= '<p class="lv_testimonial_text">"' . esc_html($content) . '"</p>';
+            $output .= '<p class="lv_testimonial_author">' . esc_html($title) . '</p>';
+            $output .= '</div>';
+            $output .= '</div>';
+        }
+    }
+
+    // Đóng phần testimonial
+    $output .= '</div>';
+
+    // Trả về output để hiển thị
+    return $output;
+}
+
+// Đăng ký shortcode
+add_shortcode('lv_testimonial', 'lv_testimonial_shortcode');
