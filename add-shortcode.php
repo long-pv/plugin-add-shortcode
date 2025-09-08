@@ -848,7 +848,52 @@ add_shortcode('lv_cta', function () {
             </div>
         </div>
     </section>
-<?php
+    <?php
     // Return the output
     return ob_get_clean();
 });
+
+function lv_partner_shortcode()
+{
+    // Lấy dữ liệu từ ACF
+    $title_partner = get_field('title_partner', 'option'); // Lấy tiêu đề đối tác
+    $list_partner = get_field('list_partner', 'option'); // Lấy danh sách đối tác
+
+    // Kiểm tra xem có dữ liệu trong list_partner không
+    if ($list_partner):
+        ob_start(); // Bắt đầu ghi dữ liệu vào bộ đệm đầu ra
+    ?>
+        <div class="lv_partner_container">
+            <?php if ($title_partner): // Kiểm tra nếu có tiêu đề thì mới hiển thị 
+            ?>
+                <h2 class="lv_partner_title text_center"><?php echo $title_partner; ?></h2>
+            <?php endif; ?>
+            <div class="lv_partner">
+                <?php
+                // Duyệt qua danh sách đối tác
+                foreach ($list_partner as $partner):
+                    $title = $partner['title']; // Lấy tiêu đề đối tác
+                    $logo_id = $partner['logo']; // Lấy ID hình ảnh logo
+                    $logo_html = wp_get_attachment_image($logo_id, 'medium'); // Lấy HTML của hình ảnh logo
+                ?>
+                    <div class="lv_partner_item_wrapper">
+                        <div class="lv_partner_item">
+                            <?php if ($logo_html): ?>
+                                <?php echo $logo_html; // Hiển thị HTML hình ảnh 
+                                ?>
+                            <?php endif; ?>
+                            <p class="lv_partner_text"><?php echo $title; ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+<?php
+        return ob_get_clean(); // Trả về nội dung bộ đệm đầu ra
+    endif;
+
+    return ''; // Nếu không có dữ liệu trong list_partner, trả về chuỗi rỗng
+}
+
+// Đăng ký shortcode
+add_shortcode('lv_partner', 'lv_partner_shortcode');

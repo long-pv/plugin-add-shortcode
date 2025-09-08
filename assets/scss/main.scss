@@ -6,7 +6,7 @@ $countdown : var(--lv-color-countdown);
 .lv_menu {
     background: transparent;
 
-    @media (max-width: 850px) {
+    @media (max-width: 849px) {
         display: none;
     }
 }
@@ -112,7 +112,7 @@ $countdown : var(--lv-color-countdown);
     display: none;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 849px) {
     .menu_mobile {
         display: block;
         padding: 8px 0px;
@@ -251,6 +251,10 @@ $countdown : var(--lv-color-countdown);
     max-width: 600px;
     width: 100%;
     margin: 30px auto;
+
+    @media (max-width: 849px) {
+        padding: 0px 24px;
+    }
 }
 
 .lv_faq_item {
@@ -264,6 +268,7 @@ $countdown : var(--lv-color-countdown);
     font-weight: 700;
     position: relative;
     color: $primary;
+    padding-right: 24px;
 }
 
 .lv_faq_item_question::after {
@@ -317,8 +322,8 @@ $countdown : var(--lv-color-countdown);
     justify-content: center;
     padding: 10px 16px;
     border: 1px solid $primary;
-    color: $primary;
-    background-color: #fff;
+    color: $primary !important;
+    background-color: #fff !important;
     font-size: 16px;
     text-decoration: none !important;
     border-radius: 6px;
@@ -327,8 +332,13 @@ $countdown : var(--lv-color-countdown);
     font-weight: 700;
 
     &:hover {
-        background-color: $primary;
-        color: #fff;
+        background-color: $primary !important;
+        color: #fff !important;
+    }
+
+    @media (max-width: 767px) {
+        max-width: calc(50% - 8px);
+        flex: 1 1 100%;
     }
 }
 
@@ -356,7 +366,7 @@ $countdown : var(--lv-color-countdown);
 }
 
 // dưới 1024px => 2 cột
-@media (max-width: 850px) {
+@media (max-width: 849px) {
     .lv_latest_posts_grid {
         grid-template-columns: repeat(2, 1fr) !important;
     }
@@ -617,7 +627,7 @@ $countdown : var(--lv-color-countdown);
         grid-template-columns: repeat(5, 1fr);
 
         // dưới 1024px => 2 cột
-        @media (max-width: 850px) {
+        @media (max-width: 849px) {
             grid-template-columns: repeat(2, 1fr) !important;
         }
 
@@ -665,8 +675,14 @@ $countdown : var(--lv-color-countdown);
     cursor: pointer;
     transition: all 0.3s;
     display: inline-flex;
+    justify-content: center;
     font-weight: 600;
     text-transform: capitalize;
+
+    @media (max-width: 767px) {
+        max-width: calc(50% - 8px);
+        flex: 1 1 100%;
+    }
 }
 
 .lv_tabs_link:hover {
@@ -802,7 +818,7 @@ $countdown : var(--lv-color-countdown);
     padding: 16px;
     border-radius: 8px;
 
-    @media (max-width: 850px) {
+    @media (max-width: 849px) {
         flex-direction: column;
     }
 }
@@ -853,7 +869,7 @@ $countdown : var(--lv-color-countdown);
     text-align: center;
     transition: transform 0.3s ease;
 
-    @media (max-width: 850px) {
+    @media (max-width: 849px) {
         max-width: calc(50% - 16px);
     }
 
@@ -915,6 +931,14 @@ $countdown : var(--lv-color-countdown);
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     gap: 16px;
+
+    @media (max-width: 849px) {
+        max-width: calc(50% - 16px);
+    }
+
+    @media (max-width: 767px) {
+        max-width: 100%;
+    }
 }
 
 .lv_testimonial_text {
@@ -1147,4 +1171,55 @@ $countdown : var(--lv-color-countdown);
 .lv_cta_button_primary:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+}
+
+.lv_partner_container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.lv_partner_title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    color: $primary;
+}
+
+.lv_partner {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.lv_partner_item_wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 0px 8px;
+}
+
+.lv_partner_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    gap: 16px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.lv_partner_image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.lv_partner_text {
+    font-size: 14px;
+    font-weight: 600;
+    color: $primary;
+    text-align: center;
+    margin: 0px;
 }

@@ -1,128 +1,152 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>CTA Test</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Partner Slider</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
 		<style>
-			/* ===== CTA Section ===== */
-			.lv_cta {
-				position: relative;
-				isolation: isolate;
+			.lv_partner_container {
+				margin: 0 auto;
+				padding: 20px;
+				max-width: 1200px;
+			}
+
+			.lv_partner {
 				display: flex;
-				align-items: center;
-				justify-content: center;
-				min-height: 300px;
-				padding: 48px;
-				color: #fff;
-				border: 1px solid rgba(255, 255, 255, 0.22);
-				border-radius: 16px;
-				overflow: hidden;
-				background: #0b0b0b;
-			}
-
-			/* Ảnh nền */
-			.lv_cta_bg {
-				position: absolute;
-				inset: 0;
-				background-size: cover;
-				background-position: center;
-				transform: scale(1.02);
-				z-index: -2;
-				background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600");
-			}
-
-			/* Lớp mờ (overlay) để chữ trắng nổi bật */
-			.lv_cta_overlay {
-				position: absolute;
-				inset: 0;
-				background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 60%, rgba(0, 0, 0, 0.65) 100%);
-				backdrop-filter: blur(2px);
-				z-index: -1;
-			}
-
-			/* Khung nội dung */
-			.lv_cta_container {
-				width: 100%;
-				max-width: 1120px;
-				display: flex;
-				align-items: center;
+				flex-wrap: nowrap;
+				gap: 15px;
 				justify-content: center;
 			}
 
-			.lv_cta_content {
+			.lv_partner_item_wrapper {
+				display: flex;
+				justify-content: center;
+			}
+
+			.lv_partner_item {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-				text-align: center;
-				gap: 16px;
+				padding: 10px;
 			}
 
-			/* Typography */
-			.lv_cta_title {
-				font-size: 30px;
-				line-height: 1.2;
-				font-weight: 700;
-				margin: 0px;
-				text-transform: capitalize;
+			.lv_partner_image {
+				max-width: 100%;
+				height: auto;
+				border-radius: 8px;
 			}
 
-			.lv_cta_desc {
-				font-size: 16px;
-				line-height: 1.5;
-				opacity: 0.95;
-				margin: 0px;
-			}
-
-			/* Nút CTA */
-			.lv_cta_button {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				text-transform: uppercase;
-				padding: 12px 22px;
-				font-size: 16px;
+			.lv_partner_text {
+				font-size: 14px;
 				font-weight: 600;
-				color: #0b0b0b;
-				background: #ffffff;
-				border: 1px solid rgba(255, 255, 255, 0);
-				border-radius: 999px;
-				text-decoration: none;
-				transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
-				will-change: transform;
+				margin-top: 8px;
+				color: #333;
+				text-align: center;
 			}
 
-			.lv_cta_button_primary:hover {
-				transform: translateY(-1px);
-				box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
-				background: #f3f3f3;
+			.slick-prev,
+			.slick-next {
+				z-index: 1;
+				font-size: 30px;
+				color: #333;
 			}
 
-			.lv_cta_button_primary:active {
-				transform: translateY(0);
-				box-shadow: 0 4px 14px rgba(0, 0, 0, 0.24) inset;
+			.slick-prev {
+				left: -40px;
 			}
 
-			.lv_cta_button_primary:focus-visible {
-				outline: 2px solid #ffffff;
-				outline-offset: 3px;
+			.slick-next {
+				right: -40px;
 			}
 		</style>
 	</head>
 	<body>
-		<main class="lv_page">
-			<section class="lv_cta">
-				<div class="lv_cta_bg"></div>
-				<div class="lv_cta_overlay" aria-hidden="true"></div>
-
-				<div class="lv_cta_container">
-					<div class="lv_cta_content">
-						<h2 id="lv_cta_title" class="lv_cta_title">Nâng cấp phong cách của bạn hôm nay</h2>
-						<p class="lv_cta_desc">Bộ sưu tập thủ công mới: bền đẹp, vừa vặn, sẵn sàng để bạn tỏa sáng.</p>
-						<a class="lv_cta_button lv_cta_button_primary" href="#shop-now">Mua ngay</a>
+		<div class="lv_partner_container">
+			<h2 class="lv_partner_title">Đối tác của chúng tôi</h2>
+			<div class="lv_partner">
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="celtic_fc_logo.png" alt="Celtic FC" class="lv_partner_image" />
+						<p class="lv_partner_text">Celtic FC</p>
 					</div>
 				</div>
-			</section>
-		</main>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="deportivo_alaves_logo.png" alt="Deportivo Alavés" class="lv_partner_image" />
+						<p class="lv_partner_text">Deportivo Alavés</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="sussex_ccc_logo.png" alt="Sussex CCC" class="lv_partner_image" />
+						<p class="lv_partner_text">Sussex CCC</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="durham_cricket_logo.png" alt="Durham Cricket" class="lv_partner_image" />
+						<p class="lv_partner_text">Durham Cricket</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="middlesex_ccc_logo.png" alt="Middlesex CCC" class="lv_partner_image" />
+						<p class="lv_partner_text">Middlesex CCC</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="yorkshire_ccc_logo.png" alt="Yorkshire CCC" class="lv_partner_image" />
+						<p class="lv_partner_text">Yorkshire CCC</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="northamptonshire_ccc_logo.png" alt="Northamptonshire CCC" class="lv_partner_image" />
+						<p class="lv_partner_text">Northamptonshire CCC</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="somerset_ccc_logo.png" alt="Somerset CCC" class="lv_partner_image" />
+						<p class="lv_partner_text">Somerset CCC</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="warwickshire_&_edgbaston_logo.png" alt="Warwickshire & Edgbaston" class="lv_partner_image" />
+						<p class="lv_partner_text">Warwickshire & Edgbaston</p>
+					</div>
+				</div>
+				<div class="lv_partner_item_wrapper">
+					<div class="lv_partner_item">
+						<img src="leicestershire_ccc_logo.png" alt="Leicestershire CCC" class="lv_partner_image" />
+						<p class="lv_partner_text">Leicestershire CCC</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".lv_partner").slick({
+					dots: false, // Không hiển thị các chấm điều hướng
+					infinite: true, // Lặp lại vô tận
+					arrows: false, // Không hiển thị các mũi tên điều hướng
+					variableWidth: true, // Mỗi slide có chiều rộng linh hoạt
+					slidesToScroll: 1, // Di chuyển 1 slide mỗi lần
+					autoplay: true, // Tự động chạy
+					autoplaySpeed: 0, // Tốc độ chuyển slide gần như ngay lập tức (0ms)
+					cssEase: "linear", // Sử dụng hiệu ứng mượt mà (linear)
+					speed: 5000, // Tốc độ chuyển động của từng slide (5000ms = 5 giây cho mỗi slide)
+					pauseOnHover: false, // Không tạm dừng khi hover
+					pauseOnFocus: false, // Không tạm dừng khi focus
+				});
+			});
+		</script>
 	</body>
 </html>

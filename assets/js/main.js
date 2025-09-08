@@ -64,4 +64,18 @@
 			{ breakpoint: 768, settings: { slidesToShow: 1 } },
 		],
 	});
+
+	$(".lv_partner").slick({
+		dots: false, // Không hiển thị các chấm điều hướng
+		infinite: true, // Lặp lại vô tận
+		arrows: false, // Không hiển thị các mũi tên điều hướng
+		variableWidth: true, // Mỗi slide có chiều rộng linh hoạt
+		slidesToScroll: 1, // Di chuyển 1 slide mỗi lần
+		autoplay: true, // Tự động chạy
+		autoplaySpeed: 0, // Tốc độ chuyển slide gần như ngay lập tức (0ms)
+		cssEase: "linear", // Sử dụng hiệu ứng mượt mà (linear)
+		speed: 5000, // Tốc độ chuyển động của từng slide (5000ms = 5 giây cho mỗi slide)
+		pauseOnHover: false, // Không tạm dừng khi hover
+		pauseOnFocus: false, // Không tạm dừng khi focus
+	});
 })(jQuery, window);
