@@ -314,6 +314,10 @@ $countdown : var(--lv-color-countdown);
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
+
+    @media (max-width: 849px) {
+        justify-content: flex-start;
+    }
 }
 
 .lv_service_item {
