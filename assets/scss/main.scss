@@ -337,7 +337,7 @@ $countdown : var(--lv-color-countdown);
     }
 
     @media (max-width: 767px) {
-        max-width: calc(50% - 8px);
+        max-width: calc(50% - 4px);
         flex: 1 1 100%;
     }
 }
@@ -598,6 +598,10 @@ $countdown : var(--lv-color-countdown);
 }
 
 .lv_service_style_2 {
+    .lv_service_list {
+        gap: 16px;
+    }
+
     .lv_service_item {
         display: flex;
         flex-direction: column;
@@ -612,29 +616,19 @@ $countdown : var(--lv-color-countdown);
         &:hover {
             transform: scale(1.05);
         }
+
+        max-width: calc(20% - 16px);
+        flex: 1 1 100%;
+
+        @media (max-width: 849px) {
+            max-width: calc(50% - 8px);
+        }
     }
 
     .lv_service_item_icon {
         width: 60px !important;
         height: auto !important;
         object-fit: cover !important;
-    }
-
-    .lv_service_list {
-        width: 100%;
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(5, 1fr);
-
-        // dưới 1024px => 2 cột
-        @media (max-width: 849px) {
-            grid-template-columns: repeat(2, 1fr) !important;
-        }
-
-        // dưới 768px => 1 cột
-        @media (max-width: 767px) {
-            grid-template-columns: 1fr !important;
-        }
     }
 }
 
@@ -680,7 +674,7 @@ $countdown : var(--lv-color-countdown);
     text-transform: capitalize;
 
     @media (max-width: 767px) {
-        max-width: calc(50% - 8px);
+        max-width: calc(50% - 4px);
         flex: 1 1 100%;
     }
 }
@@ -819,7 +813,7 @@ $countdown : var(--lv-color-countdown);
     border-radius: 8px;
 
     @media (max-width: 849px) {
-        flex-direction: column;
+        gap: 8px;
     }
 }
 
@@ -831,18 +825,30 @@ $countdown : var(--lv-color-countdown);
     max-width: 150px;
     flex: 1;
     width: 100%;
+
+    @media (max-width: 849px) {
+        padding: 8px;
+    }
 }
 
 .lv_timer_countdown_value {
     font-size: 30px;
     font-weight: 700;
     display: block;
+
+    @media (max-width: 849px) {
+        font-size: 14px;
+    }
 }
 
 .lv_timer_countdown_label {
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 700;
+
+    @media (max-width: 849px) {
+        font-size: 8px;
+    }
 }
 
 /* Card category block container */
@@ -870,11 +876,7 @@ $countdown : var(--lv-color-countdown);
     transition: transform 0.3s ease;
 
     @media (max-width: 849px) {
-        max-width: calc(50% - 16px);
-    }
-
-    @media (max-width: 767px) {
-        max-width: 100%;
+        max-width: calc(50% - 8px);
     }
 }
 
@@ -1231,4 +1233,10 @@ $countdown : var(--lv-color-countdown);
     color: $primary !important;
     text-align: center;
     margin: 0px;
+}
+
+.lv_latest_posts_wrap {
+    @media (max-width: 849px) {
+        padding: 0px 16px;
+    }
 }
