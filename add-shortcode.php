@@ -877,7 +877,7 @@ function lv_partner_shortcode()
                     $logo_html = wp_get_attachment_image($logo_id, 'medium'); // Lấy HTML của hình ảnh logo
                 ?>
                     <div class="lv_partner_item_wrapper">
-                        <div class="lv_partner_item">
+                        <div class="lv_partner_item" data-mh="lv_partner_item">
                             <?php if ($logo_html): ?>
                                 <?php echo $logo_html; // Hiển thị HTML hình ảnh 
                                 ?>
