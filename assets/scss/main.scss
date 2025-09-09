@@ -958,7 +958,7 @@ $countdown : var(--lv-color-countdown);
 .lv_testimonial_author {
     font-size: 14px;
     font-weight: 700;
-    color: $primary;
+    color: #fff;
     margin: 0px;
     text-transform: capitalize;
 }
@@ -968,7 +968,7 @@ $countdown : var(--lv-color-countdown);
 .lv_testimonial_section_style_1 .lv_testimonial_item {
     background: linear-gradient(45deg, #6a11cb, #2575fc);
     color: #fff;
-    border: 2px solid $primary;
+    border: 2px solid #f5a100;
     transform: scale(1);
     transition: transform 0.3s ease-in-out;
     display: flex;
