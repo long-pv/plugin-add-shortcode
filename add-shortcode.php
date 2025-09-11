@@ -746,7 +746,7 @@ function lv_card_category_shortcode($atts)
                                     <?php endif; ?>
 
                                     <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>" class="lv_category_list_item_btn">
-                                        <?php echo $link['title'] ? $link['title'] : 'Chơi Ngay'; ?>
+                                        Chơi Ngay
                                     </a>
                                 </div>
                             </div>
