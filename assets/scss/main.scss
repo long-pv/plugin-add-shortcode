@@ -1505,3 +1505,28 @@ $posts : var(--lv-color-posts);
         }
     }
 }
+
+.lv_service_style_3 {
+    .lv_service_list {
+        flex-direction: column;
+        gap: 0px;
+
+        .lv_service_item {
+            border: none;
+            border-top: 1px solid $primary;
+            background-color: transparent !important;
+            border-radius: 0px;
+            justify-content: flex-start;
+            color: $primary !important;
+            padding: 8px 12px;
+
+            &:hover {
+                text-decoration: underline !important;
+            }
+
+            &:last-child {
+                border-bottom: 1px solid $primary;
+            }
+        }
+    }
+}

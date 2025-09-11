@@ -375,7 +375,7 @@ function lv_service_shortcode($atts)
                         <a href="<?php echo esc_url($link['url']); ?>"
                             class="lv_service_item"
                             target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
-                            <?php echo wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']); ?>
+                            <?php echo $style_service == 2 && $icon ? wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']) : ''; ?>
                             <?php echo esc_html($link['title']); ?>
                         </a>
                     <?php endif; ?>
