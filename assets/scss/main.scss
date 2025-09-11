@@ -451,7 +451,7 @@ $posts : var(--lv-color-posts);
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 0px;
-    color: #fff;
+    color: $primary;
 }
 
 .lv_latest_posts_btn {
@@ -1463,8 +1463,8 @@ $posts : var(--lv-color-posts);
 
 .lv_menu_item_has_icon {
     .lv_menu_link {
-        font-size: 12px;
-        padding: 4px 12px;
+        font-size: 14px;
+        padding: 8px 12px;
     }
 }
 
@@ -1519,6 +1519,7 @@ $posts : var(--lv-color-posts);
             justify-content: flex-start;
             color: $primary !important;
             padding: 8px 12px;
+            max-width: 100% !important;
 
             &:hover {
                 text-decoration: underline !important;
