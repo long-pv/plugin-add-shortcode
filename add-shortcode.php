@@ -448,7 +448,7 @@ add_shortcode('lv_latest_posts', function () {
     $show_date     = (int) get_field('show_post_date', 'option');
     $show_button   = (int) get_field('show_button_post', 'option');
     $show_excerpt  = (int) get_field('show_excerpt_post', 'option');
-    $layout_post   = get_field('layout_post', 'option'); // grid | slider
+    $layout_post   = get_field('layout_post', 'option') ?? "grid"; // grid | slider | list  // ADDED (chỉ ghi chú)
 
     // Query bài viết
     $args = [
@@ -466,7 +466,7 @@ add_shortcode('lv_latest_posts', function () {
 
     ob_start(); ?>
 
-    <div class="lv_latest_posts_wrap <?php echo $layout_post === 'slider' ? 'is-slider' : 'is-grid'; ?>">
+    <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
         <?php if (!empty($list_title)): ?>
             <h2 class="lv_latest_posts_heading text_center">
                 <?php echo $list_title; ?>
@@ -488,25 +488,27 @@ add_shortcode('lv_latest_posts', function () {
                         </a>
                     <?php endif; ?>
 
-                    <?php if (!empty($title)): ?>
-                        <h3 class="lv_latest_posts_title">
-                            <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-                        </h3>
-                    <?php endif; ?>
+                    <div class="lv_latest_posts_content">
+                        <?php if (!empty($title)): ?>
+                            <h3 class="lv_latest_posts_title">
+                                <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+                            </h3>
+                        <?php endif; ?>
 
-                    <?php if ($show_date && !empty($date)): ?>
-                        <div class="lv_latest_posts_date"><?php echo $date; ?></div>
-                    <?php endif; ?>
+                        <?php if ($show_date && !empty($date)): ?>
+                            <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                        <?php endif; ?>
 
-                    <?php if ($show_excerpt && !empty($desc)): ?>
-                        <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
-                    <?php endif; ?>
+                        <?php if ($show_excerpt && !empty($desc) && $layout_post != 'list'): ?>
+                            <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
+                        <?php endif; ?>
 
-                    <?php if ($show_button): ?>
-                        <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
-                            <?php echo 'Xem thêm'; ?>
-                        </a>
-                    <?php endif; ?>
+                        <?php if ($show_button && $layout_post != 'list'): ?>
+                            <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
+                                <?php echo 'Xem thêm'; ?>
+                            </a>
+                        <?php endif; ?>
+                    </div>
                 </article>
                 <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
             <?php endwhile;
