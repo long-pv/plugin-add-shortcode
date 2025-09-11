@@ -18,7 +18,8 @@
             },
             "choices": {
                 "1": "1",
-                "2": "2"
+                "2": "2",
+                "3": "3"
             },
             "default_value": 1,
             "return_format": "value",
@@ -79,7 +80,15 @@
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68bd4415873d4",
+                                "operator": "!=",
+                                "value": "3"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -128,7 +137,15 @@
                     "type": "color_picker",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68bd4415873d4",
+                                "operator": "!=",
+                                "value": "3"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -161,5 +178,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757235130
+    "modified": 1757571360
 }

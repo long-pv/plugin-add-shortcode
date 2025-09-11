@@ -1,152 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Partner Slider</title>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+		<title>Danh mục nổi bật</title>
 		<style>
-			.lv_partner_container {
-				margin: 0 auto;
-				padding: 20px;
-				max-width: 1200px;
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			body {
+				font-family: Arial, sans-serif;
+				background: #f9f9f9;
+				color: #333;
+				line-height: 1.5;
 			}
 
-			.lv_partner {
+			.lv_category_list {
+				width: 100%;
+				max-width: 1280px;
+				margin: 40px auto;
+				padding: 0 16px;
+			}
+			.lv_category_list_wrapper {
 				display: flex;
-				flex-wrap: nowrap;
-				gap: 15px;
-				justify-content: center;
+				flex-wrap: wrap;
+				gap: 16px; /* theo yêu cầu */
 			}
 
-			.lv_partner_item_wrapper {
-				display: flex;
-				justify-content: center;
+			.lv_category_list_item {
+				position: relative;
+				flex: 1 1 100%;
+				max-width: calc(20% - 16px); /* desktop 5 cột */
+				border-radius: 12px;
+				overflow: hidden;
+				transition: transform 0.3s ease;
+				cursor: pointer;
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* bóng mờ cho item */
+			}
+			.lv_category_list_item:hover {
+				transform: translateY(-6px);
 			}
 
-			.lv_partner_item {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				padding: 10px;
-			}
-
-			.lv_partner_image {
-				max-width: 100%;
+			.lv_category_list_item_img {
+				width: 100%;
 				height: auto;
+				display: block;
 				border-radius: 8px;
 			}
 
-			.lv_partner_text {
-				font-size: 14px;
-				font-weight: 600;
-				margin-top: 8px;
-				color: #333;
+			/* Overlay */
+			.lv_category_list_item_overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(0, 0, 0, 0.6);
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				opacity: 0;
+				transition: opacity 0.3s ease;
 				text-align: center;
+				padding: 12px;
+			}
+			.lv_category_list_item:hover .lv_category_list_item_overlay {
+				opacity: 1;
 			}
 
-			.slick-prev,
-			.slick-next {
-				z-index: 1;
-				font-size: 30px;
-				color: #333;
+			.lv_category_list_item_title {
+				font-size: 18px;
+				text-transform: uppercase;
+				font-weight: 700;
+				color: #fff;
+				margin-bottom: 16px;
+				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 			}
 
-			.slick-prev {
-				left: -40px;
+			/* Button pulse + glow */
+			.lv_category_list_item_btn {
+				display: inline-block;
+				background: #ff4757;
+				color: #fff;
+				font-size: 0.9rem;
+				font-weight: 600;
+				padding: 10px 20px;
+				border-radius: 8px;
+				text-decoration: none;
+				transition: background 0.25s ease;
+				animation: pulse 1.2s infinite ease-in-out;
 			}
 
-			.slick-next {
-				right: -40px;
+			@keyframes pulse {
+				0% {
+					transform: scale(1);
+					box-shadow: 0 0 0px rgba(255, 71, 87, 0.6);
+				}
+				50% {
+					transform: scale(1.15);
+					box-shadow: 0 0 18px rgba(255, 71, 87, 0.9);
+				}
+				100% {
+					transform: scale(1);
+					box-shadow: 0 0 0px rgba(255, 71, 87, 0.6);
+				}
+			}
+
+			.lv_category_list_item_btn:hover {
+				background: #ff6b81;
+				box-shadow: 0 0 22px rgba(255, 71, 87, 1);
+			}
+
+			/* Responsive */
+			@media (max-width: 850px) {
+				.lv_category_list_item {
+					max-width: calc(33.333% - 16px);
+				} /* 3 cột */
+			}
+			@media (max-width: 767px) {
+				.lv_category_list_item {
+					max-width: calc(50% - 16px);
+				} /* 2 cột */
+
+				/* mobile: overlay khít với ảnh, không phủ border */
+				.lv_category_list_item_overlay {
+					position: absolute;
+					background: rgba(0, 0, 0, 0.7);
+					opacity: 1;
+					padding: 16px 8px;
+					justify-content: center;
+					left: 0px;
+					bottom: 0px;
+					width: 100%;
+					height: auto;
+					top: unset;
+					right: unset;
+				}
+				.lv_category_list_item_title {
+					font-size: 16px;
+					text-transform: capitalize;
+					margin-bottom: 16px;
+					color: #fff;
+				}
+				.lv_category_list_item_btn {
+					padding: 8px 16px;
+					font-size: 0.85rem;
+				}
+				.lv_category_list_item:hover {
+					transform: none;
+				} /* bỏ hover nhảy */
 			}
 		</style>
 	</head>
 	<body>
-		<div class="lv_partner_container">
-			<h2 class="lv_partner_title">Đối tác của chúng tôi</h2>
-			<div class="lv_partner">
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="celtic_fc_logo.png" alt="Celtic FC" class="lv_partner_image" />
-						<p class="lv_partner_text">Celtic FC</p>
+		<section class="lv_category_list">
+			<div class="lv_category_list_wrapper">
+				<div class="lv_category_list_item">
+					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
+					<div class="lv_category_list_item_overlay">
+						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
+						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
 					</div>
 				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="deportivo_alaves_logo.png" alt="Deportivo Alavés" class="lv_partner_image" />
-						<p class="lv_partner_text">Deportivo Alavés</p>
+
+				<div class="lv_category_list_item">
+					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
+					<div class="lv_category_list_item_overlay">
+						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
+						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
 					</div>
 				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="sussex_ccc_logo.png" alt="Sussex CCC" class="lv_partner_image" />
-						<p class="lv_partner_text">Sussex CCC</p>
+
+				<div class="lv_category_list_item">
+					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
+					<div class="lv_category_list_item_overlay">
+						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
+						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
 					</div>
 				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="durham_cricket_logo.png" alt="Durham Cricket" class="lv_partner_image" />
-						<p class="lv_partner_text">Durham Cricket</p>
+
+				<div class="lv_category_list_item">
+					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
+					<div class="lv_category_list_item_overlay">
+						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
+						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
 					</div>
 				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="middlesex_ccc_logo.png" alt="Middlesex CCC" class="lv_partner_image" />
-						<p class="lv_partner_text">Middlesex CCC</p>
-					</div>
-				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="yorkshire_ccc_logo.png" alt="Yorkshire CCC" class="lv_partner_image" />
-						<p class="lv_partner_text">Yorkshire CCC</p>
-					</div>
-				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="northamptonshire_ccc_logo.png" alt="Northamptonshire CCC" class="lv_partner_image" />
-						<p class="lv_partner_text">Northamptonshire CCC</p>
-					</div>
-				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="somerset_ccc_logo.png" alt="Somerset CCC" class="lv_partner_image" />
-						<p class="lv_partner_text">Somerset CCC</p>
-					</div>
-				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="warwickshire_&_edgbaston_logo.png" alt="Warwickshire & Edgbaston" class="lv_partner_image" />
-						<p class="lv_partner_text">Warwickshire & Edgbaston</p>
-					</div>
-				</div>
-				<div class="lv_partner_item_wrapper">
-					<div class="lv_partner_item">
-						<img src="leicestershire_ccc_logo.png" alt="Leicestershire CCC" class="lv_partner_image" />
-						<p class="lv_partner_text">Leicestershire CCC</p>
+
+				<div class="lv_category_list_item">
+					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
+					<div class="lv_category_list_item_overlay">
+						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
+						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-		<script>
-			$(document).ready(function () {
-				$(".lv_partner").slick({
-					dots: false, // Không hiển thị các chấm điều hướng
-					infinite: true, // Lặp lại vô tận
-					arrows: false, // Không hiển thị các mũi tên điều hướng
-					variableWidth: true, // Mỗi slide có chiều rộng linh hoạt
-					slidesToScroll: 1, // Di chuyển 1 slide mỗi lần
-					autoplay: true, // Tự động chạy
-					autoplaySpeed: 0, // Tốc độ chuyển slide gần như ngay lập tức (0ms)
-					cssEase: "linear", // Sử dụng hiệu ứng mượt mà (linear)
-					speed: 5000, // Tốc độ chuyển động của từng slide (5000ms = 5 giây cho mỗi slide)
-					pauseOnHover: false, // Không tạm dừng khi hover
-					pauseOnFocus: false, // Không tạm dừng khi focus
-				});
-			});
-		</script>
+		</section>
 	</body>
 </html>
