@@ -1244,3 +1244,52 @@ $countdown : var(--lv-color-countdown);
         padding: 0px 16px;
     }
 }
+
+
+.lv_block_card_category_style_2 {
+    display: flex;
+
+    .lv_block_card_category_card {
+        max-width: calc(50% - 16px);
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 16px;
+        text-align: start;
+
+        @media (max-width: 767px) {
+            max-width: 100%;
+        }
+    }
+
+    .lv_block_card_category_icon {
+        display: inline-flex;
+        flex-shrink: 0;
+
+        img {
+            width: 30px;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+
+    .lv_block_card_category_inner {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .lv_block_card_category_right {
+        display: inline-flex;
+        flex-shrink: 0;
+
+        svg {
+            width: 24px;
+            height: auto;
+
+            path {
+                stroke: #fff;
+                fill: #fff;
+            }
+        }
+    }
+}
