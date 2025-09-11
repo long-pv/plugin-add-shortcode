@@ -21,6 +21,7 @@ function mytheme_add_global_colors()
     $color_primary = get_field('color_primary', 'option') ?: '#FEA800';
     $color_menu = get_field('color_menu', 'option') ?: '#ffffff';
     $color_countdown = get_field('color_countdown', 'option') ?: '#FEA800';
+    $color_posts = get_field('color_posts', 'option') ?: '#FEA800';
 
 ?>
     <style>
@@ -28,6 +29,7 @@ function mytheme_add_global_colors()
             --lv-color-primary: <?php echo esc_html($color_primary); ?>;
             --lv-color-menu: <?php echo esc_html($color_menu); ?>;
             --lv-color-countdown: <?php echo esc_html($color_countdown); ?>;
+            --lv-color-posts: <?php echo esc_html($color_posts); ?>;
         }
     </style>
     <?php
@@ -662,11 +664,18 @@ function lv_card_category_shortcode($atts)
     // Get the ACF fields
     $style_category = get_field('style_category', 'option'); // Get the selected style
     $list_category = get_field('list_category', 'option'); // Get the list of categories
+    $title_category = get_field('title_category', 'option'); // Get the list of categories
 
     // Start output buffering
     ob_start();
 
     if ($list_category) {
+        if (!empty($title_category)): ?>
+            <h2 class="lv_block_card_category_title text_center">
+                <?php echo $title_category; ?>
+            </h2>
+        <?php endif;
+
         if ($style_category !== '3') {
             // Add the dynamic class for style category if selected
             $style_class = $style_category ? 'lv_block_card_category_style_' . $style_category : '';

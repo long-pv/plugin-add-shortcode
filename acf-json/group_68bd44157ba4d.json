@@ -33,6 +33,27 @@
             "save_options": 0
         },
         {
+            "key": "field_68c291d16d6b7",
+            "label": "Title category",
+            "name": "title_category",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_68bd44158e8e9",
             "label": "List Category",
             "name": "list_category",
@@ -178,5 +199,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757571360
+    "modified": 1757581796
 }

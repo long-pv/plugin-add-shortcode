@@ -58,6 +58,25 @@
             "enable_opacity": 0,
             "return_format": "string",
             "allow_in_bindings": 0
+        },
+        {
+            "key": "field_68c291a6939f5",
+            "label": "Color posts",
+            "name": "color_posts",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#FEA800",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "allow_in_bindings": 0
         }
     ],
     "location": [
@@ -78,5 +97,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757268121
+    "modified": 1757581749
 }

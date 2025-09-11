@@ -1,6 +1,7 @@
 $primary : var(--lv-color-primary);
 $menu_link : var(--lv-color-menu);
 $countdown : var(--lv-color-countdown);
+$posts : var(--lv-color-posts);
 
 /* MENU */
 .lv_menu {
@@ -409,11 +410,14 @@ $countdown : var(--lv-color-countdown);
 .lv_latest_posts_title {
     margin: 10px 0 6px;
     font-size: 18px;
+    font-weight: 500;
 }
 
 .lv_latest_posts_title a {
     text-decoration: none;
-    color: $primary !important;
+    color: $posts !important;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .lv_latest_posts_title a:hover {
@@ -440,13 +444,21 @@ $countdown : var(--lv-color-countdown);
     color: $primary;
 }
 
+.lv_block_card_category_title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    color: $primary;
+}
+
 .lv_latest_posts_btn {
     display: inline-flex;
     padding: 4px 12px;
-    border: 1px solid $primary;
+    border: 1px solid $posts;
     border-radius: 8px;
     text-decoration: none !important;
-    color: $primary;
+    color: $posts;
     transition: all 0.3s;
     background-color: #fff;
     font-size: 14px;
@@ -455,7 +467,7 @@ $countdown : var(--lv-color-countdown);
 }
 
 .lv_latest_posts_btn:hover {
-    background: $primary;
+    background: $posts;
     color: #fff;
 }
 
@@ -468,15 +480,15 @@ $countdown : var(--lv-color-countdown);
 .lv_latest_posts_btn_more {
     display: inline-flex;
     padding: 8px 16px;
-    border: 1px solid $primary;
+    border: 1px solid $posts;
     border-radius: 8px;
     text-decoration: none !important;
-    color: $primary;
+    color: $posts;
     font-weight: 500;
     text-transform: capitalize;
 
     &:hover {
-        background: $primary;
+        background: $posts;
         color: #fff;
     }
 }
