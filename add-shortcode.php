@@ -157,6 +157,7 @@ add_shortcode("lv_tabs", "lv_tabs_shortcode");
 function lv_menu_pc_shortcode()
 {
     $menu_items = get_field('menu_pc', 'option');
+    $menu_use_icon = get_field('menu_use_icon', 'option') ?? false;
 
     if (!$menu_items || !is_array($menu_items)) {
         return '';
@@ -170,19 +171,19 @@ function lv_menu_pc_shortcode()
                 <?php
                 $link_primary = isset($item['link_primary']) ? $item['link_primary'] : null;
                 $submenu      = isset($item['submenu']) ? $item['submenu'] : null;
-                $image        = isset($item['image']) ? $item['image'] : null; // nếu bạn có thêm field hình ảnh
+                $icon         = isset($item['icon']) ? $item['icon'] : null;   // ADDED: lấy image ID từ field 'icon'
                 ?>
 
                 <?php if ($link_primary && isset($link_primary['url'], $link_primary['title'])): ?>
-                    <li class="lv_menu_item">
+                    <li class="lv_menu_item <?php echo $icon && $menu_use_icon ? 'lv_menu_item_has_icon' : ''; ?>">
                         <a href="<?php echo $link_primary['url']; ?>"
                             class="lv_menu_link"
                             <?php if (!empty($link_primary['target'])): ?>target="<?php echo $link_primary['target']; ?>" <?php endif; ?>>
 
                             <?php
                             // Hiển thị ảnh nếu có
-                            if ($image) {
-                                echo wp_get_attachment_image($image, 'full', false, ['class' => 'lv_menu_icon']);
+                            if ($icon && $menu_use_icon) {
+                                echo wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_menu_pc_icon']); // ADDED: hiển thị 'icon'
                             }
                             ?>
                             <?php echo $link_primary['title']; ?>

@@ -449,7 +449,7 @@ $posts : var(--lv-color-posts);
     font-weight: 600;
     margin-bottom: 20px;
     margin-top: 0px;
-    color: $primary;
+    color: #fff;
 }
 
 .lv_latest_posts_btn {
@@ -887,7 +887,7 @@ $posts : var(--lv-color-posts);
     padding: 16px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
+    color: #fff;
     text-align: center;
     transition: transform 0.3s ease;
 
@@ -1297,21 +1297,21 @@ $posts : var(--lv-color-posts);
 }
 
 .lv_category_list {
-    padding: 0 16px;
+    padding: 0px;
 }
 
 .lv_category_list_wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    /* theo yêu cầu */
+    gap: 4px;
+    justify-content: center;
 }
 
 .lv_category_list_item {
     position: relative;
     flex: 1 1 100%;
-    max-width: calc(20% - 16px);
-    border-radius: 12px;
+    max-width: calc(16.6666666% - 8px);
+    border-radius: 8px;
     overflow: hidden;
     transition: transform 0.3s ease;
     cursor: pointer;
@@ -1365,9 +1365,9 @@ $posts : var(--lv-color-posts);
     display: inline-block;
     background: #ff4757 !important;
     color: #fff !important;
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 6px 10px;
     border-radius: 8px;
     text-decoration: none;
     transition: background 0.25s ease;
@@ -1399,13 +1399,13 @@ $posts : var(--lv-color-posts);
 /* Responsive */
 @media (max-width: 850px) {
     .lv_category_list_item {
-        max-width: calc(33.333% - 16px);
+        max-width: calc(33.333% - 8px);
     }
 }
 
 @media (max-width: 767px) {
     .lv_category_list_item {
-        max-width: calc(50% - 16px);
+        max-width: calc(50% - 8px);
     }
 
     .lv_category_list_item_overlay {
@@ -1430,11 +1430,6 @@ $posts : var(--lv-color-posts);
         color: #fff !important;
     }
 
-    .lv_category_list_item_btn {
-        padding: 8px 16px;
-        font-size: 0.85rem;
-    }
-
     .lv_category_list_item:hover {
         transform: none;
     }
@@ -1442,7 +1437,7 @@ $posts : var(--lv-color-posts);
 
 .editor_content_fix_height {
     scrollbar-width: thin;
-    scrollbar-color: #c0c0c0;
+    scrollbar-color: $primary;
     max-height: 500px;
     overflow: auto;
     padding: 20px;
@@ -1450,9 +1445,23 @@ $posts : var(--lv-color-posts);
     -webkit-overflow-scrolling: touch;
     transition: box-shadow .2s ease, transform .2s ease, background-color .2s ease;
     background-color: transparent;
-    border-radius: 10px;
+    border-radius: 12px;
     position: relative;
     width: 100%;
-    border: 1px solid #f1f1f1;
+    border: 1px solid $primary;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.lv_menu_pc_icon {
+    width: 24px;
+    height: auto;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.lv_menu_item_has_icon {
+    .lv_menu_link {
+        font-size: 12px;
+        padding: 4px 12px;
+    }
 }
