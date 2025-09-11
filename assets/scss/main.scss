@@ -52,7 +52,7 @@ $posts : var(--lv-color-posts);
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    color: $menu_link;
+    color: $menu_link !important;
     text-decoration: none;
     transition: all 0.3s;
     white-space: nowrap;
@@ -905,6 +905,11 @@ $posts : var(--lv-color-posts);
 /* Icon styling */
 .lv_block_card_category_icon {
     margin-bottom: 16px;
+
+    img {
+        height: 60px;
+        width: auto;
+    }
 }
 
 /* Description styling */
@@ -1268,6 +1273,7 @@ $posts : var(--lv-color-posts);
     .lv_block_card_category_icon {
         display: inline-flex;
         flex-shrink: 0;
+        margin: 0px;
 
         img {
             width: 30px;
@@ -1295,6 +1301,16 @@ $posts : var(--lv-color-posts);
                 fill: #fff;
             }
         }
+    }
+
+    .lv_block_card_category_title {
+        margin: 0px;
+    }
+
+    .lv_block_card_category_content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 }
 
