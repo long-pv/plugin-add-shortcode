@@ -18,7 +18,8 @@
             },
             "choices": {
                 "grid": "grid",
-                "slider": "slider"
+                "slider": "slider",
+                "list": "list"
             },
             "default_value": false,
             "return_format": "value",
@@ -115,6 +116,11 @@
                         "field": "field_68b87e38490fb",
                         "operator": "==",
                         "value": "grid"
+                    },
+                    {
+                        "field": "field_68b87e38490fb",
+                        "operator": "==",
+                        "value": "list"
                     }
                 ]
             ],
@@ -172,7 +178,15 @@
             "type": "true_false",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68b87e38490fb",
+                        "operator": "!=",
+                        "value": "list"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -193,7 +207,15 @@
             "type": "true_false",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68b87e38490fb",
+                        "operator": "!=",
+                        "value": "list"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -214,7 +236,15 @@
             "type": "true_false",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68b87e38490fb",
+                        "operator": "!=",
+                        "value": "list"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -246,5 +276,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757231365
+    "modified": 1757595478
 }

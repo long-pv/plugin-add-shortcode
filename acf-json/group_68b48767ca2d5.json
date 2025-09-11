@@ -3,6 +3,27 @@
     "title": "Shortcode Menu PC",
     "fields": [
         {
+            "key": "field_68c2c603cc0de",
+            "label": "Menu use icon",
+            "name": "menu_use_icon",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_68b48767e71ec",
             "label": "Menu PC",
             "name": "menu_pc",
@@ -40,6 +61,41 @@
                     },
                     "return_format": "array",
                     "allow_in_bindings": 0,
+                    "parent_repeater": "field_68b48767e71ec"
+                },
+                {
+                    "key": "field_68c2bf801d31d",
+                    "label": "Icon",
+                    "name": "icon",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68c2c603cc0de",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "allow_in_bindings": 0,
+                    "preview_size": "medium",
                     "parent_repeater": "field_68b48767e71ec"
                 },
                 {
@@ -106,5 +162,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756661880
+    "modified": 1757595296
 }

@@ -36,7 +36,8 @@
             },
             "choices": {
                 "1": "1",
-                "2": "2"
+                "2": "2",
+                "3": "3"
             },
             "default_value": 1,
             "return_format": "value",
@@ -100,7 +101,15 @@
                     "type": "image",
                     "instructions": "",
                     "required": 0,
-                    "conditional_logic": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68bd3c351514f",
+                                "operator": "==",
+                                "value": "2"
+                            }
+                        ]
+                    ],
                     "wrapper": {
                         "width": "",
                         "class": "",
@@ -158,5 +167,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757232219
+    "modified": 1757598174
 }
