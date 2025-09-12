@@ -1454,19 +1454,14 @@ $posts : var(--lv-color-posts);
 }
 
 .editor_content_fix_height {
-    scrollbar-width: thin;
-    scrollbar-color: $primary;
-    max-height: 500px;
-    overflow: auto;
-    padding: 20px;
-    scrollbar-gutter: stable;
-    -webkit-overflow-scrolling: touch;
-    transition: box-shadow .2s ease, transform .2s ease, background-color .2s ease;
-    background-color: transparent;
-    border-radius: 12px;
-    position: relative;
-    width: 100%;
     border: 1px solid $primary;
+    border-radius: 10px;
+    padding: 10px 20px;
+    height: 500px;
+    overflow-y: auto;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: $primary transparent;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
