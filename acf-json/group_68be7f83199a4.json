@@ -102,7 +102,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "partner"
             }
         ]
     ],
@@ -115,5 +115,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757315388
+    "modified": 1757768409
 }

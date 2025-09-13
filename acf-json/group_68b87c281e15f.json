@@ -97,7 +97,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "tabs"
             }
         ]
     ],
@@ -110,5 +110,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756920933
+    "modified": 1757768382
 }

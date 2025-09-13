@@ -263,7 +263,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "latest-posts"
             }
         ]
     ],
@@ -276,5 +276,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757595478
+    "modified": 1757768303
 }

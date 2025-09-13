@@ -149,7 +149,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "menu-setting"
             }
         ]
     ],
@@ -162,5 +162,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757595296
+    "modified": 1757768321
 }

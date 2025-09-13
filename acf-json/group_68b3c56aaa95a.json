@@ -154,7 +154,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "service"
             }
         ]
     ],
@@ -167,5 +167,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757598174
+    "modified": 1757768366
 }

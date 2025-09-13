@@ -93,7 +93,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "cta"
             }
         ]
     ],
@@ -106,5 +106,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757268102
+    "modified": 1757768277
 }

@@ -186,7 +186,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "card-category"
             }
         ]
     ],
@@ -199,5 +199,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757581796
+    "modified": 1757768397
 }

@@ -126,7 +126,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "faqs"
             }
         ]
     ],
@@ -139,5 +139,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757231076
+    "modified": 1757768291
 }

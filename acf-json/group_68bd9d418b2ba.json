@@ -162,7 +162,7 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "add-shortcode-setting"
+                "value": "testimonial"
             }
         ]
     ],
@@ -175,5 +175,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757257410
+    "modified": 1757768423
 }
