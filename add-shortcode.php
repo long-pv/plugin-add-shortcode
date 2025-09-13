@@ -92,6 +92,32 @@ add_action('acf/init', function () {
             'position'   => 80,
             'autoload'   => true,
         ]);
+
+
+        // Các trang con
+        $sub_pages = [
+            'CTA'           => 'cta',
+            'FAQs'          => 'faqs',
+            'Latest posts'  => 'latest-posts',
+            'Menu setting'  => 'menu-setting',
+            'Service'       => 'service',
+            'Tabs'          => 'tabs',
+            'Card category' => 'card-category',
+            'Partner'       => 'partner',
+            'Testimonial'   => 'testimonial',
+            'Sidebar'       => 'sidebar',
+        ];
+
+        foreach ($sub_pages as $title => $slug) {
+            acf_add_options_sub_page([
+                'page_title'  => $title,
+                'menu_title'  => $title,
+                'parent_slug' => 'add-shortcode-setting',
+                'menu_slug'   => $slug,
+                'capability'  => 'manage_options',
+                'autoload'    => true,
+            ]);
+        }
     }
 });
 
