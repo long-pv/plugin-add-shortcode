@@ -3,6 +3,13 @@ $menu_link : var(--lv-color-menu);
 $countdown : var(--lv-color-countdown);
 $posts : var(--lv-color-posts);
 
+.lv_container {
+    @media (max-width: 849px) {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
 /* MENU */
 .lv_menu {
     background: transparent;
@@ -253,9 +260,9 @@ $posts : var(--lv-color-posts);
     width: 100%;
     margin: 30px auto;
 
-    @media (max-width: 849px) {
-        padding: 0px 24px;
-    }
+    // @media (max-width: 849px) {
+    //     padding: 0px 24px;
+    // }
 }
 
 .lv_faq_item {
@@ -635,7 +642,7 @@ $posts : var(--lv-color-posts);
             transform: scale(1.05);
         }
 
-        max-width: calc(20% - 16px);
+        max-width: calc(25% - 16px);
         flex: 1 1 100%;
 
         @media (max-width: 849px) {
@@ -909,6 +916,11 @@ $posts : var(--lv-color-posts);
     img {
         height: 60px;
         width: auto;
+
+        @media (max-width: 849px) {
+            height: 40px;
+            width: auto;
+        }
     }
 }
 
@@ -1248,11 +1260,11 @@ $posts : var(--lv-color-posts);
     margin: 0px;
 }
 
-.lv_latest_posts_wrap {
-    @media (max-width: 849px) {
-        padding: 0px 16px;
-    }
-}
+// .lv_latest_posts_wrap {
+//     @media (max-width: 849px) {
+//         padding: 0px 16px;
+//     }
+// }
 
 
 .lv_block_card_category_style_2 {

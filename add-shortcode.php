@@ -104,7 +104,7 @@ function lv_tabs_shortcode()
     $list_tabs  = get_field('list_tab', 'option');
 
     if ($tabs_title || $list_tabs) : ?>
-        <section class="lv_tabs">
+        <section class="lv_container lv_tabs">
             <?php if ($tabs_title) : ?>
                 <h2 class="lv_tabs_title text_center"><?php echo $tabs_title; ?></h2>
             <?php endif; ?>
@@ -361,28 +361,30 @@ function lv_service_shortcode($atts)
     $style_service  = get_field('style_service', 'option') ?? '1';
 ?>
     <!-- lv_service_style_2 -->
-    <section class="lv_service lv_service_style_<?php echo $style_service; ?>">
-        <?php if ($title_service) : ?>
-            <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
-        <?php endif; ?>
+    <div class="lv_container">
+        <section class="lv_service lv_service_style_<?php echo $style_service; ?>">
+            <?php if ($title_service) : ?>
+                <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
+            <?php endif; ?>
 
-        <?php if ($list_service) : ?>
-            <div class="lv_service_list">
-                <?php foreach ($list_service as $row) :
-                    $link = $row['link'];
-                    $icon = $row['icon'];
-                    if ($link) : ?>
-                        <a href="<?php echo esc_url($link['url']); ?>"
-                            class="lv_service_item"
-                            target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
-                            <?php echo $style_service == 2 && $icon ? wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']) : ''; ?>
-                            <?php echo esc_html($link['title']); ?>
-                        </a>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-    </section>
+            <?php if ($list_service) : ?>
+                <div class="lv_service_list">
+                    <?php foreach ($list_service as $row) :
+                        $link = $row['link'];
+                        $icon = $row['icon'];
+                        if ($link) : ?>
+                            <a href="<?php echo esc_url($link['url']); ?>"
+                                class="lv_service_item"
+                                target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
+                                <?php echo $style_service == 2 && $icon ? wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']) : ''; ?>
+                                <?php echo esc_html($link['title']); ?>
+                            </a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </section>
+    </div>
 
     <?php
     return ob_get_clean();
@@ -399,29 +401,32 @@ function shortcode_lv_faq_block()
     if ($faqs && is_array($faqs)) {
         ob_start(); ?>
 
-        <?php if ($faqs_title) : ?>
-            <h2 class="lv_faq_title text_center">
-                <?php echo $faqs_title; ?>
-            </h2>
-        <?php endif; ?>
+        <div class="lv_container">
 
-        <div class="lv_faq_block lv_faq_block_style_<?php echo $style_faqs; ?>">
-            <?php foreach ($faqs as $faq) :
-                $title   = $faq['title'] ?? '';
-                $content = $faq['content'] ?? '';
-            ?>
-                <?php if ($title || $content) : ?>
-                    <div class="lv_faq_item">
-                        <?php if ($title) : ?>
-                            <div class="lv_faq_item_question"><?php echo $title; ?></div>
-                        <?php endif; ?>
+            <?php if ($faqs_title) : ?>
+                <h2 class="lv_faq_title text_center">
+                    <?php echo $faqs_title; ?>
+                </h2>
+            <?php endif; ?>
 
-                        <?php if ($content) : ?>
-                            <div class="lv_faq_item_answer"><?php echo $content; ?></div>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
+            <div class="lv_faq_block lv_faq_block_style_<?php echo $style_faqs; ?>">
+                <?php foreach ($faqs as $faq) :
+                    $title   = $faq['title'] ?? '';
+                    $content = $faq['content'] ?? '';
+                ?>
+                    <?php if ($title || $content) : ?>
+                        <div class="lv_faq_item">
+                            <?php if ($title) : ?>
+                                <div class="lv_faq_item_question"><?php echo $title; ?></div>
+                            <?php endif; ?>
+
+                            <?php if ($content) : ?>
+                                <div class="lv_faq_item_answer"><?php echo $content; ?></div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
 
     <?php
@@ -466,68 +471,70 @@ add_shortcode('lv_latest_posts', function () {
 
     ob_start(); ?>
 
-    <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
-        <?php if (!empty($list_title)): ?>
-            <h2 class="lv_latest_posts_heading text_center">
-                <?php echo $list_title; ?>
-            </h2>
-        <?php endif; ?>
+    <div class="lv_container">
+        <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
+            <?php if (!empty($list_title)): ?>
+                <h2 class="lv_latest_posts_heading text_center">
+                    <?php echo $list_title; ?>
+                </h2>
+            <?php endif; ?>
 
-        <div class="<?php echo $layout_post === 'slider' ? 'lv_latest_posts_slider' : 'lv_latest_posts_grid lv_cols_' . $num_cols; ?>">
-            <?php while ($q->have_posts()): $q->the_post();
-                $url   = get_permalink();
-                $title = get_the_title();
-                $date  = get_the_date('d/m/Y');
-                $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
-            ?>
-                <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="lv_latest_posts_slide_item">' : ''; ?>
-                <article class="lv_latest_posts_card">
-                    <?php if (has_post_thumbnail()): ?>
-                        <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
-                            <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
-                        </a>
-                    <?php endif; ?>
-
-                    <div class="lv_latest_posts_content">
-                        <?php if (!empty($title)): ?>
-                            <h3 class="lv_latest_posts_title">
-                                <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-                            </h3>
-                        <?php endif; ?>
-
-                        <?php if ($show_date && !empty($date)): ?>
-                            <div class="lv_latest_posts_date"><?php echo $date; ?></div>
-                        <?php endif; ?>
-
-                        <?php if ($show_excerpt && !empty($desc) && $layout_post != 'list'): ?>
-                            <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
-                        <?php endif; ?>
-
-                        <?php if ($show_button && $layout_post != 'list'): ?>
-                            <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
-                                <?php echo 'Xem thêm'; ?>
+            <div class="<?php echo $layout_post === 'slider' ? 'lv_latest_posts_slider' : 'lv_latest_posts_grid lv_cols_' . $num_cols; ?>">
+                <?php while ($q->have_posts()): $q->the_post();
+                    $url   = get_permalink();
+                    $title = get_the_title();
+                    $date  = get_the_date('d/m/Y');
+                    $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
+                ?>
+                    <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="lv_latest_posts_slide_item">' : ''; ?>
+                    <article class="lv_latest_posts_card">
+                        <?php if (has_post_thumbnail()): ?>
+                            <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
+                                <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
                             </a>
                         <?php endif; ?>
-                    </div>
-                </article>
-                <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
-            <?php endwhile;
-            wp_reset_postdata(); ?>
-        </div>
 
-        <?php if ($layout_post === 'grid' && !empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
-            $sm_url    = $see_more['url'];
-            $sm_title  = $see_more['title'] ?: 'Xem thêm';
-            $sm_target = $see_more['target'] ?: '_self'; ?>
-            <div class="lv_latest_posts_footer">
-                <a class="lv_latest_posts_btn lv_latest_posts_btn_more"
-                    href="<?php echo $sm_url; ?>"
-                    target="<?php echo $sm_target; ?>"
-                    <?php if ($sm_target === '_blank') echo 'rel="noopener noreferrer"'; ?>>
-                    <?php echo $sm_title; ?>
-                </a>
+                        <div class="lv_latest_posts_content">
+                            <?php if (!empty($title)): ?>
+                                <h3 class="lv_latest_posts_title">
+                                    <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+                                </h3>
+                            <?php endif; ?>
+
+                            <?php if ($show_date && !empty($date)): ?>
+                                <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                            <?php endif; ?>
+
+                            <?php if ($show_excerpt && !empty($desc) && $layout_post != 'list'): ?>
+                                <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
+                            <?php endif; ?>
+
+                            <?php if ($show_button && $layout_post != 'list'): ?>
+                                <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
+                                    <?php echo 'Xem thêm'; ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                    <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
+                <?php endwhile;
+                wp_reset_postdata(); ?>
             </div>
-        <?php endif; ?>
+
+            <?php if ($layout_post === 'grid' && !empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
+                $sm_url    = $see_more['url'];
+                $sm_title  = $see_more['title'] ?: 'Xem thêm';
+                $sm_target = $see_more['target'] ?: '_self'; ?>
+                <div class="lv_latest_posts_footer">
+                    <a class="lv_latest_posts_btn lv_latest_posts_btn_more"
+                        href="<?php echo $sm_url; ?>"
+                        target="<?php echo $sm_target; ?>"
+                        <?php if ($sm_target === '_blank') echo 'rel="noopener noreferrer"'; ?>>
+                        <?php echo $sm_title; ?>
+                    </a>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 
     <?php
@@ -673,6 +680,7 @@ function lv_card_category_shortcode($atts)
     ob_start();
 
     if ($list_category) {
+        echo '<div class="lv_container">';
         if (!empty($title_category)): ?>
             <h2 class="lv_block_card_category_title text_center">
                 <?php echo $title_category; ?>
@@ -766,6 +774,7 @@ function lv_card_category_shortcode($atts)
             </section>
     <?php
         }
+        echo '</div>';
     }
 
     // Return the output
@@ -788,6 +797,8 @@ function lv_testimonial_shortcode()
 
     // Khởi tạo output của shortcode
     $output = '';
+
+    $output .= '<div class="lv_container">';
 
     // Hiển thị tiêu đề nếu có
     if (!empty($testimonial_title)) {
@@ -837,6 +848,7 @@ function lv_testimonial_shortcode()
     }
 
     // Đóng phần testimonial
+    $output .= '</div>';
     $output .= '</div>';
 
     // Trả về output để hiển thị
