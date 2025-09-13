@@ -106,6 +106,7 @@ add_action('acf/init', function () {
             'Partner'       => 'partner',
             'Testimonial'   => 'testimonial',
             'Sidebar'       => 'sidebar',
+            'Award'         => 'award',
         ];
 
         foreach ($sub_pages as $title => $slug) {
@@ -981,7 +982,7 @@ function lv_partner_shortcode()
                 <?php endforeach; ?>
             </div>
         </div>
-<?php
+    <?php
         return ob_get_clean(); // Trả về nội dung bộ đệm đầu ra
     endif;
 
@@ -990,3 +991,72 @@ function lv_partner_shortcode()
 
 // Đăng ký shortcode
 add_shortcode('lv_partner', 'lv_partner_shortcode');
+
+function lv_award_shortcode()
+{
+    // Lấy group 'award' từ trang Options
+    $award = function_exists('get_field') ? get_field('award', 'option') : null;
+
+    // Nếu không có gì để hiển thị thì trả về rỗng
+    if (
+        empty($award) ||
+        (empty($award['image']) && empty($award['title']) && empty($award['price']) && empty($award['background']))
+    ) {
+        return '';
+    }
+
+    ob_start();
+    ?>
+    <div class="lv_award">
+        <?php
+        // Background image (nếu có)
+        if (!empty($award['background'])) {
+            echo wp_get_attachment_image($award['background'], 'full', false, array(
+                'class' => 'lv_award_bg'
+            ));
+        }
+        ?>
+        <div class="lv_award_inner">
+            <?php if (!empty($award['image']) || !empty($award['title'])): ?>
+                <div class="lv_award_header">
+                    <?php if (!empty($award['image'])): ?>
+                        <div class="lv_award_header_img_wrap">
+                            <?php
+                            echo wp_get_attachment_image($award['image'], 'medium', false, array(
+                                'class' => 'lv_award_header_img'
+                            ));
+                            ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($award['title'])): ?>
+                        <div class="lv_award_game_name"><?php echo $award['title']; ?></div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($award['price'])): ?>
+                <div class="lv_award_body">
+                    <div class="lv_award_value">
+                        <?php echo $award['price']; ?>
+                        <span class="lv_award_value_currency">VND</span>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <div class="lv_award_footer">
+                <div class="lv_award_timer_label">THỜI GIAN CÒN LẠI:</div>
+                <div class="lv_award_timer">
+                    <span class="lv_award_timer_digit" id="timer-hours">00</span>
+                    <span class="lv_award_timer_separator">:</span>
+                    <span class="lv_award_timer_digit" id="timer-minutes">00</span>
+                    <span class="lv_award_timer_separator">:</span>
+                    <span class="lv_award_timer_digit" id="timer-seconds">00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+    return ob_get_clean();
+}
+add_shortcode('lv_award', 'lv_award_shortcode');

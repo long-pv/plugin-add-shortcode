@@ -78,4 +78,35 @@
 		pauseOnHover: false, // Không tạm dừng khi hover
 		pauseOnFocus: false, // Không tạm dừng khi focus
 	});
+
+	// Trả về mili-giây còn lại tới 18:30 hôm nay (hoặc ngày mai nếu đã quá 18:30)
+	function getTimeUntilNextEvent() {
+		var now = new Date();
+		var targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 30, 0);
+
+		if (now > targetTime) {
+			targetTime.setDate(targetTime.getDate() + 1); // 18:30 ngày mai
+		}
+		return targetTime - now; // mili-giây
+	}
+
+	// Helper zero-pad 2 chữ số
+	function pad(n) {
+		return (n < 10 ? "0" : "") + n;
+	}
+
+	function updateTimer() {
+		var timeLeft = getTimeUntilNextEvent();
+
+		var hours = Math.floor(timeLeft / (1000 * 60 * 60));
+		var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+		$("#timer-hours").text(pad(hours));
+		$("#timer-minutes").text(pad(minutes));
+		$("#timer-seconds").text(pad(seconds));
+	}
+
+	updateTimer(); // cập nhật ngay lần đầu
+	setInterval(updateTimer, 1000);
 })(jQuery, window);

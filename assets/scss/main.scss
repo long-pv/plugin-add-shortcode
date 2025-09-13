@@ -1554,3 +1554,112 @@ $posts : var(--lv-color-posts);
         }
     }
 }
+
+.lv_award {
+    // background-color: #1a1a1a;
+    position: relative;
+}
+
+.lv_award_inner {
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    position: relative;
+    z-index: 3;
+}
+
+.lv_award_header {
+    margin: 0px 24px;
+    position: relative;
+    border-radius: 26px;
+    overflow: hidden;
+}
+
+.lv_award_header_img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.lv_award_bg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    z-index: 1;
+}
+
+.lv_award_game_name {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    left: 0px;
+    background-color: #534E4E;
+    padding: 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+}
+
+.lv_award_body {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    border: 3px solid #FFD900;
+    box-shadow: 0 -2px 10.9px 0 #FFD900;
+    padding: 22px;
+}
+
+.lv_award_value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFC100;
+}
+
+.lv_award_value_currency {
+    font-size: 12px;
+}
+
+.lv_award_footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.lv_award_timer_label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.lv_award_timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lv_award_timer_digit {
+    width: 44px;
+    height: 44px;
+    background-color: #FFFFFF;
+    border: none;
+    color: #000000;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 6px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lv_award_timer_separator {
+    font-size: 18px;
+    color: #fff;
+    margin: 0 5px;
+}

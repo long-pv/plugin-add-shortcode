@@ -3,201 +3,125 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Danh mục nổi bật</title>
+		<title>Đếm ngược 18h30 mỗi ngày</title>
 		<style>
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-			body {
-				font-family: Arial, sans-serif;
-				background: #f9f9f9;
-				color: #333;
-				line-height: 1.5;
-			}
-
-			.lv_category_list {
-				width: 100%;
-				max-width: 1280px;
-				margin: 40px auto;
-				padding: 0 16px;
-			}
-			.lv_category_list_wrapper {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 16px; /* theo yêu cầu */
-			}
-
-			.lv_category_list_item {
-				position: relative;
-				flex: 1 1 100%;
-				max-width: calc(20% - 16px); /* desktop 5 cột */
+			.lv_award {
+				width: 300px;
+				height: 400px;
+				background-color: #1a1a1a;
 				border-radius: 12px;
-				overflow: hidden;
-				transition: transform 0.3s ease;
-				cursor: pointer;
-				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); /* bóng mờ cho item */
-			}
-			.lv_category_list_item:hover {
-				transform: translateY(-6px);
-			}
-
-			.lv_category_list_item_img {
-				width: 100%;
-				height: auto;
-				display: block;
-				border-radius: 8px;
-			}
-
-			/* Overlay */
-			.lv_category_list_item_overlay {
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: rgba(0, 0, 0, 0.6);
 				display: flex;
 				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				opacity: 0;
-				transition: opacity 0.3s ease;
+				justify-content: space-between;
+				padding: 20px;
+				box-sizing: border-box;
+				color: #fff;
+				font-family: Arial, sans-serif;
+			}
+
+			.lv_award_header {
 				text-align: center;
-				padding: 12px;
-			}
-			.lv_category_list_item:hover .lv_category_list_item_overlay {
-				opacity: 1;
+				margin-bottom: 20px;
 			}
 
-			.lv_category_list_item_title {
+			.lv_award_game_name {
+				font-size: 24px;
+				font-weight: bold;
+			}
+
+			.lv_award_body {
+				text-align: center;
+			}
+
+			.lv_award_value {
+				font-size: 28px;
+				font-weight: bold;
+				color: #ffcc00;
+			}
+
+			.lv_award_footer {
+				text-align: center;
+			}
+
+			.lv_award_timer_label {
+				font-size: 16px;
+				margin-bottom: 8px;
+			}
+
+			.lv_award_timer {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.lv_award_timer_digit {
+				width: 40px;
+				height: 40px;
+				background-color: #333;
+				border: none;
+				color: #fff;
 				font-size: 18px;
-				text-transform: uppercase;
-				font-weight: 700;
+				text-align: center;
+				margin: 0 5px;
+				border-radius: 6px;
+			}
+
+			.lv_award_timer_separator {
+				font-size: 18px;
 				color: #fff;
-				margin-bottom: 16px;
-				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-			}
-
-			/* Button pulse + glow */
-			.lv_category_list_item_btn {
-				display: inline-block;
-				background: #ff4757;
-				color: #fff;
-				font-size: 0.9rem;
-				font-weight: 600;
-				padding: 10px 20px;
-				border-radius: 8px;
-				text-decoration: none;
-				transition: background 0.25s ease;
-				animation: pulse 1.2s infinite ease-in-out;
-			}
-
-			@keyframes pulse {
-				0% {
-					transform: scale(1);
-					box-shadow: 0 0 0px rgba(255, 71, 87, 0.6);
-				}
-				50% {
-					transform: scale(1.15);
-					box-shadow: 0 0 18px rgba(255, 71, 87, 0.9);
-				}
-				100% {
-					transform: scale(1);
-					box-shadow: 0 0 0px rgba(255, 71, 87, 0.6);
-				}
-			}
-
-			.lv_category_list_item_btn:hover {
-				background: #ff6b81;
-				box-shadow: 0 0 22px rgba(255, 71, 87, 1);
-			}
-
-			/* Responsive */
-			@media (max-width: 850px) {
-				.lv_category_list_item {
-					max-width: calc(33.333% - 16px);
-				} /* 3 cột */
-			}
-			@media (max-width: 767px) {
-				.lv_category_list_item {
-					max-width: calc(50% - 16px);
-				} /* 2 cột */
-
-				/* mobile: overlay khít với ảnh, không phủ border */
-				.lv_category_list_item_overlay {
-					position: absolute;
-					background: rgba(0, 0, 0, 0.7);
-					opacity: 1;
-					padding: 16px 8px;
-					justify-content: center;
-					left: 0px;
-					bottom: 0px;
-					width: 100%;
-					height: auto;
-					top: unset;
-					right: unset;
-				}
-				.lv_category_list_item_title {
-					font-size: 16px;
-					text-transform: capitalize;
-					margin-bottom: 16px;
-					color: #fff;
-				}
-				.lv_category_list_item_btn {
-					padding: 8px 16px;
-					font-size: 0.85rem;
-				}
-				.lv_category_list_item:hover {
-					transform: none;
-				} /* bỏ hover nhảy */
+				margin: 0 5px;
 			}
 		</style>
 	</head>
 	<body>
-		<section class="lv_category_list">
-			<div class="lv_category_list_wrapper">
-				<div class="lv_category_list_item">
-					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
-					<div class="lv_category_list_item_overlay">
-						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
-						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
-					</div>
-				</div>
-
-				<div class="lv_category_list_item">
-					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
-					<div class="lv_category_list_item_overlay">
-						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
-						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
-					</div>
-				</div>
-
-				<div class="lv_category_list_item">
-					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
-					<div class="lv_category_list_item_overlay">
-						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
-						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
-					</div>
-				</div>
-
-				<div class="lv_category_list_item">
-					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
-					<div class="lv_category_list_item_overlay">
-						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
-						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
-					</div>
-				</div>
-
-				<div class="lv_category_list_item">
-					<img src="https://anhnail.com/wp-content/uploads/2024/11/naruto-hinh-anh.jpg" alt="Naruto ảnh danh mục" class="lv_category_list_item_img" loading="lazy" />
-					<div class="lv_category_list_item_overlay">
-						<h3 class="lv_category_list_item_title">Danh mục Naruto</h3>
-						<a href="#" class="lv_category_list_item_btn">Chơi Ngay</a>
-					</div>
+		<div class="lv_award">
+			<div class="lv_award_header">
+				<span class="lv_award_game_name">MAHJONG WAYS</span>
+			</div>
+			<div class="lv_award_body">
+				<span class="lv_award_value">990,000,434 VND</span>
+			</div>
+			<div class="lv_award_footer">
+				<span class="lv_award_timer_label">THỜI GIAN CÒN LẠI:</span>
+				<div class="lv_award_timer">
+					<span class="lv_award_timer_digit" id="timer-hours">00</span>
+					<span class="lv_award_timer_separator">:</span>
+					<span class="lv_award_timer_digit" id="timer-minutes">00</span>
+					<span class="lv_award_timer_separator">:</span>
+					<span class="lv_award_timer_digit" id="timer-seconds">00</span>
 				</div>
 			</div>
-		</section>
+		</div>
+
+		<script>
+			function getTimeUntilNextEvent() {
+				const now = new Date();
+				const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 30, 0); // 18:30 hôm nay
+
+				// Nếu giờ hiện tại đã qua 18:30 hôm nay, tính thời gian đến 18:30 ngày mai
+				if (now > targetTime) {
+					targetTime.setDate(targetTime.getDate() + 1); // Chuyển tới 18:30 ngày mai
+				}
+
+				// Tính thời gian còn lại (tính theo giây)
+				const timeLeft = targetTime - now;
+				return timeLeft;
+			}
+
+			function updateTimer() {
+				const timeLeft = getTimeUntilNextEvent();
+				const hours = Math.floor(timeLeft / (1000 * 60 * 60)); // Tính giờ
+				const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); // Tính phút
+				const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000); // Tính giây
+
+				// Cập nhật thời gian lên giao diện
+				document.getElementById("timer-hours").textContent = String(hours).padStart(2, "0");
+				document.getElementById("timer-minutes").textContent = String(minutes).padStart(2, "0");
+				document.getElementById("timer-seconds").textContent = String(seconds).padStart(2, "0");
+			}
+
+			// Cập nhật đồng hồ mỗi giây
+			setInterval(updateTimer, 1000);
+		</script>
 	</body>
 </html>
