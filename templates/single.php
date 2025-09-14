@@ -45,25 +45,23 @@ $background_content = get_field('single_post_background_content', 'option');
 
     <div class="col medium-4 small-12 large-4">
         <div class="col-inner">
-            <div class="recentNews__mainContent">
-                <div class="recentNews__header">
-                    <span class="recentNews__header__text">TIN MỚI NHẤT</span>
+            <div class="newsSection">
+                <div class="newsSection__header">
+                    <img src="<?php echo ADD_SC_URL . 'assets/img/img_1.png' ?>" class="newsSection__header__img" alt="">
                 </div>
-
-                <div class="recentNews__content">
-                    <div class="recentNews__imageWrapper">
-                        <img src="your-image-source.jpg" alt="Content Image" class="recentNews__image" />
-                    </div>
-
-                    <div class="recentNews__details">
-                        <h2 class="recentNews__details__title">THỦ THUẬT SOI CẦU MIỀN TRUNG MÀ NGƯỜI CHƠI NÊN BIẾT</h2>
-
-                        <div class="recentNews__footer">
-                            <span class="recentNews__footer__text">Tài Xỉu</span>
-                            <span class="recentNews__footer__author">admin 8kbets</span>
-                            <span class="recentNews__footer__date">25/09/2001</span>
+                <div class="newsSection__content">
+                    <img src="<?php echo ADD_SC_URL . 'assets/img/img_3.png' ?>" class="newsSection__content__bg" alt="">
+                    <a href="#" class="newsSection__content__inner">
+                        <img src="<?php echo ADD_SC_URL . 'assets/img/img_4.png' ?>" class="newsSection__content__img" alt="">
+                        <div class="newsSection__content__info">
+                            <h3 class="newsSection__content__info__title">THỦ THUẬT SOI CẦU MIỀN TRUNG MÀ NGƯỜI CHƠI NÊN BIẾT</h3>
+                            <div class="newsSection__content__info__footer">
+                                <span class="newsSection__content__info__footer__type">Tài Xỉu</span>
+                                <span class="newsSection__content__info__footer__author">admin 8kbet</span>
+                                <span class="newsSection__content__info__footer__date">25/09/2001</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
