@@ -109,8 +109,8 @@ add_action('acf/init', function () {
             'Testimonial'   => 'testimonial',
             'Sidebar'       => 'sidebar',
             'Award'         => 'award',
-            'Single post'   => 'single-post',
-            'Archive post'  => 'archive-post',
+            // 'Single post'   => 'single-post',
+            // 'Archive post'  => 'archive-post',
         ];
 
         foreach ($sub_pages as $title => $slug) {
@@ -127,20 +127,20 @@ add_action('acf/init', function () {
 });
 
 // Hook vào template_include để thay đổi template của trang single post
-function my_custom_single_post_template($template)
-{
-    if (is_single()) {
-        $single_post_use_template = get_field('single_post_use_template', 'option') ?? false;
-        if ($single_post_use_template) {
-            $custom_template = ADD_SC_PATH . 'templates/single.php';
-            if (file_exists($custom_template)) {
-                return $custom_template;
-            }
-        }
-    }
-    return $template;
-}
-add_filter('template_include', 'my_custom_single_post_template', 99);
+// function my_custom_single_post_template($template)
+// {
+//     if (is_single()) {
+//         $single_post_use_template = get_field('single_post_use_template', 'option') ?? false;
+//         if ($single_post_use_template) {
+//             $custom_template = ADD_SC_PATH . 'templates/single.php';
+//             if (file_exists($custom_template)) {
+//                 return $custom_template;
+//             }
+//         }
+//     }
+//     return $template;
+// }
+// add_filter('template_include', 'my_custom_single_post_template', 99);
 
 // Shortcode Tabs [lv_tabs]
 function lv_tabs_shortcode()
