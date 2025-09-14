@@ -107,6 +107,8 @@ add_action('acf/init', function () {
             'Testimonial'   => 'testimonial',
             'Sidebar'       => 'sidebar',
             'Award'         => 'award',
+            'Single post'   => 'single-post',
+            'Archive post'  => 'archive-post',
         ];
 
         foreach ($sub_pages as $title => $slug) {
@@ -509,69 +511,132 @@ add_shortcode('lv_latest_posts', function () {
     ob_start(); ?>
 
     <div class="lv_container">
-        <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
-            <?php if (!empty($list_title)): ?>
-                <h2 class="lv_latest_posts_heading text_center">
-                    <?php echo $list_title; ?>
-                </h2>
-            <?php endif; ?>
+        <?php
+        if ($layout_post == 'grid' || $layout_post == 'slider' || $layout_post == 'list') :
+        ?>
+            <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
+                <?php if (!empty($list_title)): ?>
+                    <h2 class="lv_latest_posts_heading text_center">
+                        <?php echo $list_title; ?>
+                    </h2>
+                <?php endif; ?>
 
-            <div class="<?php echo $layout_post === 'slider' ? 'lv_latest_posts_slider' : 'lv_latest_posts_grid lv_cols_' . $num_cols; ?>">
-                <?php while ($q->have_posts()): $q->the_post();
-                    $url   = get_permalink();
-                    $title = get_the_title();
-                    $date  = get_the_date('d/m/Y');
-                    $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
-                ?>
-                    <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="lv_latest_posts_slide_item">' : ''; ?>
-                    <article class="lv_latest_posts_card">
-                        <?php if (has_post_thumbnail()): ?>
-                            <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
-                                <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
-                            </a>
-                        <?php endif; ?>
-
-                        <div class="lv_latest_posts_content">
-                            <?php if (!empty($title)): ?>
-                                <h3 class="lv_latest_posts_title">
-                                    <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
-                                </h3>
-                            <?php endif; ?>
-
-                            <?php if ($show_date && !empty($date)): ?>
-                                <div class="lv_latest_posts_date"><?php echo $date; ?></div>
-                            <?php endif; ?>
-
-                            <?php if ($show_excerpt && !empty($desc) && $layout_post != 'list'): ?>
-                                <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
-                            <?php endif; ?>
-
-                            <?php if ($show_button && $layout_post != 'list'): ?>
-                                <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
-                                    <?php echo 'Xem thêm'; ?>
+                <div class="<?php echo $layout_post === 'slider' ? 'lv_latest_posts_slider' : 'lv_latest_posts_grid lv_cols_' . $num_cols; ?>">
+                    <?php while ($q->have_posts()): $q->the_post();
+                        $url   = get_permalink();
+                        $title = get_the_title();
+                        $date  = get_the_date('d/m/Y');
+                        $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
+                    ?>
+                        <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="lv_latest_posts_slide_item">' : ''; ?>
+                        <article class="lv_latest_posts_card">
+                            <?php if (has_post_thumbnail()): ?>
+                                <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
+                                    <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
                                 </a>
                             <?php endif; ?>
-                        </div>
-                    </article>
-                    <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
-                <?php endwhile;
-                wp_reset_postdata(); ?>
-            </div>
 
-            <?php if ($layout_post === 'grid' && !empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
-                $sm_url    = $see_more['url'];
-                $sm_title  = $see_more['title'] ?: 'Xem thêm';
-                $sm_target = $see_more['target'] ?: '_self'; ?>
-                <div class="lv_latest_posts_footer">
-                    <a class="lv_latest_posts_btn lv_latest_posts_btn_more"
-                        href="<?php echo $sm_url; ?>"
-                        target="<?php echo $sm_target; ?>"
-                        <?php if ($sm_target === '_blank') echo 'rel="noopener noreferrer"'; ?>>
-                        <?php echo $sm_title; ?>
-                    </a>
+                            <div class="lv_latest_posts_content">
+                                <?php if (!empty($title)): ?>
+                                    <h3 class="lv_latest_posts_title">
+                                        <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
+                                    </h3>
+                                <?php endif; ?>
+
+                                <?php if ($show_date && !empty($date)): ?>
+                                    <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                                <?php endif; ?>
+
+                                <?php if ($show_excerpt && !empty($desc) && $layout_post != 'list'): ?>
+                                    <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
+                                <?php endif; ?>
+
+                                <?php if ($show_button && $layout_post != 'list'): ?>
+                                    <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
+                                        <?php echo 'Xem thêm'; ?>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </article>
+                        <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
+                    <?php endwhile;
+                    wp_reset_postdata(); ?>
                 </div>
-            <?php endif; ?>
-        </div>
+
+                <?php if ($layout_post === 'grid' && !empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
+                    $sm_url    = $see_more['url'];
+                    $sm_title  = $see_more['title'] ?: 'Xem thêm';
+                    $sm_target = $see_more['target'] ?: '_self'; ?>
+                    <div class="lv_latest_posts_footer">
+                        <a class="lv_latest_posts_btn lv_latest_posts_btn_more"
+                            href="<?php echo $sm_url; ?>"
+                            target="<?php echo $sm_target; ?>"
+                            <?php if ($sm_target === '_blank') echo 'rel="noopener noreferrer"'; ?>>
+                            <?php echo $sm_title; ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php elseif ($layout_post == 'box') : ?>
+            <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
+                <?php if (!empty($list_title)): ?>
+                    <h2 class="lv_latest_posts_heading text_center">
+                        <?php echo $list_title; ?>
+                    </h2>
+                <?php endif; ?>
+
+                <div class="lv_latest_posts_box_wrap">
+                    <?php
+                    $background_post = get_field('background_post', 'option');
+                    echo wp_get_attachment_image($background_post, 'full', false, ['class' => 'lv_latest_posts_box_bg'])
+                    ?>
+
+                    <div class="lv_latest_posts_box">
+                        <?php while ($q->have_posts()): $q->the_post();
+                            $url   = get_permalink();
+                            $title = get_the_title();
+                            $date  = get_the_date('d/m/Y');
+                        ?>
+                            <article class="lv_latest_posts_card">
+                                <?php if (has_post_thumbnail()): ?>
+                                    <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
+                                        <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
+                                    </a>
+                                <?php endif; ?>
+
+                                <div class="lv_latest_posts_content">
+                                    <?php if (!empty($title)): ?>
+                                        <h3 class="lv_latest_posts_title">
+                                            <a href="<?php echo $url; ?>">
+                                                <?php echo $title; ?>
+                                            </a>
+                                        </h3>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($date)): ?>
+                                        <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                                    <?php endif; ?>
+                                </div>
+                            </article>
+                        <?php endwhile;
+                        wp_reset_postdata(); ?>
+                    </div>
+
+                    <a href="#" class="">
+                        BÀI VIẾT TIẾP THEO
+                    </a>
+
+                    <?php
+                    if (!empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
+                        $sm_url    = $see_more['url'];
+                    ?>
+                        <a class="lv_latest_posts_next" href="<?php echo $sm_url; ?>">
+                            BÀI VIẾT TIẾP THEO
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 
     <?php
