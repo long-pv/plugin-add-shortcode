@@ -22,6 +22,7 @@ function mytheme_add_global_colors()
     $color_menu = get_field('color_menu', 'option') ?: '#ffffff';
     $color_countdown = get_field('color_countdown', 'option') ?: '#FEA800';
     $color_posts = get_field('color_posts', 'option') ?: '#FEA800';
+    $color_breadcrumbs = get_field('color_breadcrumbs', 'option') ?: '#FEA800';
 
 ?>
     <style>
@@ -30,6 +31,7 @@ function mytheme_add_global_colors()
             --lv-color-menu: <?php echo esc_html($color_menu); ?>;
             --lv-color-countdown: <?php echo esc_html($color_countdown); ?>;
             --lv-color-posts: <?php echo esc_html($color_posts); ?>;
+            --lv-color-breadcrumbs: <?php echo esc_html($color_breadcrumbs); ?>;
         }
     </style>
     <?php
@@ -123,6 +125,22 @@ add_action('acf/init', function () {
         }
     }
 });
+
+// Hook vào template_include để thay đổi template của trang single post
+function my_custom_single_post_template($template)
+{
+    if (is_single()) {
+        $single_post_use_template = get_field('single_post_use_template', 'option') ?? false;
+        if ($single_post_use_template) {
+            $custom_template = ADD_SC_PATH . 'templates/single.php';
+            if (file_exists($custom_template)) {
+                return $custom_template;
+            }
+        }
+    }
+    return $template;
+}
+add_filter('template_include', 'my_custom_single_post_template', 99);
 
 // Shortcode Tabs [lv_tabs]
 function lv_tabs_shortcode()
@@ -1150,3 +1168,102 @@ function lv_award_shortcode()
     return ob_get_clean();
 }
 add_shortcode('lv_award', 'lv_award_shortcode');
+
+function wp_breadcrumbs()
+{
+    $delimiter = '
+	<span class="icon">
+		<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18.3337 10.5013C18.3337 12.7114 17.4557 14.8311 15.8929 16.3939C14.3301 17.9567 12.2105 18.8346 10.0003 18.8346C8.90598 18.8346 7.82234 18.6191 6.8113 18.2003C5.80025 17.7815 4.88159 17.1677 4.10777 16.3939C2.54497 14.8311 1.66699 12.7114 1.66699 10.5013C1.66699 8.29116 2.54497 6.17155 4.10777 4.60875C5.67057 3.04594 7.79019 2.16797 10.0003 2.16797C11.0947 2.16797 12.1783 2.38352 13.1894 2.80231C14.2004 3.2211 15.1191 3.83492 15.8929 4.60875C16.6667 5.38257 17.2805 6.30123 17.6993 7.31227C18.1181 8.32332 18.3337 9.40695 18.3337 10.5013ZM5.00033 11.3346H11.667L8.75033 14.2513L9.93366 15.4346L14.867 10.5013L9.93366 5.56797L8.75033 6.7513L11.667 9.66797H5.00033V11.3346Z" fill="white"/>
+        </svg>
+	</span>
+	';
+
+    $home = __('Home', 'basetheme');
+    $before = '<span class="current">';
+    $after = '</span>';
+    if (!is_admin() && !is_home() && (!is_front_page() || is_paged())) {
+
+        global $post;
+
+        echo '<nav>';
+        echo '<div id="breadcrumbs" class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">';
+
+        $homeLink = home_url();
+        echo '<a href="' . $homeLink . '">' . $home . '</a>' . $delimiter . ' ';
+
+        switch (true) {
+            case is_category() || is_archive():
+                $cat_obj = get_queried_object();
+                echo $before . $cat_obj->name . $after;
+                break;
+
+            case is_single() && !is_attachment():
+                $post_type = $post->post_type;
+
+                if ($post_type == 'post') {
+                    $categories = get_the_category($post->ID);
+
+                    if (!empty($categories)) {
+                        $first_category = $categories[0];
+                        echo '<a aria-label="' . $first_category->name . '" href="' . get_category_link($first_category->term_id) . '">' . $first_category->name . '</a>' . $delimiter . ' ';
+                    }
+                }
+
+                if ($post_type == 'product') {
+                    $categories = get_the_terms($post->ID, 'product_cat');
+
+                    if (!empty($categories)) {
+                        $first_category = $categories[0];
+                        echo '<a aria-label="' . $first_category->name . '" href="' . get_term_link($first_category->term_id, 'product_cat') . '">' . $first_category->name . '</a>' . $delimiter . ' ';
+                    }
+                }
+
+                echo $before . $post->post_title . $after;
+                break;
+
+            case is_page():
+                if ($post->post_parent) {
+                    $parent_id = $post->ID;
+                    echo generate_page_parent($parent_id, $delimiter);
+                }
+
+                echo $before . get_the_title() . $after;
+                break;
+
+            case is_search():
+                echo $before . 'Search' . $after;
+                break;
+
+            case is_404():
+                echo $before . 'Error 404' . $after;
+                break;
+        }
+
+        echo '</div>';
+        echo '</nav>';
+    }
+} // end wp_breadcrumbs()
+
+// Generate breadcrumbs ancestor page
+function generate_page_parent($parent_id, $delimiter)
+{
+    $breadcrumbs = [];
+    $output = '';
+
+    while ($parent_id) {
+        $page = get_post($parent_id);
+        $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
+        $parent_id = $page->post_parent;
+    }
+
+
+    $breadcrumbs = array_reverse($breadcrumbs);
+    array_pop($breadcrumbs);
+
+    foreach ($breadcrumbs as $crumb) {
+        $output .= $crumb . $delimiter;
+    }
+
+    return rtrim($output);
+}
