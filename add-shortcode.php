@@ -386,6 +386,7 @@ function lv_service_shortcode($atts)
     $title_service = get_field('title_service', 'option');
     $list_service  = get_field('list_service', 'option');
     $style_service  = get_field('style_service', 'option') ?? '1';
+    $background_button = get_field('background_button', 'option') ?? '';
 ?>
     <!-- lv_service_style_2 -->
     <div class="lv_container">
@@ -404,7 +405,14 @@ function lv_service_shortcode($atts)
                                 class="lv_service_item"
                                 target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
                                 <?php echo $style_service == 2 && $icon ? wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']) : ''; ?>
-                                <?php echo esc_html($link['title']); ?>
+
+                                <?php if ($style_service == '4') : ?>
+                                    <img class="lv_service_item_bg" src="<?php echo $background_button; ?>" alt="background_button">
+                                <?php endif; ?>
+
+                                <span class="lv_service_item_text">
+                                    <?php echo $link['title']; ?>
+                                </span>
                             </a>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -412,6 +420,8 @@ function lv_service_shortcode($atts)
             <?php endif; ?>
         </section>
     </div>
+
+
 
     <?php
     return ob_get_clean();
@@ -714,74 +724,73 @@ function lv_card_category_shortcode($atts)
             </h2>
         <?php endif;
 
-        if ($style_category == '1' || $style_category == '2') {
-            // Add the dynamic class for style category if selected
-            $style_class = $style_category ? 'lv_block_card_category_style_' . $style_category : '';
-            echo '<div class="lv_block_card_category ' . $style_class . '">';
+        if ($style_category == '1' || $style_category == '2') : ?>
+            <!-- Add the dynamic class for style category if selected -->
+            <div class="lv_block_card_category <?php echo $style_category ? 'lv_block_card_category_style_' . $style_category : ''; ?>">
+                <?php foreach ($list_category as $category) : ?>
+                    <?php
+                    // Extract the values from the ACF repeater sub-fields
+                    $link = $category['link']; // Get the link
+                    $description = $category['description']; // Get the description
+                    $image_id = $category['image']; // Get the image ID
+                    $background_color = $category['background_color']; // Get the background color
 
-            foreach ($list_category as $category) {
-                // Extract the values from the ACF repeater sub-fields
-                $link = $category['link']; // Get the link
-                $description = $category['description']; // Get the description
-                $image_id = $category['image']; // Get the image ID
-                $background_color = $category['background_color']; // Get the background color
+                    // Check if the link exists
+                    $link_url = !empty($link) ? $link['url'] : '#';
+                    $link_title = !empty($link) ? $link['title'] : '';
+                    $link_target = !empty($link) ? $link['target'] : '';
 
-                // Check if the link exists
-                $link_url = !empty($link) ? $link['url'] : '#';
-                $link_title = !empty($link) ? $link['title'] : '';
-                $link_target = !empty($link) ? $link['target'] : '';
+                    // Set the default background color if not provided
+                    $background_color = !empty($background_color) ? $background_color : '#2563EB';
 
-                // Set the default background color if not provided
-                $background_color = !empty($background_color) ? $background_color : '#2563EB';
+                    // Check if an image exists and get its HTML
+                    $image_html = '';
+                    if (!empty($image_id)) {
+                        $image_html = wp_get_attachment_image($image_id, 'medium'); // Get image HTML using default WP function
+                    }
+                    ?>
 
-                // Check if an image exists and get its HTML
-                $image_html = '';
-                if (!empty($image_id)) {
-                    $image_html = wp_get_attachment_image($image_id, 'medium'); // Get image HTML using default WP function
-                }
+                    <!-- Check if the description exists, if not, skip the card -->
+                    <a target="<?php echo $link_target; ?>" href="<?php echo $link_url; ?>" class="lv_block_card_category_card" style="background-color:<?php echo $background_color; ?>;">
 
-                // Check if the description exists, if not, skip the card
-                // Start rendering each card with dynamic content
-                echo '<a target="' . $link_target . '" href="' . $link_url . '" class="lv_block_card_category_card" style="background-color:' . $background_color . ';">';
+                        <?php if ($style_category == '2') : ?>
+                            <div class="lv_block_card_category_inner">
+                            <?php endif; ?>
 
-                // Display image if available
-                if ($style_category == '2') {
-                    echo '<div class="lv_block_card_category_inner">';
-                }
-                if ($image_html) {
-                    echo '<div class="lv_block_card_category_icon">' . $image_html . '</div>';
-                }
+                            <?php if ($image_html) : ?>
+                                <div class="lv_block_card_category_icon"><?php echo $image_html; ?></div>
+                            <?php endif; ?>
 
-                // Display title and description
-                if ($style_category == '2') {
-                    echo '<div class="lv_block_card_category_content">';
-                }
-                echo $link_title ? '<div class="lv_block_card_category_title">' . $link_title . '</div>' : '';
-                echo $description ? '<div class="lv_block_card_category_desc">' . $description . '</div>' : '';
-                if ($style_category == '2') {
-                    echo '</div></div>';
+                            <?php if ($style_category == '2') : ?>
+                                <div class="lv_block_card_category_content">
+                                <?php endif; ?>
 
-                    echo '<div class="lv_block_card_category_right">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3C348.8 149.8 348.8 170.1 361.3 182.6L466.7 288L96 288C78.3 288 64 302.3 64 320C64 337.7 78.3 352 96 352L466.7 352L361.3 457.4C348.8 469.9 348.8 490.2 361.3 502.7C373.8 515.2 394.1 515.2 406.6 502.7L566.6 342.7z"/></svg>
-                    </div>';
-                }
+                                <?php echo $link_title ? '<div class="lv_block_card_category_title">' . $link_title . '</div>' : ''; ?>
+                                <?php echo $description ? '<div class="lv_block_card_category_desc">' . $description . '</div>' : ''; ?>
 
-                echo '</a>'; // End of card
-            }
+                                <?php if ($style_category == '2') : ?>
+                                </div> <!-- End of lv_block_card_category_content -->
+                            </div> <!-- End of lv_block_card_category_inner -->
 
-            echo '</div>'; // End of card category container
-        } else {
-        ?>
+                            <div class="lv_block_card_category_right">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                                    <path d="M566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3C348.8 149.8 348.8 170.1 361.3 182.6L466.7 288L96 288C78.3 288 64 302.3 64 320C64 337.7 78.3 352 96 352L466.7 352L361.3 457.4C348.8 469.9 348.8 490.2 361.3 502.7C373.8 515.2 394.1 515.2 406.6 502.7L566.6 342.7z" />
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                    </a> <!-- End of card -->
+                <?php endforeach; ?>
+            </div> <!-- End of card category container -->
+        <?php elseif ($style_category == '3') : ?>
             <section class="lv_category_list lv_category_list_<?php echo $style_category; ?>">
                 <div class="lv_category_list_wrapper">
                     <?php foreach ($list_category as $item) :
                         $link = $item['link'];
                         $image_id = $item['image'];
                         $description = $item['description'];
-                        $background = $item['background_color'];
                     ?>
                         <?php if ($link && $image_id) : ?>
-                            <div class="lv_category_list_item" style="background-color:<?php echo $style_category != 3 ? $background : ''; ?>">
+                            <div class="lv_category_list_item">
                                 <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'lv_category_list_item_img', 'loading' => 'lazy']); ?>
                                 <div class="lv_category_list_item_overlay">
                                     <h3 class="lv_category_list_item_title"><?php echo $link['title']; ?></h3>
@@ -799,8 +808,24 @@ function lv_card_category_shortcode($atts)
                     <?php endforeach; ?>
                 </div>
             </section>
+        <?php elseif ($style_category == '4'): ?>
+            <section class="lv_category_list lv_category_list_<?php echo $style_category; ?>">
+                <div class="lv_category_list_wrapper">
+                    <?php
+                    foreach ($list_category as $item) :
+                        $link = $item['link'] ?? [];
+                        $image_id = $item['image'];
+                    ?>
+                        <?php if ($image_id) : ?>
+                            <a target="<?php echo $link['target']; ?>" href="<?php echo $link['url'] ?? 'javascript:void(0);'; ?>" class="lv_category_list_item">
+                                <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'lv_category_list_item_img', 'loading' => 'lazy']); ?>
+                            </a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </section>
     <?php
-        }
+        endif;
         echo '</div>';
     }
 
