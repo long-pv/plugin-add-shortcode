@@ -119,6 +119,27 @@
                     "parent_repeater": "field_68b3ba5f2c45b"
                 }
             ]
+        },
+        {
+            "key": "field_68c841d2dc997",
+            "label": "FAQs content",
+            "name": "faqs_content",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         }
     ],
     "location": [
@@ -139,5 +160,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757768291
+    "modified": 1757954562
 }

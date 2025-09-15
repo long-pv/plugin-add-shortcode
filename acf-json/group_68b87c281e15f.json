@@ -90,6 +90,27 @@
                     "parent_repeater": "field_68b87c282d34f"
                 }
             ]
+        },
+        {
+            "key": "field_68c8421ef6109",
+            "label": "Tabs content",
+            "name": "tabs_content",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         }
     ],
     "location": [
@@ -110,5 +131,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757768382
+    "modified": 1757954606
 }

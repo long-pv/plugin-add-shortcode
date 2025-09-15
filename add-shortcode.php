@@ -109,6 +109,8 @@ add_action('acf/init', function () {
             'Testimonial'   => 'testimonial',
             'Sidebar'       => 'sidebar',
             'Award'         => 'award',
+            'About us'      => 'about-us',
+            'Box content'   => 'box-content',
             // 'Single post'   => 'single-post',
             // 'Archive post'  => 'archive-post',
         ];
