@@ -19,7 +19,8 @@
             "choices": {
                 "grid": "grid",
                 "slider": "slider",
-                "list": "list"
+                "list": "list",
+                "box": "box"
             },
             "default_value": false,
             "return_format": "value",
@@ -31,6 +32,40 @@
             "placeholder": "",
             "create_options": 0,
             "save_options": 0
+        },
+        {
+            "key": "field_68c65cb5c2b4b",
+            "label": "Background post",
+            "name": "background_post",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68b87e38490fb",
+                        "operator": "==",
+                        "value": "box"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
         },
         {
             "key": "field_68b540f35972f",
@@ -276,5 +311,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757768303
+    "modified": 1757835705
 }

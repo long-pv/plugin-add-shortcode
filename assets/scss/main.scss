@@ -1488,9 +1488,14 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 
 .editor_content {
     position: relative;
+    padding: 0px !important;
 
     .section-content {
         padding: 100px 60px;
+
+        @media (max-width: 767px) {
+            padding: 60px 30px;
+        }
     }
 
     .content {
@@ -1504,6 +1509,14 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
         scrollbar-color: $primary transparent;
         background-color: transparent;
         color: #fff;
+
+        @media (max-width: 849px) {
+            height: 800px;
+        }
+
+        @media (max-width: 767px) {
+            height: 400px;
+        }
 
         * {
             color: #fff;

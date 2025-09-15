@@ -37,7 +37,8 @@
             "choices": {
                 "1": "1",
                 "2": "2",
-                "3": "3"
+                "3": "3",
+                "4": "4"
             },
             "default_value": 1,
             "return_format": "value",
@@ -49,6 +50,40 @@
             "placeholder": "",
             "create_options": 0,
             "save_options": 0
+        },
+        {
+            "key": "field_68c657b2f755d",
+            "label": "Background button",
+            "name": "background_button",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68bd3c351514f",
+                        "operator": "==",
+                        "value": "4"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
         },
         {
             "key": "field_68b3c618df60b",
@@ -167,5 +202,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757768366
+    "modified": 1757829089
 }

@@ -19,7 +19,8 @@
             "choices": {
                 "1": "1",
                 "2": "2",
-                "3": "3"
+                "3": "3",
+                "4": "4"
             },
             "default_value": 1,
             "return_format": "value",
@@ -105,8 +106,15 @@
                         [
                             {
                                 "field": "field_68bd4415873d4",
-                                "operator": "!=",
-                                "value": "3"
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_68bd4415873d4",
+                                "operator": "==",
+                                "value": "2"
                             }
                         ]
                     ],
@@ -162,8 +170,15 @@
                         [
                             {
                                 "field": "field_68bd4415873d4",
-                                "operator": "!=",
-                                "value": "3"
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_68bd4415873d4",
+                                "operator": "==",
+                                "value": "2"
                             }
                         ]
                     ],
@@ -199,5 +214,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757768397
+    "modified": 1757826513
 }
