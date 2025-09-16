@@ -162,7 +162,7 @@ function lv_tabs_shortcode()
             <?php endif; ?>
 
             <?php if ($tabs_content) : ?>
-                <h2 class="lv_tabs_content"><?php echo $tabs_content; ?></h2>
+                <div class="lv_tabs_content"><?php echo $tabs_content; ?></div>
             <?php endif; ?>
 
             <?php if ($list_tabs) : ?>

@@ -8,7 +8,7 @@
             "name": "about_us",
             "aria-label": "",
             "type": "group",
-            "instructions": "Shortcode: [lv_award]",
+            "instructions": "Shortcode: [lv_about_us]",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -149,5 +149,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757954915
+    "modified": 1758030155
 }

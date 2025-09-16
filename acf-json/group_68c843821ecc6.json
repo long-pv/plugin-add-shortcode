@@ -8,7 +8,7 @@
             "name": "box_content",
             "aria-label": "",
             "type": "group",
-            "instructions": "Shortcode: [lv_award]",
+            "instructions": "Shortcode: [lv_box_content]",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -169,5 +169,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757955028
+    "modified": 1758043486
 }
