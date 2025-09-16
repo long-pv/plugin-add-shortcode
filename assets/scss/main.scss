@@ -2096,7 +2096,6 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 }
 
 .lv_aboutUs__description {
-    font-size: 16px;
     margin-bottom: 24px;
 }
 
@@ -2138,4 +2137,38 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     overflow: hidden;
     border: 2px solid $primary;
     box-shadow: 0 0px 40px $primary;
+}
+
+.lv_section__contentBox {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.lv_contentBox__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 20px;
+    color: #fff;
+    height: auto;
+}
+
+.lv_contentBox__text {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #fff !important;
+}
+
+.lv_contentBox__title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: $primary;
+}
+
+.lv_contentBox__description {
+    margin-bottom: 24px;
 }

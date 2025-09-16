@@ -1338,3 +1338,48 @@ function lv_about_us()
     return ob_get_clean();
 }
 add_shortcode('lv_about_us', 'lv_about_us');
+
+function lv_box_content_shortcode()
+{
+    // Get values from ACF option page
+    $box_content = get_field('box_content', 'option');
+
+    // Check if box content is set
+    if (!$box_content) {
+        return ''; // If no content, return empty string
+    }
+
+    // Initialize output
+    $output = '';
+
+    // Check if title is set and append to output
+    if (!empty($box_content['title'])) {
+        $output .= '<h2 class="lv_contentBox__title text_center">' . $box_content['title'] . '</h2>';
+    }
+
+    // Check if content is set and append to output
+    if (!empty($box_content['content'])) {
+        $output .= '<div class="lv_contentBox__description">' . $box_content['content'] . '</div>';
+    }
+
+    // Check if list is set and append each item
+    if (!empty($box_content['list'])) {
+        $output .= '<section class="lv_section__contentBox">';
+
+        foreach ($box_content['list'] as $item) {
+            // Check if the list item has the necessary values
+            if (!empty($item['title']) && !empty($item['description'])) {
+                $background_color = !empty($item['background_color']) ? $item['background_color'] : '#ffffff';
+                $output .= '<div class="lv_contentBox__item" style="background-color: ' . $background_color . '">';
+                $output .= '<h3 class="lv_contentBox__text text_center">' . $item['title'] . '</h3>';
+                $output .= '<div class="lv_contentBox__description">' . $item['description'] . '</div>';
+                $output .= '</div>';
+            }
+        }
+
+        $output .= '</section>';
+    }
+
+    return $output;
+}
+add_shortcode('lv_box_content', 'lv_box_content_shortcode');

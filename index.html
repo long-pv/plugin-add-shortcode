@@ -1,85 +1,83 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>About Us - U888</title>
+		<title>Content Boxes</title>
 		<style>
-			.lv_aboutUs {
-				padding: 20px;
-				font-size: 16px;
+			body {
 				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f4f4f4;
 			}
 
-			.lv_aboutUs__title {
-				font-size: 24px;
-				font-weight: bold;
-				margin-bottom: 15px;
-			}
-
-			.lv_aboutUs__description {
-				font-size: 16px;
-				margin-bottom: 20px;
-			}
-
-			.lv_aboutUs__boxes {
-				display: flex;
+			.lv_section__contentBox {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr); /* 3 boxes per row */
 				gap: 20px;
-				flex-wrap: wrap;
+				max-width: 1200px;
+				margin: auto;
+			}
+
+			.lv_contentBox__item {
+				display: flex;
+				flex-direction: column;
 				justify-content: space-between;
-			}
-
-			.lv_aboutUs__box {
-				flex: 1;
-				max-width: 30%;
+				border-radius: 10px;
 				padding: 20px;
-				background-color: #f9f9f9;
-				border-radius: 8px;
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+				color: #fff;
+				height: auto;
 			}
 
-			.lv_aboutUs__boxTitle {
+			.lv_contentBox__text {
 				font-size: 18px;
-				font-weight: bold;
-				margin-bottom: 10px;
+				font-weight: 700;
+				margin-bottom: 16px;
+				color: #fff !important;
 			}
 
-			.lv_aboutUs__boxContent {
+			.lv_contentBox__description {
 				font-size: 14px;
-				line-height: 1.6;
+				line-height: 1.5;
 			}
 
-			@media (max-width: 768px) {
-				.lv_aboutUs__box {
-					max-width: 48%;
-				}
-			}
-
-			@media (max-width: 480px) {
-				.lv_aboutUs__box {
-					max-width: 100%;
-				}
+			.lv_contentBox__title {
+				font-size: 18px;
+				font-weight: 700;
+				margin-bottom: 10px;
+				text-align: center;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="lv_aboutUs">
-			<h2 class="lv_aboutUs__title">Khám phá thế giới cá cược online cùng U888</h2>
-			<p class="lv_aboutUs__description">U888 là một trong những thương hiệu cá cược nổi bật tại Việt Nam và châu Á. Điểm mạnh của sân chơi này nằm ở giao diện thân thiện, tốc độ mượt mà cùng hệ thống an ninh công nghệ cao, đảm bảo tuyệt đối cho mọi giao dịch...</p>
-			<div class="lv_aboutUs__boxes">
-				<div class="lv_aboutUs__box">
-					<h3 class="lv_aboutUs__boxTitle">Lịch sử hình thành</h3>
-					<p class="lv_aboutUs__boxContent">U888 chính thức xuất hiện trên thị trường giải trí trực tuyến từ năm 2023 đánh dấu bước khởi đầu của một thương hiệu cá cược thể thao vô cùng mạnh mẽ...</p>
-				</div>
-				<div class="lv_aboutUs__box">
-					<h3 class="lv_aboutUs__boxTitle">Giấy phép hoạt động</h3>
-					<p class="lv_aboutUs__boxContent">Ra mắt giới thiệu cổng cạnh tranh khốc liệt nhất của ngành cá nhân cho người chơi tại thị trường tiềm năng...</p>
-				</div>
-				<div class="lv_aboutUs__box">
-					<h3 class="lv_aboutUs__boxTitle">Cảnh báo giả mạo</h3>
-					<p class="lv_aboutUs__boxContent">Hiện nay xuất hiện nhiều website sử dụng tên thương hiệu tương tự để lừa đảo...</p>
-				</div>
+		<h2 class="lv_contentBox__title">Điểm khác biệt giúp U888 nhanh chóng phá só vỡ các đối thủ</h2>
+		<div class="lv_contentBox__description">Dù là tân binh trên thị trường nhưng nhà cái này lại có thể khiến được nhiều người hâm mộ vì hỗ trợ những mẫu thiết kế độc đáo, cùng với các tính năng nổi bật giúp người chơi dễ dàng trải nghiệm và tin tưởng hơn.</div>
+		<section class="lv_section__contentBox">
+			<div class="lv_contentBox__item" style="background-color: #ff6a00">
+				<h3 class="lv_contentBox__text">Giao diện sang trọng</h3>
+				<div class="lv_contentBox__description">Nhà cái này thường xuyên thay đổi giao diện mỗi tháng để thiết kế được hỗ trợ những mẫu thiết kế đơn giản nhưng bắt mắt. Các danh mục được hiển thị rõ ràng giúp người sử dụng dễ dàng điều hướng website.</div>
 			</div>
-		</div>
+
+			<div class="lv_contentBox__item" style="background-color: #0052cc">
+				<h3 class="lv_contentBox__text">An ninh công nghệ cao</h3>
+				<div class="lv_contentBox__description">Sự an toàn của người chơi luôn được U888 đặt lên hàng đầu khi nhà cái trang bị hệ thống bảo mật cực kỳ mạnh mẽ như hệ thống mã hóa SSL 128-bit, bảo mật OTP cung cấp nhiều lớp bảo vệ.</div>
+			</div>
+
+			<div class="lv_contentBox__item" style="background-color: #28a745">
+				<h3 class="lv_contentBox__text">Nạp rút tiền nhanh</h3>
+				<div class="lv_contentBox__description">Nhà cái này xây dựng giao diện dịch vụ nạp tiền và rút tiền rất dễ hiểu như “nạp tiền” - “rút tiền” như vậy, người chơi mới dễ dàng thực hiện mọi thao tác mà không bị mất quá nhiều thời gian.</div>
+			</div>
+
+			<div class="lv_contentBox__item" style="background-color: #6f42c1">
+				<h3 class="lv_contentBox__text">App di động đồng bộ</h3>
+				<div class="lv_contentBox__description">Không chỉ xây dựng lại phiên bản web này, nhà cái còn phát triển app đồng bộ với cả nền tảng IOS và Android. Giao diện người dùng rất dễ hiểu, phù hợp với mọi loại thiết bị di động.</div>
+			</div>
+
+			<div class="lv_contentBox__item" style="background-color: #20c997">
+				<h3 class="lv_contentBox__text">Giấy phép hợp pháp</h3>
+				<div class="lv_contentBox__description">U888 được cấp phép hoạt động bởi PAGCOR - tổ chức uy tín của quốc tế. Với đội ngũ chuyên gia giàu kinh nghiệm trong ngành, nhà cái cam kết mang đến sự an toàn cho người chơi.</div>
+			</div>
+		</section>
 	</body>
 </html>
