@@ -3,125 +3,83 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Đếm ngược 18h30 mỗi ngày</title>
+		<title>About Us - U888</title>
 		<style>
-			.lv_award {
-				width: 300px;
-				height: 400px;
-				background-color: #1a1a1a;
-				border-radius: 12px;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
+			.lv_aboutUs {
 				padding: 20px;
-				box-sizing: border-box;
-				color: #fff;
+				font-size: 16px;
 				font-family: Arial, sans-serif;
 			}
 
-			.lv_award_header {
-				text-align: center;
+			.lv_aboutUs__title {
+				font-size: 24px;
+				font-weight: bold;
+				margin-bottom: 15px;
+			}
+
+			.lv_aboutUs__description {
+				font-size: 16px;
 				margin-bottom: 20px;
 			}
 
-			.lv_award_game_name {
-				font-size: 24px;
-				font-weight: bold;
-			}
-
-			.lv_award_body {
-				text-align: center;
-			}
-
-			.lv_award_value {
-				font-size: 28px;
-				font-weight: bold;
-				color: #ffcc00;
-			}
-
-			.lv_award_footer {
-				text-align: center;
-			}
-
-			.lv_award_timer_label {
-				font-size: 16px;
-				margin-bottom: 8px;
-			}
-
-			.lv_award_timer {
+			.lv_aboutUs__boxes {
 				display: flex;
-				justify-content: center;
-				align-items: center;
+				gap: 20px;
+				flex-wrap: wrap;
+				justify-content: space-between;
 			}
 
-			.lv_award_timer_digit {
-				width: 40px;
-				height: 40px;
-				background-color: #333;
-				border: none;
-				color: #fff;
-				font-size: 18px;
-				text-align: center;
-				margin: 0 5px;
-				border-radius: 6px;
+			.lv_aboutUs__box {
+				flex: 1;
+				max-width: 30%;
+				padding: 20px;
+				background-color: #f9f9f9;
+				border-radius: 8px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 			}
 
-			.lv_award_timer_separator {
+			.lv_aboutUs__boxTitle {
 				font-size: 18px;
-				color: #fff;
-				margin: 0 5px;
+				font-weight: bold;
+				margin-bottom: 10px;
+			}
+
+			.lv_aboutUs__boxContent {
+				font-size: 14px;
+				line-height: 1.6;
+			}
+
+			@media (max-width: 768px) {
+				.lv_aboutUs__box {
+					max-width: 48%;
+				}
+			}
+
+			@media (max-width: 480px) {
+				.lv_aboutUs__box {
+					max-width: 100%;
+				}
 			}
 		</style>
 	</head>
 	<body>
-		<div class="lv_award">
-			<div class="lv_award_header">
-				<span class="lv_award_game_name">MAHJONG WAYS</span>
-			</div>
-			<div class="lv_award_body">
-				<span class="lv_award_value">990,000,434 VND</span>
-			</div>
-			<div class="lv_award_footer">
-				<span class="lv_award_timer_label">THỜI GIAN CÒN LẠI:</span>
-				<div class="lv_award_timer">
-					<span class="lv_award_timer_digit" id="timer-hours">00</span>
-					<span class="lv_award_timer_separator">:</span>
-					<span class="lv_award_timer_digit" id="timer-minutes">00</span>
-					<span class="lv_award_timer_separator">:</span>
-					<span class="lv_award_timer_digit" id="timer-seconds">00</span>
+		<div class="lv_aboutUs">
+			<h2 class="lv_aboutUs__title">Khám phá thế giới cá cược online cùng U888</h2>
+			<p class="lv_aboutUs__description">U888 là một trong những thương hiệu cá cược nổi bật tại Việt Nam và châu Á. Điểm mạnh của sân chơi này nằm ở giao diện thân thiện, tốc độ mượt mà cùng hệ thống an ninh công nghệ cao, đảm bảo tuyệt đối cho mọi giao dịch...</p>
+			<div class="lv_aboutUs__boxes">
+				<div class="lv_aboutUs__box">
+					<h3 class="lv_aboutUs__boxTitle">Lịch sử hình thành</h3>
+					<p class="lv_aboutUs__boxContent">U888 chính thức xuất hiện trên thị trường giải trí trực tuyến từ năm 2023 đánh dấu bước khởi đầu của một thương hiệu cá cược thể thao vô cùng mạnh mẽ...</p>
+				</div>
+				<div class="lv_aboutUs__box">
+					<h3 class="lv_aboutUs__boxTitle">Giấy phép hoạt động</h3>
+					<p class="lv_aboutUs__boxContent">Ra mắt giới thiệu cổng cạnh tranh khốc liệt nhất của ngành cá nhân cho người chơi tại thị trường tiềm năng...</p>
+				</div>
+				<div class="lv_aboutUs__box">
+					<h3 class="lv_aboutUs__boxTitle">Cảnh báo giả mạo</h3>
+					<p class="lv_aboutUs__boxContent">Hiện nay xuất hiện nhiều website sử dụng tên thương hiệu tương tự để lừa đảo...</p>
 				</div>
 			</div>
 		</div>
-
-		<script>
-			function getTimeUntilNextEvent() {
-				const now = new Date();
-				const targetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 18, 30, 0); // 18:30 hôm nay
-
-				// Nếu giờ hiện tại đã qua 18:30 hôm nay, tính thời gian đến 18:30 ngày mai
-				if (now > targetTime) {
-					targetTime.setDate(targetTime.getDate() + 1); // Chuyển tới 18:30 ngày mai
-				}
-
-				// Tính thời gian còn lại (tính theo giây)
-				const timeLeft = targetTime - now;
-				return timeLeft;
-			}
-
-			function updateTimer() {
-				const timeLeft = getTimeUntilNextEvent();
-				const hours = Math.floor(timeLeft / (1000 * 60 * 60)); // Tính giờ
-				const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60)); // Tính phút
-				const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000); // Tính giây
-
-				// Cập nhật thời gian lên giao diện
-				document.getElementById("timer-hours").textContent = String(hours).padStart(2, "0");
-				document.getElementById("timer-minutes").textContent = String(minutes).padStart(2, "0");
-				document.getElementById("timer-seconds").textContent = String(seconds).padStart(2, "0");
-			}
-
-			// Cập nhật đồng hồ mỗi giây
-			setInterval(updateTimer, 1000);
-		</script>
 	</body>
 </html>

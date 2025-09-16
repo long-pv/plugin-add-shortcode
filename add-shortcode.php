@@ -23,6 +23,7 @@ function mytheme_add_global_colors()
     $color_countdown = get_field('color_countdown', 'option') ?: '#FEA800';
     $color_posts = get_field('color_posts', 'option') ?: '#FEA800';
     $color_breadcrumbs = get_field('color_breadcrumbs', 'option') ?: '#FEA800';
+    $padding_block = get_field('padding_block', 'option');
 
 ?>
     <style>
@@ -32,6 +33,7 @@ function mytheme_add_global_colors()
             --lv-color-countdown: <?php echo esc_html($color_countdown); ?>;
             --lv-color-posts: <?php echo esc_html($color_posts); ?>;
             --lv-color-breadcrumbs: <?php echo esc_html($color_breadcrumbs); ?>;
+            --lv-padding-block: <?php echo esc_html($padding_block); ?>px;
         }
     </style>
     <?php
@@ -151,11 +153,16 @@ function lv_tabs_shortcode()
 
     $tabs_title = get_field('tabs_title', 'option');
     $list_tabs  = get_field('list_tab', 'option');
+    $tabs_content  = get_field('tabs_content', 'option');
 
     if ($tabs_title || $list_tabs) : ?>
         <section class="lv_container lv_tabs">
             <?php if ($tabs_title) : ?>
                 <h2 class="lv_tabs_title text_center"><?php echo $tabs_title; ?></h2>
+            <?php endif; ?>
+
+            <?php if ($tabs_content) : ?>
+                <h2 class="lv_tabs_content"><?php echo $tabs_content; ?></h2>
             <?php endif; ?>
 
             <?php if ($list_tabs) : ?>
@@ -456,6 +463,7 @@ function shortcode_lv_faq_block()
     $faqs = get_field('list_faqs', 'option'); // lấy từ ACF Options
     $faqs_title = get_field('faqs_title', 'option');
     $style_faqs = get_field('style_faqs', 'option') ?? '1';
+    $faqs_content = get_field('faqs_content', 'option') ?? '';
 
     if ($faqs && is_array($faqs)) {
         ob_start(); ?>
@@ -466,6 +474,12 @@ function shortcode_lv_faq_block()
                 <h2 class="lv_faq_title text_center">
                     <?php echo $faqs_title; ?>
                 </h2>
+            <?php endif; ?>
+
+            <?php if ($faqs_content) : ?>
+                <div class="lv_faq_content">
+                    <?php echo $faqs_content; ?>
+                </div>
             <?php endif; ?>
 
             <div class="lv_faq_block lv_faq_block_style_<?php echo $style_faqs; ?>">
@@ -1166,7 +1180,7 @@ function lv_award_shortcode()
             </div>
         </div>
     </div>
-<?php
+    <?php
     return ob_get_clean();
 }
 add_shortcode('lv_award', 'lv_award_shortcode');
@@ -1269,3 +1283,58 @@ function generate_page_parent($parent_id, $delimiter)
 
     return rtrim($output);
 }
+
+function lv_about_us()
+{
+    ob_start();
+
+    // Lấy dữ liệu từ ACF
+    $about_us_group = get_field('about_us', 'option'); // 'option' để lấy giá trị từ options page
+    if ($about_us_group) {
+        // Kiểm tra xem có dữ liệu không
+        $title = isset($about_us_group['title']) ? $about_us_group['title'] : '';
+        $content = isset($about_us_group['content']) ? $about_us_group['content'] : '';
+        $list = isset($about_us_group['list']) ? $about_us_group['list'] : [];
+
+    ?>
+        <div class="lv_container">
+            <div class="lv_aboutUs">
+                <!-- Hiển thị tiêu đề nếu có -->
+                <?php if (!empty($title)) : ?>
+                    <h2 class="lv_aboutUs__title text_center"><?php echo $title; ?></h2>
+                <?php endif; ?>
+
+                <!-- Hiển thị nội dung nếu có -->
+                <?php if (!empty($content)) : ?>
+                    <p class="lv_aboutUs__description"><?php echo $content; ?></p>
+                <?php endif; ?>
+
+                <div class="lv_aboutUs__boxes">
+                    <?php
+                    // Hiển thị danh sách nếu có
+                    if (!empty($list)) :
+                        foreach ($list as $item) :
+                            $item_title = isset($item['title']) ? $item['title'] : '';
+                            $item_description = isset($item['description']) ? $item['description'] : '';
+                    ?>
+                            <div class="lv_aboutUs__box">
+                                <?php if (!empty($item_title)) : ?>
+                                    <h3 class="lv_aboutUs__boxTitle"><?php echo $item_title; ?></h3>
+                                <?php endif; ?>
+
+                                <?php if (!empty($item_description)) : ?>
+                                    <p class="lv_aboutUs__boxContent"><?php echo $item_description; ?></p>
+                                <?php endif; ?>
+                            </div>
+                    <?php
+                        endforeach;
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+<?php
+    }
+    return ob_get_clean();
+}
+add_shortcode('lv_about_us', 'lv_about_us');

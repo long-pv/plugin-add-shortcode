@@ -6,8 +6,8 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 
 .lv_container {
     @media (max-width: 849px) {
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: var(--lv-padding-block);
+        padding-right: var(--lv-padding-block);
     }
 }
 
@@ -2077,4 +2077,65 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 .newsSection__content__info__footer__author,
 .newsSection__content__info__footer__date {
     color: #ccc;
+}
+
+.lv_tabs_content,
+.lv_faq_content {
+    margin-bottom: 24px;
+}
+
+.lv_aboutUs {
+    font-size: 16px;
+}
+
+.lv_aboutUs__title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: $primary;
+}
+
+.lv_aboutUs__description {
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+.lv_aboutUs__boxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.lv_aboutUs__box {
+    padding: 16px;
+    background-color: transparent;
+    border: 1px solid $primary;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lv_aboutUs__boxTitle {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+    color: $primary;
+}
+
+.lv_aboutUs__boxContent {
+    font-size: 14px;
+}
+
+@media (max-width: 767px) {
+    .lv_aboutUs__boxes {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.box_border {
+    padding: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid $primary;
+    box-shadow: 0 0px 40px $primary;
 }
