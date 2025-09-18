@@ -656,10 +656,6 @@ add_shortcode('lv_latest_posts', function () {
                         wp_reset_postdata(); ?>
                     </div>
 
-                    <a href="#" class="">
-                        BÀI VIẾT TIẾP THEO
-                    </a>
-
                     <?php
                     if (!empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
                         $sm_url    = $see_more['url'];
