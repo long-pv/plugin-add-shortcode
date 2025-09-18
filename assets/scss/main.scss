@@ -2174,3 +2174,109 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 .lv_contentBox__description {
     margin-bottom: 24px;
 }
+
+
+/* Pill / banner */
+.lv_promoBanner__page p {
+    margin: 0px !important;
+}
+
+.lv_promoBanner__page br {
+    display: none !important;
+}
+
+.lv_promoBanner__pill {
+    width: 100%;
+    height: 48px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 12px;
+    overflow: hidden;
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            #01BCE4 36%,
+            #01B9E0 63%,
+            rgba(255, 255, 255, 0) 100%);
+}
+
+/* Ticker (middle area) */
+.lv_promoBanner__ticker {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-left: 2px;
+}
+
+/* Marquee wrapper doubles content for continuous scroll */
+.lv_promoBanner__marquee {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    width: 200%;
+    box-sizing: content-box;
+    animation: lv_promoBanner__marqueeAnim 12s linear infinite;
+    will-change: transform;
+}
+
+/* Each item (one copy of the message) */
+.lv_promoBanner__marqueeItem {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 18px;
+    line-height: 20px;
+    color: #ffffff;
+    font-weight: 600;
+    text-overflow: ellipsis;
+}
+
+/* Right button */
+.lv_promoBanner__button {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 36px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #09c0ee 0%, #0199c7 100%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.6px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
+/* Optional hover/focus states */
+.lv_promoBanner__button:hover,
+.lv_promoBanner__button:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
+}
+
+/* Marquee animation */
+@keyframes lv_promoBanner__marqueeAnim {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Accessibility: pause animation if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .lv_promoBanner__marquee {
+        animation: none;
+    }
+}

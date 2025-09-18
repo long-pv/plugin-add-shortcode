@@ -1329,7 +1329,7 @@ function lv_about_us()
                 </div>
             </div>
         </div>
-<?php
+    <?php
     }
     return ob_get_clean();
 }
@@ -1379,3 +1379,53 @@ function lv_box_content_shortcode()
     return $output;
 }
 add_shortcode('lv_box_content', 'lv_box_content_shortcode');
+
+function lv_promo_banner_shortcode($atts)
+{
+    $atts = shortcode_atts(
+        array(
+            'messages'   => 'Thưởng nạp đầu lên đến 8.888k PU88, thử ngay chương trình hấp dẫn hôm nay!|Thưởng nạp đầu lên đến 8.888k PU88, thử ngay chương trình hấp dẫn hôm nay!',
+            'button_url' => '#',
+            'aria_label' => 'Thông báo khuyến mãi',
+        ),
+        $atts,
+        'lv_promo_banner'
+    );
+
+    $raw_msgs = preg_split('/\|+/', $atts['messages']);
+    $msgs = array();
+    foreach ($raw_msgs as $m) {
+        $m = trim($m);
+        if ($m !== '') $msgs[] = $m;
+    }
+
+    $has_msgs = ! empty($msgs);
+    $has_button = isset($atts['button_url']) && $atts['button_url'] !== '';
+
+    ob_start();
+
+    if ($has_msgs || $has_button) : ?>
+        <div class="lv_promoBanner__page">
+            <div class="lv_promoBanner__pill" role="region" aria-label="<?php echo $atts['aria_label']; ?>">
+                <?php if ($has_msgs) : ?>
+                    <div class="lv_promoBanner__ticker" aria-hidden="false">
+                        <div class="lv_promoBanner__marquee" aria-hidden="true">
+                            <?php foreach ($msgs as $item): ?>
+                                <div class="lv_promoBanner__marqueeItem"><?php echo $item; ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($has_button) : ?>
+                    <a href="<?php echo $atts['button_url']; ?>" class="lv_promoBanner__button" role="link" aria-label="<?php echo $atts['aria_label']; ?>">
+                        <?php echo 'TẤT CẢ'; ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+<?php endif;
+
+    return ob_get_clean();
+}
+add_shortcode('lv_promo_banner', 'lv_promo_banner_shortcode');
