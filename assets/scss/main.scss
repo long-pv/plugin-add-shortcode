@@ -2280,3 +2280,56 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
         animation: none;
     }
 }
+
+.header-button {
+    position: relative;
+
+    .button {
+        color: #fff !important;
+        border: 2px solid $primary !important;
+        background: $primary !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px !important;
+        text-transform: uppercase !important;
+        font-size: 14px !important;
+        font-weight: 700;
+        min-width: 140px !important;
+        padding: 4px 12px !important;
+        transition: all 0.3s;
+        box-shadow: none !important;
+        position: relative;
+        animation: zoomAndShake 1.5s ease-in-out infinite;
+
+        &:hover {
+            transition: all 0.3s;
+            color: $primary !important;
+            background: #fff !important;
+        }
+    }
+}
+
+/* Animation phóng to và lắc lư */
+@keyframes zoomAndShake {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    25% {
+        transform: scale(1.05) rotate(-4deg);
+    }
+
+    50% {
+        transform: scale(1.05) rotate(4deg);
+    }
+
+    75% {
+        transform: scale(1.05) rotate(-4deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
