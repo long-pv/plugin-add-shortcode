@@ -1431,3 +1431,35 @@ function lv_promo_banner_shortcode($atts)
     return ob_get_clean();
 }
 add_shortcode('lv_promo_banner', 'lv_promo_banner_shortcode');
+
+
+// Tạo shortcode 'list_image_shortcode' để hiển thị danh sách hình ảnh
+function list_image_shortcode()
+{
+    // Lấy dữ liệu từ ACF
+    $list_image = get_field('list_image', 'option'); // Lấy nhóm các trường từ options page
+    $pc_column = isset($list_image['pc_column']) ? $list_image['pc_column'] : 5; // Số cột trên PC
+    $sp_column = isset($list_image['sp_column']) ? $list_image['sp_column'] : 5; // Số cột trên mobile
+    $list = isset($list_image['list']) ? $list_image['list'] : array(); // Danh sách hình ảnh
+
+    // Bắt đầu HTML cho Shortcode
+    $output = '<div class="lv_imageList" style="--columns: ' . $pc_column . '; --columns-mobile: ' . $sp_column . ';">';
+
+    if (!empty($list)) {
+        foreach ($list as $item) {
+            $image_url = wp_get_attachment_image_url($item['image'], 'medium'); // Lấy URL của ảnh
+            $url = isset($item['url']) ? esc_url($item['url']) : '#'; // Lấy URL (nếu có, nếu không sẽ là #)
+            $output .= '<div class="lv_imageList__item">';
+            $output .= '<a href="' . $url . '"><img src="' . $image_url . '" alt="Image"></a>';
+            $output .= '</div>';
+        }
+    }
+
+    // Kết thúc HTML
+    $output .= '</div>';
+
+    return $output; // Trả về HTML để hiển thị
+}
+
+// Đăng ký shortcode
+add_shortcode('lv_list_image', 'list_image_shortcode');
