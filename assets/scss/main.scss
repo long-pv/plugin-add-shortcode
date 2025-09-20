@@ -2309,15 +2309,15 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     }
 
     25% {
-        transform: scale(1.05) rotate(-4deg);
+        transform: scale(1.05) rotate(-1deg);
     }
 
     50% {
-        transform: scale(1.05) rotate(4deg);
+        transform: scale(1.05) rotate(1deg);
     }
 
     75% {
-        transform: scale(1.05) rotate(-4deg);
+        transform: scale(1.05) rotate(-1deg);
     }
 
     100% {
