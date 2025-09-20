@@ -1394,27 +1394,18 @@ function lv_promo_banner_shortcode($atts)
     $button_target = isset($promo_banner['link']) ? $promo_banner['link']['target'] : '_self'; // Target attribute for the button
 
     // Split messages by the pipe symbol
-    $raw_msgs = preg_split('/\|+/', $messages);
-    $msgs = array();
-    foreach ($raw_msgs as $m) {
-        $m = trim($m);
-        if ($m !== '') $msgs[] = $m;
-    }
-
-    $has_msgs = ! empty($msgs);
+    $raw_msgs = trim($messages);
     $has_button = isset($button_url) && $button_url !== '';
 
     ob_start();
 
-    if ($has_msgs || $has_button) : ?>
+    if ($messages || $has_button) : ?>
         <div class="lv_promoBanner__page">
             <div class="lv_promoBanner__pill" role="region">
-                <?php if ($has_msgs) : ?>
+                <?php if ($messages) : ?>
                     <div class="lv_promoBanner__ticker" aria-hidden="false">
                         <div class="lv_promoBanner__marquee" aria-hidden="true">
-                            <?php foreach ($msgs as $item): ?>
-                                <div class="lv_promoBanner__marqueeItem"><?php echo $item; ?></div>
-                            <?php endforeach; ?>
+                            <div class="lv_promoBanner__marqueeItem"><?php echo $raw_msgs; ?></div>
                         </div>
                     </div>
                 <?php endif; ?>

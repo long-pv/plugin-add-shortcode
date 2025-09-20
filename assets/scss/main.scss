@@ -2215,11 +2215,11 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 .lv_promoBanner__marquee {
     display: flex;
     align-items: center;
-    gap: 60px;
-    width: 200%;
-    box-sizing: content-box;
-    animation: lv_promoBanner__marqueeAnim 12s linear infinite;
-    will-change: transform;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    justify-content: center;
 }
 
 /* Each item (one copy of the message) */
@@ -2230,12 +2230,23 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     line-height: 20px;
     color: #ffffff;
     font-weight: 600;
-    text-overflow: ellipsis;
+    display: inline-block;
+    animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 /* Right button */
 .lv_promoBanner__button {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
