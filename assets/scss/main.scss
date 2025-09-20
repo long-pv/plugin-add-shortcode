@@ -2196,8 +2196,8 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     overflow: hidden;
     background: linear-gradient(90deg,
             rgba(255, 255, 255, 0) 0%,
-            #01BCE4 36%,
-            #01B9E0 63%,
+            $primary 36%,
+            $primary 63%,
             rgba(255, 255, 255, 0) 100%);
 }
 
@@ -2209,7 +2209,6 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     display: flex;
     align-items: center;
     overflow: hidden;
-    padding-left: 2px;
 }
 
 /* Marquee wrapper doubles content for continuous scroll */
@@ -2240,27 +2239,19 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 76px;
+    min-width: 76px;
     height: 36px;
     border-radius: 20px;
-    background: linear-gradient(180deg, #09c0ee 0%, #0199c7 100%);
+    background: linear-gradient(180deg, $primary 0%, $primary 100%) !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    color: #ffffff;
+    color: #ffffff !important;
     text-decoration: none;
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 0.6px;
     padding: 0 12px;
     box-sizing: border-box;
-    margin-left: 8px;
     white-space: nowrap;
-}
-
-/* Optional hover/focus states */
-.lv_promoBanner__button:hover,
-.lv_promoBanner__button:focus {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.28);
 }
 
 /* Marquee animation */

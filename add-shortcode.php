@@ -113,6 +113,8 @@ add_action('acf/init', function () {
             'Award'         => 'award',
             'About us'      => 'about-us',
             'Box content'   => 'box-content',
+            'Promo banner'  => 'promo-banner',
+            'List image'    => 'list-image',
             // 'Single post'   => 'single-post',
             // 'Archive post'  => 'archive-post',
         ];
@@ -1382,17 +1384,17 @@ add_shortcode('lv_box_content', 'lv_box_content_shortcode');
 
 function lv_promo_banner_shortcode($atts)
 {
-    $atts = shortcode_atts(
-        array(
-            'messages'   => 'Thưởng nạp đầu lên đến 8.888k PU88, thử ngay chương trình hấp dẫn hôm nay!|Thưởng nạp đầu lên đến 8.888k PU88, thử ngay chương trình hấp dẫn hôm nay!',
-            'button_url' => '#',
-            'aria_label' => 'Thông báo khuyến mãi',
-        ),
-        $atts,
-        'lv_promo_banner'
-    );
+    // Retrieve ACF settings for the Promo Banner
+    $promo_banner = get_field('promo_banner', 'option'); // Assuming the 'promo_banner' field is under the 'option' page
 
-    $raw_msgs = preg_split('/\|+/', $atts['messages']);
+    // Fallbacks for when no ACF value is set
+    $messages = isset($promo_banner['messages']) ? $promo_banner['messages'] : '';
+    $button_url = isset($promo_banner['link']) ? $promo_banner['link']['url'] : '';
+    $button_title = isset($promo_banner['link']) ? $promo_banner['link']['title'] : ''; // Title of the button
+    $button_target = isset($promo_banner['link']) ? $promo_banner['link']['target'] : '_self'; // Target attribute for the button
+
+    // Split messages by the pipe symbol
+    $raw_msgs = preg_split('/\|+/', $messages);
     $msgs = array();
     foreach ($raw_msgs as $m) {
         $m = trim($m);
@@ -1400,13 +1402,13 @@ function lv_promo_banner_shortcode($atts)
     }
 
     $has_msgs = ! empty($msgs);
-    $has_button = isset($atts['button_url']) && $atts['button_url'] !== '';
+    $has_button = isset($button_url) && $button_url !== '';
 
     ob_start();
 
     if ($has_msgs || $has_button) : ?>
         <div class="lv_promoBanner__page">
-            <div class="lv_promoBanner__pill" role="region" aria-label="<?php echo $atts['aria_label']; ?>">
+            <div class="lv_promoBanner__pill" role="region">
                 <?php if ($has_msgs) : ?>
                     <div class="lv_promoBanner__ticker" aria-hidden="false">
                         <div class="lv_promoBanner__marquee" aria-hidden="true">
@@ -1418,8 +1420,8 @@ function lv_promo_banner_shortcode($atts)
                 <?php endif; ?>
 
                 <?php if ($has_button) : ?>
-                    <a href="<?php echo $atts['button_url']; ?>" class="lv_promoBanner__button" role="link" aria-label="<?php echo $atts['aria_label']; ?>">
-                        <?php echo 'TẤT CẢ'; ?>
+                    <a href="<?php echo $button_url; ?>" class="lv_promoBanner__button" role="link" target="<?php echo $button_target; ?>">
+                        <?php echo $button_title; ?>
                     </a>
                 <?php endif; ?>
             </div>
