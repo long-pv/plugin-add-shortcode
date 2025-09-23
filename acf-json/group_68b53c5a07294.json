@@ -145,20 +145,7 @@
             "type": "link",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68b87e38490fb",
-                        "operator": "==",
-                        "value": "grid"
-                    },
-                    {
-                        "field": "field_68b87e38490fb",
-                        "operator": "==",
-                        "value": "list"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -311,5 +298,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757835705
+    "modified": 1758634068
 }

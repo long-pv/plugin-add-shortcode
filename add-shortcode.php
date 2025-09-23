@@ -1394,7 +1394,7 @@ function lv_promo_banner_shortcode($atts)
                 <?php endif; ?>
             </div>
         </div>
-        <?php endif;
+    <?php endif;
 
     return ob_get_clean();
 }
@@ -1406,9 +1406,18 @@ function list_image_shortcode()
 {
     // Lấy dữ liệu từ ACF
     $list_image = get_field('list_image', 'option'); // Lấy nhóm các trường từ options page
+    $list_image_title = get_field('list_image_title', 'option'); // Lấy nhóm các trường từ options page
     $pc_column = isset($list_image['pc_column']) ? $list_image['pc_column'] : 5; // Số cột trên PC
     $sp_column = isset($list_image['sp_column']) ? $list_image['sp_column'] : 5; // Số cột trên mobile
     $list = isset($list_image['list']) ? $list_image['list'] : array(); // Danh sách hình ảnh
+
+    if (!empty($list_image_title)):
+    ?>
+        <h2 class="lv_block_card_category_title text_center">
+            <?php echo $list_image_title; ?>
+        </h2>
+        <?php
+    endif;
 
     // Bắt đầu HTML cho Shortcode
     $output = '<div class="lv_imageList" style="--columns: ' . $pc_column . '; --columns-mobile: ' . $sp_column . ';">';
