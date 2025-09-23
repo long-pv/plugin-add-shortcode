@@ -1,83 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Content Boxes</title>
+		<title>Content Section</title>
 		<style>
-			body {
-				font-family: Arial, sans-serif;
-				margin: 0;
-				padding: 0;
-				background-color: #f4f4f4;
-			}
-
-			.lv_section__contentBox {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr); /* 3 boxes per row */
-				gap: 20px;
-				max-width: 1200px;
-				margin: auto;
-			}
-
-			.lv_contentBox__item {
+			.lv_content_section {
 				display: flex;
-				flex-direction: column;
+				flex-wrap: wrap;
 				justify-content: space-between;
-				border-radius: 10px;
-				padding: 20px;
-				color: #fff;
-				height: auto;
+				padding-bottom: 30px;
+				align-items: center;
+				gap: 40px;
 			}
 
-			.lv_contentBox__text {
-				font-size: 18px;
+			.lv_content_section__text,
+			.lv_content_section__image {
+				flex: 1;
+			}
+
+			.lv_content_section__text {
+				max-width: 50%;
+			}
+
+			.lv_content_section__heading {
+				font-size: 24px;
 				font-weight: 700;
-				margin-bottom: 16px;
-				color: #fff !important;
+				margin-bottom: 24px;
+				margin-top: 0px;
 			}
 
-			.lv_contentBox__description {
-				font-size: 14px;
+			.lv_content_section__description {
+				font-size: 16px;
 				line-height: 1.5;
+				margin-bottom: 24px;
+				margin-top: 0px;
 			}
 
-			.lv_contentBox__title {
-				font-size: 18px;
-				font-weight: 700;
-				margin-bottom: 10px;
+			.lv_content_section__link {
+				font-size: 16px;
+				font-weight: bold;
+				color: #fff;
+				background-color: #b72b2b; /* Red button */
+				padding: 8px 16px;
+				text-decoration: none;
+				border-radius: 5px;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
 				text-align: center;
+				transition: background-color 0.3s ease;
+			}
+
+			.lv_content_section__link:hover {
+				background-color: #a2211d; /* Darker red */
+			}
+
+			.lv_content_section__image {
+				max-width: 50%;
+			}
+
+			.lv_content_section__image img {
+				width: 100%;
+				height: auto;
+				border-radius: 10px;
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				.lv_content_section {
+					flex-direction: column;
+				}
+
+				.lv_content_section__text,
+				.lv_content_section__image {
+					max-width: 100%;
+					flex: 1;
+				}
+
+				/* Đảm bảo ảnh trên, text dưới */
+				.lv_content_section__image {
+					order: 1;
+				}
+				.lv_content_section__text {
+					order: 2;
+				}
 			}
 		</style>
 	</head>
 	<body>
-		<h2 class="lv_contentBox__title">Điểm khác biệt giúp U888 nhanh chóng phá só vỡ các đối thủ</h2>
-		<div class="lv_contentBox__description">Dù là tân binh trên thị trường nhưng nhà cái này lại có thể khiến được nhiều người hâm mộ vì hỗ trợ những mẫu thiết kế độc đáo, cùng với các tính năng nổi bật giúp người chơi dễ dàng trải nghiệm và tin tưởng hơn.</div>
-		<section class="lv_section__contentBox">
-			<div class="lv_contentBox__item" style="background-color: #ff6a00">
-				<h3 class="lv_contentBox__text">Giao diện sang trọng</h3>
-				<div class="lv_contentBox__description">Nhà cái này thường xuyên thay đổi giao diện mỗi tháng để thiết kế được hỗ trợ những mẫu thiết kế đơn giản nhưng bắt mắt. Các danh mục được hiển thị rõ ràng giúp người sử dụng dễ dàng điều hướng website.</div>
+		<div class="lv_content_section_container lv_container">
+			<div class="lv_content_section">
+				<div class="lv_content_section__text">
+					<h2 class="lv_content_section__heading">CHÚNG TÔI LÀ AI</h2>
+					<div class="lv_content_section__description">Với hơn 5 năm kinh nghiệm trong lĩnh vực thiết kế web nhanh, chúng tôi giúp doanh nghiệp hiện thực hóa ý tưởng online một cách nhanh chóng, chuyên nghiệp và hiệu quả.</div>
+					<a href="#" class="lv_content_section__link">LIÊN HỆ</a>
+				</div>
+				<div class="lv_content_section__image">
+					<img src="https://build-web-nhanh.page.gd/wp-content/uploads/2025/09/17787044_5886959-1200x800.jpg" alt="Team Image" />
+				</div>
 			</div>
 
-			<div class="lv_contentBox__item" style="background-color: #0052cc">
-				<h3 class="lv_contentBox__text">An ninh công nghệ cao</h3>
-				<div class="lv_contentBox__description">Sự an toàn của người chơi luôn được U888 đặt lên hàng đầu khi nhà cái trang bị hệ thống bảo mật cực kỳ mạnh mẽ như hệ thống mã hóa SSL 128-bit, bảo mật OTP cung cấp nhiều lớp bảo vệ.</div>
+			<div class="lv_content_section">
+				<div class="lv_content_section__image">
+					<img src="https://build-web-nhanh.page.gd/wp-content/uploads/2025/09/17787044_5886959-1200x800.jpg" alt="Target Image" />
+				</div>
+				<div class="lv_content_section__text">
+					<h2 class="lv_content_section__heading">TẦM NHÌN & SỨ MỆNH</h2>
+					<div class="lv_content_section__description">Chúng tôi hướng đến việc trở thành đơn vị tiên phong trong giải pháp xây dựng website nhanh, giúp khách hàng tiết kiệm thời gian, tối ưu chi phí và tăng trải nghiệm người dùng.</div>
+					<a href="#" class="lv_content_section__link">LIÊN HỆ</a>
+				</div>
 			</div>
-
-			<div class="lv_contentBox__item" style="background-color: #28a745">
-				<h3 class="lv_contentBox__text">Nạp rút tiền nhanh</h3>
-				<div class="lv_contentBox__description">Nhà cái này xây dựng giao diện dịch vụ nạp tiền và rút tiền rất dễ hiểu như “nạp tiền” - “rút tiền” như vậy, người chơi mới dễ dàng thực hiện mọi thao tác mà không bị mất quá nhiều thời gian.</div>
-			</div>
-
-			<div class="lv_contentBox__item" style="background-color: #6f42c1">
-				<h3 class="lv_contentBox__text">App di động đồng bộ</h3>
-				<div class="lv_contentBox__description">Không chỉ xây dựng lại phiên bản web này, nhà cái còn phát triển app đồng bộ với cả nền tảng IOS và Android. Giao diện người dùng rất dễ hiểu, phù hợp với mọi loại thiết bị di động.</div>
-			</div>
-
-			<div class="lv_contentBox__item" style="background-color: #20c997">
-				<h3 class="lv_contentBox__text">Giấy phép hợp pháp</h3>
-				<div class="lv_contentBox__description">U888 được cấp phép hoạt động bởi PAGCOR - tổ chức uy tín của quốc tế. Với đội ngũ chuyên gia giàu kinh nghiệm trong ngành, nhà cái cam kết mang đến sự an toàn cho người chơi.</div>
-			</div>
-		</section>
+		</div>
 	</body>
 </html>

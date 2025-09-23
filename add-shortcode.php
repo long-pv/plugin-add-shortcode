@@ -115,6 +115,7 @@ add_action('acf/init', function () {
             'Box content'   => 'box-content',
             'Promo banner'  => 'promo-banner',
             'List image'    => 'list-image',
+            'Content image' => 'content-image',
             // 'Single post'   => 'single-post',
             // 'Archive post'  => 'archive-post',
         ];
@@ -131,22 +132,6 @@ add_action('acf/init', function () {
         }
     }
 });
-
-// Hook vào template_include để thay đổi template của trang single post
-// function my_custom_single_post_template($template)
-// {
-//     if (is_single()) {
-//         $single_post_use_template = get_field('single_post_use_template', 'option') ?? false;
-//         if ($single_post_use_template) {
-//             $custom_template = ADD_SC_PATH . 'templates/single.php';
-//             if (file_exists($custom_template)) {
-//                 return $custom_template;
-//             }
-//         }
-//     }
-//     return $template;
-// }
-// add_filter('template_include', 'my_custom_single_post_template', 99);
 
 // Shortcode Tabs [lv_tabs]
 function lv_tabs_shortcode()
@@ -720,86 +705,78 @@ add_shortcode('lv_menu_bottom', function () {
                 </a>
             <?php endforeach; ?>
         </nav>
-        <?php endif;
+    <?php endif;
 
     return ob_get_clean();
 });
 
-function lv_countdown_shortcode($atts)
+function lv_countdown_shortcode()
 {
-    // Thiết lập giá trị mặc định cho tham số "date"
-    $atts = shortcode_atts(
-        array(
-            'date' => '31/12/2025', // Ngày mặc định
-        ),
-        $atts,
-        'lv_countdown'
-    );
+    // Lấy ngày giờ hiện tại
+    $current_date = new DateTime();
+    $current_time = $current_date->format('H:i'); // Lấy giờ phút hiện tại
 
-    // Chuyển đổi định dạng d/m/Y sang Y-m-d để JavaScript hiểu được
-    $date_parts = explode('/', $atts['date']);
-    $formatted_date = $date_parts[2] . '-' . $date_parts[1] . '-' . $date_parts[0] . 'T23:59:59';
+    // Xác định thời gian đếm ngược
+    $target_date = clone $current_date;
+    $target_date->setTime(18, 30); // Đặt thời gian đếm ngược là 18:30
 
-    // HTML cấu trúc countdown
-    $output = '<div class="lv_timer_countdown">
-                <div class="lv_timer_countdown_item lv_timer_countdown_weeks">
-                    <span class="lv_timer_countdown_value" id="weeks">0</span>
-                    <span class="lv_timer_countdown_label">WEEKS</span>
-                </div>
-                <div class="lv_timer_countdown_item lv_timer_countdown_days">
-                    <span class="lv_timer_countdown_value" id="days">0</span>
-                    <span class="lv_timer_countdown_label">DAYS</span>
-                </div>
-                <div class="lv_timer_countdown_item lv_timer_countdown_hours">
-                    <span class="lv_timer_countdown_value" id="hours">0</span>
-                    <span class="lv_timer_countdown_label">HOURS</span>
-                </div>
-                <div class="lv_timer_countdown_item lv_timer_countdown_minutes">
-                    <span class="lv_timer_countdown_value" id="minutes">0</span>
-                    <span class="lv_timer_countdown_label">MIN</span>
-                </div>
-                <div class="lv_timer_countdown_item lv_timer_countdown_seconds">
-                    <span class="lv_timer_countdown_value" id="seconds">0</span>
-                    <span class="lv_timer_countdown_label">SEC</span>
-                </div>
-            </div>';
+    // Nếu giờ hiện tại đã qua 18:30, thì chọn 18:30 ngày hôm sau
+    if ($current_time > '18:30') {
+        $target_date->modify('+1 day');
+    }
 
-    // Đoạn script để tính toán và cập nhật countdown
-    $output .= "
-        <script type='text/javascript'>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Định dạng ngày đích cho countdown
-                var targetDate = new Date('{$formatted_date}');
+    // Lấy ngày giờ đếm ngược theo định dạng Y-m-d H:i:s cho JavaScript
+    $formatted_date = $target_date->format('Y-m-d\TH:i:s');
 
-                function updateCountdown() {
-                    var now = new Date();
-                    var timeRemaining = targetDate - now;
+    // HTML động cấu trúc countdown
+    ob_start();  // Bắt đầu ghi đệm nội dung
+    ?>
+    <div class="lv_timer_countdown">
+        <div class="lv_timer_countdown_item lv_timer_countdown_hours">
+            <span class="lv_timer_countdown_value" id="hours">0</span>
+            <span class="lv_timer_countdown_label">HOURS</span>
+        </div>
+        <div class="lv_timer_countdown_item lv_timer_countdown_minutes">
+            <span class="lv_timer_countdown_value" id="minutes">0</span>
+            <span class="lv_timer_countdown_label">MIN</span>
+        </div>
+        <div class="lv_timer_countdown_item lv_timer_countdown_seconds">
+            <span class="lv_timer_countdown_value" id="seconds">0</span>
+            <span class="lv_timer_countdown_label">SEC</span>
+        </div>
+    </div>
 
-                    if (timeRemaining <= 0) {
-                        clearInterval(countdownInterval);
-                        document.getElementById('lv-countdown').innerHTML = 'Countdown Completed';
-                    } else {
-                        var weeks = Math.floor(timeRemaining / (1000 * 60 * 60 * 24 * 7));
-                        var days = Math.floor((timeRemaining % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
-                        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Định dạng ngày đích cho countdown
+            var targetDate = new Date('<?php echo $formatted_date; ?>');
 
-                        document.getElementById('weeks').innerHTML = weeks;
-                        document.getElementById('days').innerHTML = days;
-                        document.getElementById('hours').innerHTML = hours;
-                        document.getElementById('minutes').innerHTML = minutes;
-                        document.getElementById('seconds').innerHTML = seconds;
-                    }
+            function updateCountdown() {
+                var now = new Date();
+                var timeRemaining = targetDate - now;
+
+                if (timeRemaining <= 0) {
+                    // Nếu thời gian đếm ngược đã kết thúc, tính toán lại đếm ngược cho ngày hôm sau
+                    targetDate.setDate(targetDate.getDate() + 1);
+                    timeRemaining = targetDate - now;
                 }
 
-                // Cập nhật countdown mỗi giây
-                var countdownInterval = setInterval(updateCountdown, 1000);
-            });
-        </script>
-    ";
+                var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    return $output;
+                document.getElementById('hours').innerHTML = hours;
+                document.getElementById('minutes').innerHTML = minutes;
+                document.getElementById('seconds').innerHTML = seconds;
+            }
+
+            // Cập nhật countdown mỗi giây
+            var countdownInterval = setInterval(updateCountdown, 1000);
+        });
+    </script>
+    <?php
+    // Lấy toàn bộ nội dung đã ghi đệm và trả về
+    return ob_get_clean();
 }
 add_shortcode('lv_countdown', 'lv_countdown_shortcode');
 
@@ -1417,7 +1394,7 @@ function lv_promo_banner_shortcode($atts)
                 <?php endif; ?>
             </div>
         </div>
-<?php endif;
+        <?php endif;
 
     return ob_get_clean();
 }
@@ -1454,3 +1431,77 @@ function list_image_shortcode()
 
 // Đăng ký shortcode
 add_shortcode('lv_list_image', 'list_image_shortcode');
+
+
+function lv_content_image_shortcode($atts)
+{
+    ob_start();
+
+    // Lấy dữ liệu từ ACF
+    $content_images = get_field('content_image', 'options');
+
+    // Kiểm tra nếu có dữ liệu
+    if ($content_images):
+        echo '<div class="lv_content_section_container lv_container">';  // Mở thẻ container
+
+        // Duyệt qua mảng dữ liệu bằng vòng lặp foreach
+        foreach ($content_images as $index => $image_data):
+            $image_id = $image_data['image']; // ID của hình ảnh
+            $title = $image_data['title'];
+            $content = $image_data['content'];
+            $button = $image_data['button'];
+            $button_url = isset($button['url']) ? $button['url'] : '#';
+            $button_text = isset($button['title']) ? $button['title'] : 'Xem thêm';
+            $target = isset($button['target']) ? $button['target'] : '';
+
+            if ($index % 2 == 0):
+        ?>
+                <div class="lv_content_section">
+                    <div class="lv_content_section__image">
+                        <?php
+                        echo wp_get_attachment_image($image_id, 'full');
+                        ?>
+                    </div>
+                    <div class="lv_content_section__text">
+                        <?php if ($title) : ?>
+                            <h2 class="lv_content_section__heading"><?php echo $title; ?></h2>
+                        <?php endif; ?>
+                        <?php if ($content) : ?>
+                            <div class="lv_content_section__description"><?php echo $content; ?></div>
+                        <?php endif; ?>
+                        <?php if ($button_url && $button_text) : ?>
+                            <a target="<?php echo $target; ?>" href="<?php echo $button_url; ?>" class="lv_content_section__link"><?php echo $button_text; ?></a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php
+            else:
+            ?>
+                <div class="lv_content_section">
+                    <div class="lv_content_section__text">
+                        <?php if ($title) : ?>
+                            <h2 class="lv_content_section__heading"><?php echo $title; ?></h2>
+                        <?php endif; ?>
+                        <?php if ($content) : ?>
+                            <div class="lv_content_section__description"><?php echo $content; ?></div>
+                        <?php endif; ?>
+                        <?php if ($button_url && $button_text) : ?>
+                            <a target="<?php echo $target; ?>" href="<?php echo $button_url; ?>" class="lv_content_section__link"><?php echo $button_text; ?></a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="lv_content_section__image">
+                        <?php
+                        echo wp_get_attachment_image($image_id, 'full');
+                        ?>
+                    </div>
+                </div>
+<?php
+            endif; // End kiểm tra chẵn/lẻ
+        endforeach;
+
+        echo '</div>';  // Đóng thẻ container
+    endif;
+
+    return ob_get_clean();
+}
+add_shortcode('lv_content_image', 'lv_content_image_shortcode');
