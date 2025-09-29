@@ -19,6 +19,35 @@
             "layout": "row",
             "sub_fields": [
                 {
+                    "key": "field_68da9e5a01b91",
+                    "label": "Layout",
+                    "name": "layout",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "1": "1",
+                        "2": "2"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0
+                },
+                {
                     "key": "field_68cea1683d613",
                     "label": "Title",
                     "name": "title",
@@ -179,5 +208,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1758372832
+    "modified": 1759157876
 }
