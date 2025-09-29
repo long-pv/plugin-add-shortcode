@@ -1407,6 +1407,7 @@ function list_image_shortcode()
     // Lấy dữ liệu từ ACF
     $list_image = get_field('list_image', 'option'); // Lấy nhóm các trường từ options page
     $list_image_title = get_field('list_image_title', 'option'); // Lấy nhóm các trường từ options page
+    $layout = get_field('list_image_layout', 'option') ?: '1';
     $pc_column = isset($list_image['pc_column']) ? $list_image['pc_column'] : 5; // Số cột trên PC
     $sp_column = isset($list_image['sp_column']) ? $list_image['sp_column'] : 5; // Số cột trên mobile
     $list = isset($list_image['list']) ? $list_image['list'] : array(); // Danh sách hình ảnh
@@ -1420,25 +1421,46 @@ function list_image_shortcode()
     endif;
 
     // Bắt đầu HTML cho Shortcode
-    $output = '<div class="lv_imageList" style="--columns: ' . $pc_column . '; --columns-mobile: ' . $sp_column . ';">';
+    $output = '';
+    if ($layout == '1') {
+        $output .= '<div class="lv_imageList" style="--columns: ' . $pc_column . '; --columns-mobile: ' . $sp_column . ';">';
 
-    if (!empty($list)) {
-        foreach ($list as $item) {
-            $image_url = wp_get_attachment_image_url($item['image'], 'medium'); // Lấy URL của ảnh
-            $url = isset($item['url']) ? esc_url($item['url']) : '#'; // Lấy URL (nếu có, nếu không sẽ là #)
-            $output .= '<div class="lv_imageList__item">';
-            $output .= '<a href="' . $url . '"><img src="' . $image_url . '" alt="Image"></a>';
-            $output .= '</div>';
+        if (!empty($list)) {
+            foreach ($list as $item) {
+                $image_url = wp_get_attachment_image_url($item['image'], 'full'); // Lấy URL của ảnh
+                $url = isset($item['url']) ? esc_url($item['url']) : '#'; // Lấy URL (nếu có, nếu không sẽ là #)
+                $output .= '<div class="lv_imageList__item">';
+                $output .= '<a href="' . $url . '"><img src="' . $image_url . '" alt="Image"></a>';
+                $output .= '</div>';
+            }
         }
+
+        // Close the lv_imageList div
+        $output .= '</div>';
+    } else if ($layout == '2') {
+        $output .= '<div class="lv_catSlider">';
+
+        // Check if there is a list of images and iterate through them for the slider
+        if (!empty($list)) {
+            foreach ($list as $item) {
+                $image_url = wp_get_attachment_image_url($item['image'], 'full'); // Lấy URL của ảnh
+                $url = isset($item['url']) ? esc_url($item['url']) : '#'; // Lấy URL (nếu có, nếu không sẽ là #)
+
+                $output .= '<div class="lv_catSlider__slickSlide">';
+                $output .= '<a href="' . $url . '">';
+                $output .= '<img src="' . $image_url . '" alt="Item Image" />';
+                $output .= '</a>';
+                $output .= '</div>';
+            }
+        }
+
+        // Closing the div for the slider
+        $output .= '</div>';
     }
 
-    // Kết thúc HTML
-    $output .= '</div>';
-
+    // Return the final HTML
     return $output; // Trả về HTML để hiển thị
 }
-
-// Đăng ký shortcode
 add_shortcode('lv_list_image', 'list_image_shortcode');
 
 
@@ -1447,11 +1469,12 @@ function lv_content_image_shortcode($atts)
     ob_start();
 
     // Lấy dữ liệu từ ACF
+    $layout = get_field('layout_content_image', 'options') ?: '1';
     $content_images = get_field('content_image', 'options');
 
     // Kiểm tra nếu có dữ liệu
     if ($content_images):
-        echo '<div class="lv_content_section_container lv_container">';  // Mở thẻ container
+        echo '<div class="lv_content_section_container lv_container lv_content_section_layout_' . $layout . '">';  // Mở thẻ container
 
         // Duyệt qua mảng dữ liệu bằng vòng lặp foreach
         foreach ($content_images as $index => $image_data):
@@ -1462,6 +1485,7 @@ function lv_content_image_shortcode($atts)
             $button_url = isset($button['url']) ? $button['url'] : '#';
             $button_text = isset($button['title']) ? $button['title'] : 'Xem thêm';
             $target = isset($button['target']) ? $button['target'] : '';
+            $image_title = $image_data['image_title'];
 
             if ($index % 2 == 0):
         ?>
@@ -1472,13 +1496,23 @@ function lv_content_image_shortcode($atts)
                         ?>
                     </div>
                     <div class="lv_content_section__text">
-                        <?php if ($title) : ?>
+                        <?php if ($layout == '1' && $title) : ?>
                             <h2 class="lv_content_section__heading"><?php echo $title; ?></h2>
                         <?php endif; ?>
+
+                        <?php if ($layout == '2' && $image_title) : ?>
+                            <a href="<?php echo $button_url; ?>" target="<?php echo $target; ?>" class="lv_content_section_image_title">
+                                <?php
+                                echo wp_get_attachment_image($image_title, 'full');
+                                ?>
+                            </a>
+                        <?php endif; ?>
+
                         <?php if ($content) : ?>
                             <div class="lv_content_section__description"><?php echo $content; ?></div>
                         <?php endif; ?>
-                        <?php if ($button_url && $button_text) : ?>
+
+                        <?php if ($layout == '1' && $button_url && $button_text) : ?>
                             <a target="<?php echo $target; ?>" href="<?php echo $button_url; ?>" class="lv_content_section__link"><?php echo $button_text; ?></a>
                         <?php endif; ?>
                     </div>
@@ -1488,13 +1522,23 @@ function lv_content_image_shortcode($atts)
             ?>
                 <div class="lv_content_section">
                     <div class="lv_content_section__text">
-                        <?php if ($title) : ?>
+                        <?php if ($layout == '1' && $title) : ?>
                             <h2 class="lv_content_section__heading"><?php echo $title; ?></h2>
                         <?php endif; ?>
+
+                        <?php if ($layout == '2' && $image_title) : ?>
+                            <a href="<?php echo $button_url; ?>" target="<?php echo $target; ?>" class="lv_content_section_image_title">
+                                <?php
+                                echo wp_get_attachment_image($image_title, 'full');
+                                ?>
+                            </a>
+                        <?php endif; ?>
+
                         <?php if ($content) : ?>
                             <div class="lv_content_section__description"><?php echo $content; ?></div>
                         <?php endif; ?>
-                        <?php if ($button_url && $button_text) : ?>
+
+                        <?php if ($layout == '1' && $button_url && $button_text) : ?>
                             <a target="<?php echo $target; ?>" href="<?php echo $button_url; ?>" class="lv_content_section__link"><?php echo $button_text; ?></a>
                         <?php endif; ?>
                     </div>

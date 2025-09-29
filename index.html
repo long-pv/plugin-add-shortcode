@@ -3,114 +3,120 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Content Section</title>
+		<title>Carousel với Slick.js</title>
+		<!-- Slick CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 		<style>
-			.lv_content_section {
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f5f5f5;
+			}
+			.lv_catSlider__slickSlide {
 				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-				padding-bottom: 30px;
-				align-items: center;
-				gap: 40px;
-			}
-
-			.lv_content_section__text,
-			.lv_content_section__image {
-				flex: 1;
-			}
-
-			.lv_content_section__text {
-				max-width: 50%;
-			}
-
-			.lv_content_section__heading {
-				font-size: 24px;
-				font-weight: 700;
-				margin-bottom: 24px;
-				margin-top: 0px;
-			}
-
-			.lv_content_section__description {
-				font-size: 16px;
-				line-height: 1.5;
-				margin-bottom: 24px;
-				margin-top: 0px;
-			}
-
-			.lv_content_section__link {
-				font-size: 16px;
-				font-weight: bold;
-				color: #fff;
-				background-color: #b72b2b; /* Red button */
-				padding: 8px 16px;
-				text-decoration: none;
-				border-radius: 5px;
-				display: inline-flex;
-				align-items: center;
 				justify-content: center;
-				text-align: center;
-				transition: background-color 0.3s ease;
+				align-items: center;
+				transition: transform 0.3s ease;
 			}
-
-			.lv_content_section__link:hover {
-				background-color: #a2211d; /* Darker red */
+			.lv_catSlider__slickSlide:not(.slick-center) {
+				transform: scale(0.6); /* Bóp nhỏ các item bên ngoài */
 			}
-
-			.lv_content_section__image {
-				max-width: 50%;
+			.lv_catSlider__slickCenter .slick-slide {
+				transform: scale(1); /* Mục ở giữa giữ kích thước bình thường */
 			}
-
-			.lv_content_section__image img {
+			.lv_catSlider__slickDots {
+				display: none; /* Ẩn chấm điều hướng */
+			}
+			.lv_catSlider__slickSlide img {
 				width: 100%;
 				height: auto;
-				border-radius: 10px;
+				aspect-ratio: 660 / 294;
+				object-fit: cover;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 			}
 
-			/* Responsive */
+			/* Media Query cho màn hình nhỏ hơn 768px */
 			@media (max-width: 768px) {
-				.lv_content_section {
-					flex-direction: column;
+				.lv_catSlider__slickSlide {
+					padding: 8px;
 				}
-
-				.lv_content_section__text,
-				.lv_content_section__image {
-					max-width: 100%;
-					flex: 1;
-				}
-
-				/* Đảm bảo ảnh trên, text dưới */
-				.lv_content_section__image {
-					order: 1;
-				}
-				.lv_content_section__text {
-					order: 2;
+				.lv_catSlider__slickSlide:not(.slick-center) {
+					transform: scale(1);
 				}
 			}
 		</style>
 	</head>
 	<body>
-		<div class="lv_content_section_container lv_container">
-			<div class="lv_content_section">
-				<div class="lv_content_section__text">
-					<h2 class="lv_content_section__heading">CHÚNG TÔI LÀ AI</h2>
-					<div class="lv_content_section__description">Với hơn 5 năm kinh nghiệm trong lĩnh vực thiết kế web nhanh, chúng tôi giúp doanh nghiệp hiện thực hóa ý tưởng online một cách nhanh chóng, chuyên nghiệp và hiệu quả.</div>
-					<a href="#" class="lv_content_section__link">LIÊN HỆ</a>
-				</div>
-				<div class="lv_content_section__image">
-					<img src="https://build-web-nhanh.page.gd/wp-content/uploads/2025/09/17787044_5886959-1200x800.jpg" alt="Team Image" />
-				</div>
+		<div class="lv_catSlider">
+			<div class="lv_catSlider__slickSlide">
+				<a href="https://example.com/item1" target="_blank">
+					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 1" />
+				</a>
 			</div>
-
-			<div class="lv_content_section">
-				<div class="lv_content_section__image">
-					<img src="https://build-web-nhanh.page.gd/wp-content/uploads/2025/09/17787044_5886959-1200x800.jpg" alt="Target Image" />
-				</div>
-				<div class="lv_content_section__text">
-					<h2 class="lv_content_section__heading">TẦM NHÌN & SỨ MỆNH</h2>
-					<div class="lv_content_section__description">Chúng tôi hướng đến việc trở thành đơn vị tiên phong trong giải pháp xây dựng website nhanh, giúp khách hàng tiết kiệm thời gian, tối ưu chi phí và tăng trải nghiệm người dùng.</div>
-					<a href="#" class="lv_content_section__link">LIÊN HỆ</a>
-				</div>
+			<div class="lv_catSlider__slickSlide">
+				<a href="https://example.com/item2" target="_blank">
+					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 2" />
+				</a>
+			</div>
+			<div class="lv_catSlider__slickSlide">
+				<a href="https://example.com/item3" target="_blank">
+					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 3" />
+				</a>
+			</div>
+			<div class="lv_catSlider__slickSlide">
+				<a href="https://example.com/item4" target="_blank">
+					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 4" />
+				</a>
+			</div>
+			<div class="lv_catSlider__slickSlide">
+				<a href="https://example.com/item5" target="_blank">
+					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 5" />
+				</a>
+			</div>
+			<div class="lv_catSlider__slickSlide">
+				<a href="https://example.com/item6" target="_blank">
+					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 6" />
+				</a>
 			</div>
 		</div>
+
+		<!-- jQuery -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<!-- Slick JS -->
+		<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".lv_catSlider").slick({
+					infinite: true,
+					slidesToShow: 3 /* Hiển thị 3 ảnh trên màn hình lớn */,
+					slidesToScroll: 1,
+					centerMode: true,
+					centerPadding: "0",
+					focusOnSelect: true,
+					autoplay: true,
+					autoplaySpeed: 3000,
+					arrows: false /* Tắt mũi tên */,
+					dots: false /* Tắt chấm điều hướng */,
+					responsive: [
+						{
+							breakpoint: 768 /* Khi màn hình nhỏ hơn 768px */,
+							settings: {
+								slidesToShow: 1.5,
+								slidesToScroll: 1,
+								centerMode: false,
+								centerPadding: "0",
+								autoplay: true,
+								autoplaySpeed: 3000,
+								arrows: false,
+								dots: false,
+								infinite: false,
+							},
+						},
+					],
+				});
+			});
+		</script>
 	</body>
 </html>

@@ -109,4 +109,33 @@
 
 	updateTimer(); // cập nhật ngay lần đầu
 	setInterval(updateTimer, 1000);
+
+	$(".lv_catSlider").slick({
+		infinite: true,
+		slidesToShow: 3 /* Hiển thị 3 ảnh trên màn hình lớn */,
+		slidesToScroll: 1,
+		centerMode: true,
+		centerPadding: "0",
+		focusOnSelect: true,
+		autoplay: true,
+		autoplaySpeed: 3000,
+		arrows: false,
+		dots: false,
+		responsive: [
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 1.5,
+					slidesToScroll: 1,
+					centerMode: false,
+					centerPadding: "0",
+					autoplay: true,
+					autoplaySpeed: 3000,
+					arrows: false,
+					dots: false,
+					infinite: false,
+				},
+			},
+		],
+	});
 })(jQuery, window);
