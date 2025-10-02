@@ -2529,3 +2529,78 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
         margin-bottom: 0px;
     }
 }
+
+/* Tabs wrapper */
+.lv_tabs_wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+}
+
+/* Tabs nav */
+.lv_tabs_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.lv_tabs_navItem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #555;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.lv_tabs_navItem.active {
+    border-bottom: 3px solid #ff9800;
+    color: #000;
+    font-weight: bold;
+}
+
+.lv_tabs_icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+}
+
+/* Tabs content */
+.lv_tabs_content {
+    width: 100%;
+}
+
+.lv_tabs_panel {
+    display: none;
+}
+
+.lv_tabs_panel.active {
+    display: block;
+}
+
+.lv_tabs_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 ảnh mỗi hàng */
+    gap: 16px;
+}
+
+.lv_tabs_item img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+}
+
+.lv_tabs_item img:hover {
+    transform: scale(1.05);
+}

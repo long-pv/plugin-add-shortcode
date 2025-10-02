@@ -138,4 +138,16 @@
 			},
 		],
 	});
+
+	$(".lv_tabs_navItem").click(function () {
+		var tabId = $(this).attr("data-tab");
+
+		// Active state for nav
+		$(".lv_tabs_navItem").removeClass("active");
+		$(this).addClass("active");
+
+		// Show content
+		$(".lv_tabs_panel").removeClass("active");
+		$("#" + tabId).addClass("active");
+	});
 })(jQuery, window);

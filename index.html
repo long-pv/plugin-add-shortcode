@@ -2,119 +2,189 @@
 <html lang="vi">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Carousel với Slick.js</title>
-		<!-- Slick CSS -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+		<title>Tabs Demo Full Width</title>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<style>
-			body {
+			/* Tabs wrapper */
+			.lv_tabs_wrapper {
+				width: 100%;
+				max-width: 1200px;
+				margin: 40px auto;
 				font-family: Arial, sans-serif;
-				margin: 0;
-				padding: 0;
-				background-color: #f5f5f5;
 			}
-			.lv_catSlider__slickSlide {
+
+			/* Tabs nav */
+			.lv_tabs_nav {
+				display: flex;
+				justify-content: space-between;
+				align-items: stretch;
+				list-style: none;
+				padding: 0;
+				margin: 0 0 16px 0;
+				border-bottom: 2px solid #e0e0e0;
+			}
+
+			.lv_tabs_navItem {
+				flex: 1;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				transition: transform 0.3s ease;
-			}
-			.lv_catSlider__slickSlide:not(.slick-center) {
-				transform: scale(0.6); /* Bóp nhỏ các item bên ngoài */
-			}
-			.lv_catSlider__slickCenter .slick-slide {
-				transform: scale(1); /* Mục ở giữa giữ kích thước bình thường */
-			}
-			.lv_catSlider__slickDots {
-				display: none; /* Ẩn chấm điều hướng */
-			}
-			.lv_catSlider__slickSlide img {
-				width: 100%;
-				height: auto;
-				aspect-ratio: 660 / 294;
-				object-fit: cover;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				cursor: pointer;
+				padding: 10px 0;
+				font-size: 14px;
+				color: #555;
+				transition: all 0.3s ease;
+				text-align: center;
 			}
 
-			/* Media Query cho màn hình nhỏ hơn 768px */
-			@media (max-width: 768px) {
-				.lv_catSlider__slickSlide {
-					padding: 8px;
-				}
-				.lv_catSlider__slickSlide:not(.slick-center) {
-					transform: scale(1);
-				}
+			.lv_tabs_navItem.active {
+				border-bottom: 3px solid #ff9800;
+				color: #000;
+				font-weight: bold;
+			}
+
+			.lv_tabs_icon {
+				width: 20px;
+				height: 20px;
+				margin-right: 6px;
+			}
+
+			/* Tabs content */
+			.lv_tabs_content {
+				width: 100%;
+			}
+
+			.lv_tabs_panel {
+				display: none;
+			}
+
+			.lv_tabs_panel.active {
+				display: block;
+			}
+
+			.lv_tabs_grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr); /* 3 ảnh mỗi hàng */
+				gap: 16px;
+			}
+
+			.lv_tabs_item img {
+				width: 100%;
+				height: auto;
+				border-radius: 6px;
+				transition: transform 0.3s ease;
+			}
+
+			.lv_tabs_item img:hover {
+				transform: scale(1.05);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="lv_catSlider">
-			<div class="lv_catSlider__slickSlide">
-				<a href="https://example.com/item1" target="_blank">
-					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 1" />
-				</a>
-			</div>
-			<div class="lv_catSlider__slickSlide">
-				<a href="https://example.com/item2" target="_blank">
-					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 2" />
-				</a>
-			</div>
-			<div class="lv_catSlider__slickSlide">
-				<a href="https://example.com/item3" target="_blank">
-					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 3" />
-				</a>
-			</div>
-			<div class="lv_catSlider__slickSlide">
-				<a href="https://example.com/item4" target="_blank">
-					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 4" />
-				</a>
-			</div>
-			<div class="lv_catSlider__slickSlide">
-				<a href="https://example.com/item5" target="_blank">
-					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 5" />
-				</a>
-			</div>
-			<div class="lv_catSlider__slickSlide">
-				<a href="https://example.com/item6" target="_blank">
-					<img src="https://anhnail.com/wp-content/uploads/2024/10/Hinh-gai-xinh-k8-sieu-cute.jpg" alt="Item 6" />
-				</a>
+		<div class="lv_tabs_wrapper">
+			<!-- Tabs -->
+			<ul class="lv_tabs_nav">
+				<li class="lv_tabs_navItem active" data-tab="tabHot">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Hot_icon.svg" class="lv_tabs_icon" alt="hot icon" />
+					<!-- Icon for Hot -->
+					<span class="lv_tabs_text">Hot</span>
+				</li>
+				<li class="lv_tabs_navItem" data-tab="tabCasino">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Casino_icon.svg" class="lv_tabs_icon" alt="casino icon" />
+					<!-- Icon for Casino -->
+					<span class="lv_tabs_text">Casino</span>
+				</li>
+				<li class="lv_tabs_navItem" data-tab="tabNoHu">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Gambling_icon.svg" class="lv_tabs_icon" alt="nổ hũ icon" />
+					<!-- Icon for Nổ hũ -->
+					<span class="lv_tabs_text">Nổ hũ</span>
+				</li>
+				<li class="lv_tabs_navItem" data-tab="tabTheThao">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Sports_icon.svg" class="lv_tabs_icon" alt="thể thao icon" />
+					<!-- Icon for Thể thao -->
+					<span class="lv_tabs_text">Thể thao</span>
+				</li>
+				<li class="lv_tabs_navItem" data-tab="tabGameBai">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Card_game_icon.svg" class="lv_tabs_icon" alt="game bài icon" />
+					<!-- Icon for Game bài -->
+					<span class="lv_tabs_text">Game bài</span>
+				</li>
+				<li class="lv_tabs_navItem" data-tab="tabXoSo">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Lottery_icon.svg" class="lv_tabs_icon" alt="xổ số icon" />
+					<!-- Icon for Xổ số -->
+					<span class="lv_tabs_text">Xổ số</span>
+				</li>
+			</ul>
+
+			<!-- Content -->
+			<div class="lv_tabs_content">
+				<div id="tabHot" class="lv_tabs_panel active">
+					<div class="lv_tabs_grid">
+						<a href="#" class="lv_tabs_item">
+							<img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="demo 1" />
+						</a>
+						<a href="#" class="lv_tabs_item">
+							<img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="demo 2" />
+						</a>
+						<a href="#" class="lv_tabs_item">
+							<img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="demo 3" />
+						</a>
+						<a href="#" class="lv_tabs_item">
+							<img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="demo 4" />
+						</a>
+						<a href="#" class="lv_tabs_item">
+							<img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="demo 5" />
+						</a>
+						<a href="#" class="lv_tabs_item">
+							<img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="demo 6" />
+						</a>
+					</div>
+				</div>
+
+				<div id="tabCasino" class="lv_tabs_panel">
+					<div class="lv_tabs_grid">
+						<a href="#"><img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="casino" /></a>
+					</div>
+				</div>
+
+				<div id="tabNoHu" class="lv_tabs_panel">
+					<div class="lv_tabs_grid">
+						<a href="#"><img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="nổ hũ" /></a>
+					</div>
+				</div>
+
+				<div id="tabTheThao" class="lv_tabs_panel">
+					<div class="lv_tabs_grid">
+						<a href="#"><img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="thể thao" /></a>
+					</div>
+				</div>
+
+				<div id="tabGameBai" class="lv_tabs_panel">
+					<div class="lv_tabs_grid">
+						<a href="#"><img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="game bài" /></a>
+					</div>
+				</div>
+
+				<div id="tabXoSo" class="lv_tabs_panel">
+					<div class="lv_tabs_grid">
+						<a href="#"><img src="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" alt="xổ số" /></a>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<!-- jQuery -->
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<!-- Slick JS -->
-		<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 		<script>
 			$(document).ready(function () {
-				$(".lv_catSlider").slick({
-					infinite: true,
-					slidesToShow: 3 /* Hiển thị 3 ảnh trên màn hình lớn */,
-					slidesToScroll: 1,
-					centerMode: true,
-					centerPadding: "0",
-					focusOnSelect: true,
-					autoplay: true,
-					autoplaySpeed: 3000,
-					arrows: false /* Tắt mũi tên */,
-					dots: false /* Tắt chấm điều hướng */,
-					responsive: [
-						{
-							breakpoint: 768 /* Khi màn hình nhỏ hơn 768px */,
-							settings: {
-								slidesToShow: 1.5,
-								slidesToScroll: 1,
-								centerMode: false,
-								centerPadding: "0",
-								autoplay: true,
-								autoplaySpeed: 3000,
-								arrows: false,
-								dots: false,
-								infinite: false,
-							},
-						},
-					],
+				$(".lv_tabs_navItem").click(function () {
+					var tabId = $(this).attr("data-tab");
+
+					// Active state for nav
+					$(".lv_tabs_navItem").removeClass("active");
+					$(this).addClass("active");
+
+					// Show content
+					$(".lv_tabs_panel").removeClass("active");
+					$("#" + tabId).addClass("active");
 				});
 			});
 		</script>
