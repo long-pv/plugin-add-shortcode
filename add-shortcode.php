@@ -1549,7 +1549,7 @@ function lv_content_image_shortcode($atts)
                         ?>
                     </div>
                 </div>
-<?php
+        <?php
             endif; // End kiểm tra chẵn/lẻ
         endforeach;
 
@@ -1560,131 +1560,70 @@ function lv_content_image_shortcode($atts)
 }
 add_shortcode('lv_content_image', 'lv_content_image_shortcode');
 
+function shortcode_tabs_category()
+{
+    ob_start();
 
-// Tạo ID theo CamelCase không dấu: "Nổ hũ" -> "tabNoHu"
-if (!function_exists('lv_make_id_from_title')) {
-    function lv_make_id_from_title($title)
-    {
-        // Bỏ dấu tiếng Việt
-        $no_accent = remove_accents($title);
-        // Loại ký tự không phải chữ/số hoặc khoảng trắng
-        $no_accent = preg_replace('/[^A-Za-z0-9 ]+/', ' ', $no_accent);
-        // Thu gọn khoảng trắng
-        $no_accent = trim(preg_replace('/\s+/', ' ', $no_accent));
-        // CamelCase
-        $parts = $no_accent === '' ? [] : explode(' ', strtolower($no_accent));
-        $camel = '';
-        foreach ($parts as $p) {
-            $camel .= ucfirst($p);
-        }
-        return 'tab' . $camel; // ví dụ: "tabNoHu"
-    }
+    // Lấy dữ liệu từ ACF Options
+    $tabs_category = get_field('tabs_category', 'option');
+
+    if (!empty($tabs_category) && !empty($tabs_category['list'])) :
+        ?>
+        <div class="lv_tabs_wrapper">
+            <!-- Tabs -->
+            <ul class="lv_tabs_nav">
+                <?php
+                $first = true;
+                foreach ($tabs_category['list'] as $index => $tab) :
+                    if (!empty($tab['title'])) :
+                        $tab_id = 'tab' . $index;
+                ?>
+                        <li class="lv_tabs_navItem <?php echo $first ? 'active' : ''; ?>" data-tab="<?php echo $tab_id; ?>">
+                            <?php
+                            if (!empty($tab['title_icon'])) {
+                                echo wp_get_attachment_image($tab['title_icon'], 'thumbnail', false, ['class' => 'lv_tabs_icon']);
+                            }
+                            ?>
+                            <span class="lv_tabs_text"><?php echo $tab['title']; ?></span>
+                        </li>
+                <?php
+                        $first = false;
+                    endif;
+                endforeach;
+                ?>
+            </ul>
+
+            <!-- Content -->
+            <div class="lv_tabs_content">
+                <?php
+                $first = true;
+                foreach ($tabs_category['list'] as $index => $tab) :
+                    if (!empty($tab['title']) && !empty($tab['list_item'])) :
+                        $tab_id = 'tab' . $index;
+                ?>
+                        <div id="<?php echo $tab_id; ?>" class="lv_tabs_cat_panel <?php echo $first ? 'active' : ''; ?>">
+                            <div class="lv_tabs_grid">
+                                <?php foreach ($tab['list_item'] as $item) :
+                                    if (!empty($item['image'])) :
+                                        $url = !empty($item['url']) ? $item['url'] : '#';
+                                ?>
+                                        <a href="<?php echo $url; ?>" class="lv_tabs_item">
+                                            <?php echo wp_get_attachment_image($item['image'], 'medium'); ?>
+                                        </a>
+                                <?php endif;
+                                endforeach; ?>
+                            </div>
+                        </div>
+                <?php
+                        $first = false;
+                    endif;
+                endforeach;
+                ?>
+            </div>
+        </div>
+<?php
+    endif;
+
+    return ob_get_clean();
 }
-
-
-// ===== Helper: tạo ID CamelCase không dấu: "Nổ hũ" -> "tabNoHu" =====
-if (!function_exists('lv_make_id_from_title')) {
-    function lv_make_id_from_title($title)
-    {
-        $no_accent = remove_accents($title);                       // WP helper
-        $no_accent = preg_replace('/[^A-Za-z0-9 ]+/', ' ', $no_accent);
-        $no_accent = trim(preg_replace('/\s+/', ' ', $no_accent));
-        if ($no_accent === '') return 'tabItem';
-        $parts = explode(' ', strtolower($no_accent));
-        $camel = '';
-        foreach ($parts as $p) {
-            $camel .= ucfirst($p);
-        }
-        return 'tab' . $camel;                                     // ví dụ: tabNoHu
-    }
-}
-
-// ===== Shortcode: [lv_tabs_cat] =====
-if (!function_exists('shortcode_tabs_category')) {
-    function shortcode_tabs_category()
-    {
-        // Lấy dữ liệu từ ACF Options
-        $tabs_category = get_field('tabs_category', 'option');
-        if (
-            empty($tabs_category) ||
-            !isset($tabs_category['list']) ||
-            !is_array($tabs_category['list']) ||
-            empty($tabs_category['list'])
-        ) {
-            return '';
-        }
-
-        $tabs = $tabs_category['list'];
-
-        // Xây HTML bằng chuỗi để tránh đóng/mở PHP
-        $html  = '';
-        $html .= '<div class="lv_tabs_wrapper">';
-        $html .=   '<ul class="lv_tabs_nav">';
-
-        $panels_html = '';
-        $idx = 0;
-
-        foreach ($tabs as $tab) {
-            $tab_title   = isset($tab['title']) ? trim($tab['title']) : '';
-            $tab_icon_id = isset($tab['title_icon']) ? intval($tab['title_icon']) : 0;
-            if ($tab_title === '') {
-                continue;
-            }
-
-            $tab_id = lv_make_id_from_title($tab_title);
-
-            // Icon (nếu có)
-            $icon_html = '';
-            if ($tab_icon_id > 0) {
-                $icon_html = wp_get_attachment_image($tab_icon_id, 'medium', false, [
-                    'class'    => 'lv_tabs_icon',
-                    'alt'      => esc_attr($tab_title . ' icon'),
-                    'loading'  => 'lazy',
-                    'decoding' => 'async',
-                ]);
-            }
-
-            // Nav item
-            $active_class = ($idx === 0) ? ' active' : '';
-            $html .= '<li class="lv_tabs_navItem' . esc_attr($active_class) . '" data-tab="' . esc_attr($tab_id) . '">';
-            $html .=        $icon_html;
-            $html .=        '<span class="lv_tabs_text">' . esc_html($tab_title) . '</span>';
-            $html .=    '</li>';
-
-            // Panel tương ứng
-            $panel_active = ($idx === 0) ? ' active' : '';
-            $panel  = '';
-            $panel .= '<div id="' . esc_attr($tab_id) . '" class="lv_tabs_panel' . esc_attr($panel_active) . '">';
-            $panel .=   '<div class="lv_tabs_grid">';
-
-            if (!empty($tab['list_item']) && is_array($tab['list_item'])) {
-                foreach ($tab['list_item'] as $item) {
-                    $item_image_id = isset($item['image']) ? intval($item['image']) : 0;
-                    $item_url      = isset($item['url']) && $item['url'] !== '' ? $item['url'] : '#';
-                    if ($item_image_id > 0) {
-                        $item_image_html = wp_get_attachment_image($item_image_id, 'medium', false, [
-                            'class'    => 'lv_tabs_item_image',
-                            'alt'      => esc_attr($tab_title),
-                            'loading'  => 'lazy',
-                            'decoding' => 'async',
-                        ]);
-                        $panel .= '<a href="' . esc_url($item_url) . '" class="lv_tabs_item">' . $item_image_html . '</a>';
-                    }
-                }
-            }
-
-            $panel .=   '</div>';
-            $panel .= '</div>';
-            $panels_html .= $panel;
-
-            $idx++;
-        }
-
-        $html .=   '</ul>';
-        $html .=   '<div class="lv_tabs_content">' . $panels_html . '</div>';
-        $html .= '</div>';
-
-        return $html;
-    }
-    add_shortcode('lv_tabs_cat', 'shortcode_tabs_category');
-}
+add_shortcode('lv_tabs_cat', 'shortcode_tabs_category');

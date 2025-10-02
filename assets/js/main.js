@@ -147,7 +147,7 @@
 		$(this).addClass("active");
 
 		// Show content
-		$(".lv_tabs_panel").removeClass("active");
+		$(".lv_tabs_cat_panel").removeClass("active");
 		$("#" + tabId).addClass("active");
 	});
 })(jQuery, window);
