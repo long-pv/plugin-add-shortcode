@@ -1581,7 +1581,7 @@ function shortcode_tabs_category()
                         <li class="lv_tabs_navItem <?php echo $first ? 'active' : ''; ?>" data-tab="<?php echo $tab_id; ?>">
                             <?php
                             if (!empty($tab['title_icon'])) {
-                                echo wp_get_attachment_image($tab['title_icon'], 'thumbnail', false, ['class' => 'lv_tabs_icon']);
+                                echo wp_get_attachment_image($tab['title_icon'], 'large', false, ['class' => 'lv_tabs_icon']);
                             }
                             ?>
                             <span class="lv_tabs_text"><?php echo $tab['title']; ?></span>
