@@ -2577,6 +2577,8 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     gap: 4px;
     margin: 0px !important;
     padding: 8px !important;
+    background-color: #e9e9e9;
+    border-radius: 56px;
 
     @media (max-width: 767px) {
         flex-direction: column;
