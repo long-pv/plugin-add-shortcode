@@ -1915,37 +1915,37 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 }
 
 // -------------- Breadcrumbs ------------------
-.breadcrumbs {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
+// .breadcrumbs {
+//     position: relative;
+//     display: flex;
+//     flex-wrap: wrap;
+//     align-items: center;
+//     gap: 8px;
 
-    a,
-    .current {
-        color: $breadcrumbs !important;
-        font-size: 30px;
-        font-weight: 400;
-        display: inline-flex;
-        text-decoration: none !important;
-        flex-shrink: 0;
-    }
+//     a,
+//     .current {
+//         color: $breadcrumbs !important;
+//         font-size: 30px;
+//         font-weight: 400;
+//         display: inline-flex;
+//         text-decoration: none !important;
+//         flex-shrink: 0;
+//     }
 
-    a {
-        &:hover {
-            text-decoration: underline !important;
-        }
-    }
+//     a {
+//         &:hover {
+//             text-decoration: underline !important;
+//         }
+//     }
 
-    .icon {
-        padding: 0px;
-        margin: 0px;
-        display: inline-flex;
-        position: relative;
-        flex-shrink: 0;
-    }
-}
+//     .icon {
+//         padding: 0px;
+//         margin: 0px;
+//         display: inline-flex;
+//         position: relative;
+//         flex-shrink: 0;
+//     }
+// }
 
 .lv_single_post_banner {
     img {
@@ -2345,7 +2345,7 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
     grid-template-columns: repeat(var(--columns, 3), 1fr);
     gap: 16px;
 
-    @media (max-width: 767px) {
+    @media (max-width: 549px) {
         gap: 8px;
         grid-template-columns: repeat(var(--columns-mobile, 2), 1fr);
     }
