@@ -2083,6 +2083,9 @@ $breadcrumbs : var(--lv-color-breadcrumbs);
 .lv_tabs_content,
 .lv_faq_content {
     margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .lv_aboutUs {
