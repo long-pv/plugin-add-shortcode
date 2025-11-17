@@ -139,30 +139,31 @@ function lv_tabs_shortcode()
 {
     ob_start();
 
+    $prefix = get_field('prefix', 'option') ?? 'lv';
     $tabs_title = get_field('tabs_title', 'option');
     $list_tabs  = get_field('list_tab', 'option');
     $tabs_content  = get_field('tabs_content', 'option');
 
     if ($tabs_title || $list_tabs) : ?>
-        <section class="lv_container lv_tabs">
+        <section class="<?php echo $prefix; ?>_container <?php echo $prefix; ?>_tabs">
             <?php if ($tabs_title) : ?>
-                <h2 class="lv_tabs_title text_center"><?php echo $tabs_title; ?></h2>
+                <h2 class="<?php echo $prefix; ?>_tabs_title text_center"><?php echo $tabs_title; ?></h2>
             <?php endif; ?>
 
             <?php if ($tabs_content) : ?>
-                <div class="lv_tabs_content"><?php echo $tabs_content; ?></div>
+                <div class="<?php echo $prefix; ?>_tabs_content"><?php echo $tabs_content; ?></div>
             <?php endif; ?>
 
             <?php if ($list_tabs) : ?>
-                <div class="lv_tabs_wrapper">
-                    <div class="lv_tabs_links">
+                <div class="<?php echo $prefix; ?>_tabs_wrapper">
+                    <div class="<?php echo $prefix; ?>_tabs_links">
                         <?php
                         $i = 1;
                         foreach ($list_tabs as $row) :
                             if (!empty($row['title'])) :
-                                $active_class = ($i === 1) ? ' lv_tabs_link_active' : '';
+                                $active_class = ($i === 1) ? ' ' . $prefix . '_tabs_link_active' : '';
                         ?>
-                                <div class="lv_tabs_link<?php echo $active_class; ?>" data-tab="tab<?php echo $i; ?>">
+                                <div class="<?php echo $prefix; ?>_tabs_link<?php echo $active_class; ?>" data-tab="tab<?php echo $i; ?>">
                                     <?php echo $row['title']; ?>
                                 </div>
                         <?php
@@ -172,14 +173,14 @@ function lv_tabs_shortcode()
                         ?>
                     </div>
 
-                    <div class="lv_tabs_content">
+                    <div class="<?php echo $prefix; ?>_tabs_content">
                         <?php
                         $i = 1;
                         foreach ($list_tabs as $row) :
                             if (!empty($row['content'])) :
-                                $active_class = ($i === 1) ? ' lv_tabs_panel_active' : '';
+                                $active_class = ($i === 1) ? ' ' . $prefix . '_tabs_panel_active' : '';
                         ?>
-                                <div class="lv_tabs_panel<?php echo $active_class; ?>" id="tab<?php echo $i; ?>">
+                                <div class="<?php echo $prefix; ?>_tabs_panel<?php echo $active_class; ?>" id="tab<?php echo $i; ?>">
                                     <?php echo $row['content']; ?>
                                 </div>
                         <?php
@@ -192,7 +193,6 @@ function lv_tabs_shortcode()
             <?php endif; ?>
         </section>
     <?php endif;
-
     return ob_get_clean();
 }
 add_shortcode("lv_tabs", "lv_tabs_shortcode");
@@ -200,8 +200,9 @@ add_shortcode("lv_tabs", "lv_tabs_shortcode");
 // Shortcode: [lv_menu_pc]
 function lv_menu_pc_shortcode()
 {
-    $menu_items = get_field('menu_pc', 'option');
-    $menu_use_icon = get_field('menu_use_icon', 'option') ?? false;
+    $menu_items     = get_field('menu_pc', 'option');
+    $menu_use_icon  = get_field('menu_use_icon', 'option') ?? false;
+    $prefix         = get_field('prefix', 'option') ?? 'lv';
 
     if (!$menu_items || !is_array($menu_items)) {
         return '';
@@ -209,31 +210,38 @@ function lv_menu_pc_shortcode()
 
     ob_start();
     ?>
-    <nav class="lv_menu">
-        <ul class="lv_menu_list">
+    <nav class="<?php echo $prefix; ?>_menu">
+        <ul class="<?php echo $prefix; ?>_menu_list">
             <?php foreach ($menu_items as $item): ?>
                 <?php
-                $link_primary = isset($item['link_primary']) ? $item['link_primary'] : null;
-                $submenu      = isset($item['submenu']) ? $item['submenu'] : null;
-                $icon         = isset($item['icon']) ? $item['icon'] : null;   // ADDED: lấy image ID từ field 'icon'
+                $link_primary = $item['link_primary'] ?? null;
+                $submenu      = $item['submenu']      ?? null;
+                $icon         = $item['icon']         ?? null;
                 ?>
 
                 <?php if ($link_primary && isset($link_primary['url'], $link_primary['title'])): ?>
-                    <li class="lv_menu_item <?php echo $icon && $menu_use_icon ? 'lv_menu_item_has_icon' : ''; ?>">
+                    <li class="<?php echo $prefix; ?>_menu_item <?php echo ($icon && $menu_use_icon) ? $prefix . '_menu_item_has_icon' : ''; ?>">
                         <a href="<?php echo $link_primary['url']; ?>"
-                            class="lv_menu_link"
-                            <?php if (!empty($link_primary['target'])): ?>target="<?php echo $link_primary['target']; ?>" <?php endif; ?>>
+                            class="<?php echo $prefix; ?>_menu_link"
+                            <?php if (!empty($link_primary['target'])): ?>
+                            target="<?php echo $link_primary['target']; ?>"
+                            <?php endif; ?>>
 
                             <?php
-                            // Hiển thị ảnh nếu có
                             if ($icon && $menu_use_icon) {
-                                echo wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_menu_pc_icon']); // ADDED: hiển thị 'icon'
+                                echo wp_get_attachment_image(
+                                    $icon,
+                                    'full',
+                                    false,
+                                    ['class' => $prefix . '_menu_pc_icon']
+                                );
                             }
                             ?>
+
                             <?php echo $link_primary['title']; ?>
 
                             <?php if ($submenu && is_array($submenu)): ?>
-                                <span class="lv_menu_arrow">
+                                <span class="<?php echo $prefix; ?>_menu_arrow">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="12" height="12">
                                         <path d="M480 224C492.9 224 504.6 231.8 509.6 243.8C514.6 255.8 511.8 269.5 502.7 278.7L342.7 438.7C330.2 451.2 309.9 451.2 297.4 438.7L137.4 278.7C128.2 269.5 125.5 255.8 130.5 243.8C135.5 231.8 147.1 224 160 224L480 224z" />
                                     </svg>
@@ -242,14 +250,16 @@ function lv_menu_pc_shortcode()
                         </a>
 
                         <?php if ($submenu && is_array($submenu)): ?>
-                            <ul class="lv_menu_submenu">
+                            <ul class="<?php echo $prefix; ?>_menu_submenu">
                                 <?php foreach ($submenu as $sub): ?>
-                                    <?php $link = isset($sub['link']) ? $sub['link'] : null; ?>
+                                    <?php $link = $sub['link'] ?? null; ?>
                                     <?php if ($link && isset($link['url'], $link['title'])): ?>
-                                        <li class="lv_menu_subitem">
+                                        <li class="<?php echo $prefix; ?>_menu_subitem">
                                             <a href="<?php echo $link['url']; ?>"
-                                                class="lv_menu_sublink"
-                                                <?php if (!empty($link['target'])): ?>target="<?php echo $link['target']; ?>" <?php endif; ?>>
+                                                class="<?php echo $prefix; ?>_menu_sublink"
+                                                <?php if (!empty($link['target'])): ?>
+                                                target="<?php echo $link['target']; ?>"
+                                                <?php endif; ?>>
                                                 <?php echo $link['title']; ?>
                                             </a>
                                         </li>
@@ -272,32 +282,36 @@ add_shortcode('lv_menu_pc', 'lv_menu_pc_shortcode');
 // Shortcode: [lv_menu_mobile]
 function render_menu_mobile_shortcode()
 {
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     ob_start();
 ?>
-    <nav class="menu_mobile">
-        <ul class="menu_mobile_list">
+    <nav class="<?php echo $prefix; ?>_menu_mobile">
+        <ul class="<?php echo $prefix; ?>_menu_mobile_list">
             <?php if (have_rows('menu_mobile', 'option')): ?>
                 <?php while (have_rows('menu_mobile', 'option')): the_row();
                     $primary = get_sub_field('link_primary');
                     if ($primary):
-                        $url    = esc_url($primary['url']);
-                        $title  = esc_html($primary['title']);
-                        $target = $primary['target'] ? esc_attr($primary['target']) : '_self';
-                        $has_sub = have_rows('submenu');
+                        $url      = esc_url($primary['url']);
+                        $title    = esc_html($primary['title']);
+                        $target   = $primary['target'] ? esc_attr($primary['target']) : '_self';
+                        $has_sub  = have_rows('submenu');
                 ?>
-                        <li class="menu_mobile_item<?php echo $has_sub ? ' has-sub' : ''; ?>">
-                            <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="menu_mobile_link">
+                        <li class="<?php echo $prefix; ?>_menu_mobile_item<?php echo $has_sub ? ' has-sub' : ''; ?>">
+                            <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="<?php echo $prefix; ?>_menu_mobile_link">
                                 <?php echo $title; ?>
+
                                 <?php if ($has_sub): ?>
-                                    <span class="toggle-submenu">
+                                    <span class="<?php echo $prefix; ?>_toggle_submenu">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                                             <path d="M480 224C492.9 224 504.6 231.8 509.6 243.8C514.6 255.8 511.8 269.5 502.7 278.7L342.7 438.7C330.2 451.2 309.9 451.2 297.4 438.7L137.4 278.7C128.2 269.5 125.5 255.8 130.5 243.8C135.5 231.8 147.1 224 160 224L480 224z" />
                                         </svg>
                                     </span>
                                 <?php endif; ?>
                             </a>
+
                             <?php if ($has_sub): ?>
-                                <ul class="submenu_list">
+                                <ul class="<?php echo $prefix; ?>_submenu_list">
                                     <?php while (have_rows('submenu')): the_row();
                                         $sub = get_sub_field('link');
                                         if ($sub):
@@ -305,8 +319,8 @@ function render_menu_mobile_shortcode()
                                             $sub_title  = esc_html($sub['title']);
                                             $sub_target = $sub['target'] ? esc_attr($sub['target']) : '_self';
                                     ?>
-                                            <li class="submenu_item">
-                                                <a href="<?php echo $sub_url; ?>" target="<?php echo $sub_target; ?>" class="submenu_link">
+                                            <li class="<?php echo $prefix; ?>_submenu_item">
+                                                <a href="<?php echo $sub_url; ?>" target="<?php echo $sub_target; ?>" class="<?php echo $prefix; ?>_submenu_link">
                                                     <?php echo $sub_title; ?>
                                                 </a>
                                             </li>
@@ -318,23 +332,24 @@ function render_menu_mobile_shortcode()
                     <?php endif; ?>
                 <?php endwhile; ?>
             <?php else: ?>
-                <li class="menu_mobile_item"><a href="#" class="menu_mobile_link">Chưa có menu</a></li>
+                <li class="<?php echo $prefix; ?>_menu_mobile_item">
+                    <a href="#" class="<?php echo $prefix; ?>_menu_mobile_link">Chưa có menu</a>
+                </li>
             <?php endif; ?>
         </ul>
 
-        <!-- Thêm danh sách các nút ở phía dưới -->
         <?php if (have_rows('menu_list_button', 'option')): ?>
-            <div class="menu_mobile_buttons">
-                <ul class="menu_mobile_button_list">
+            <div class="<?php echo $prefix; ?>_menu_mobile_buttons">
+                <ul class="<?php echo $prefix; ?>_menu_mobile_button_list">
                     <?php while (have_rows('menu_list_button', 'option')): the_row();
                         $button_link = get_sub_field('link');
                         if ($button_link):
-                            $button_url = esc_url($button_link['url']);
-                            $button_title = esc_html($button_link['title']);
+                            $button_url    = esc_url($button_link['url']);
+                            $button_title  = esc_html($button_link['title']);
                             $button_target = $button_link['target'] ? esc_attr($button_link['target']) : '_self';
                     ?>
-                            <li class="menu_mobile_button_item">
-                                <a href="<?php echo $button_url; ?>" target="<?php echo $button_target; ?>" class="menu_mobile_button_link">
+                            <li class="<?php echo $prefix; ?>_menu_mobile_button_item">
+                                <a href="<?php echo $button_url; ?>" target="<?php echo $button_target; ?>" class="<?php echo $prefix; ?>_menu_mobile_button_link">
                                     <?php echo $button_title; ?>
                                 </a>
                             </li>
@@ -352,21 +367,23 @@ add_shortcode('lv_menu_mobile', 'render_menu_mobile_shortcode');
 // Shortcode: [sidebar_left]
 function render_sidebar_left_shortcode()
 {
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     // Lấy logo
     $logo_id  = get_field('image_logo', 'option');
     $logo_url = $logo_id ? wp_get_attachment_image_url($logo_id, 'full') : 'https://via.placeholder.com/150x50?text=LOGO';
 
-    // Bắt đầu output
     ob_start();
 ?>
-    <aside class="sidebar">
-        <div class="sidebar_logo">
-            <a href="/" class="sidebar_logo_link">
-                <img src="<?php echo esc_url($logo_url); ?>" alt="Site Logo" class="sidebar_logo_img" />
+    <aside class="<?php echo $prefix; ?>_sidebar">
+        <div class="<?php echo $prefix; ?>_sidebar_logo">
+            <a href="/" class="<?php echo $prefix; ?>_sidebar_logo_link">
+                <img src="<?php echo esc_url($logo_url); ?>" alt="Site Logo" class="<?php echo $prefix; ?>_sidebar_logo_img" />
             </a>
         </div>
-        <nav class="sidebar_menu">
-            <ul class="sidebar_menu_list">
+
+        <nav class="<?php echo $prefix; ?>_sidebar_menu">
+            <ul class="<?php echo $prefix; ?>_sidebar_menu_list">
                 <?php if (have_rows('menu_sidebar', 'option')): ?>
                     <?php while (have_rows('menu_sidebar', 'option')): the_row();
                         $link = get_sub_field('link');
@@ -375,15 +392,17 @@ function render_sidebar_left_shortcode()
                             $title  = esc_html($link['title']);
                             $target = $link['target'] ? esc_attr($link['target']) : '_self';
                     ?>
-                            <li class="sidebar_menu_item">
-                                <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="sidebar_menu_link">
+                            <li class="<?php echo $prefix; ?>_sidebar_menu_item">
+                                <a href="<?php echo $url; ?>" target="<?php echo $target; ?>" class="<?php echo $prefix; ?>_sidebar_menu_link">
                                     <?php echo $title; ?>
                                 </a>
                             </li>
                         <?php endif; ?>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <li class="sidebar_menu_item"><a href="#" class="sidebar_menu_link">Chưa có menu</a></li>
+                    <li class="<?php echo $prefix; ?>_sidebar_menu_item">
+                        <a href="#" class="<?php echo $prefix; ?>_sidebar_menu_link">Chưa có menu</a>
+                    </li>
                 <?php endif; ?>
             </ul>
         </nav>
@@ -396,49 +415,61 @@ add_shortcode('lv_sidebar_left', 'render_sidebar_left_shortcode');
 // Shortcode [lv_service]
 function lv_service_shortcode($atts)
 {
-    // Bắt đầu output
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     ob_start();
 
-    // Lấy dữ liệu từ ACF Options
-    $title_service = get_field('title_service', 'option');
-    $list_service  = get_field('list_service', 'option');
-    $style_service  = get_field('style_service', 'option') ?? '1';
-    $background_button = get_field('background_button', 'option') ?? '';
+    $title_service      = get_field('title_service', 'option');
+    $list_service       = get_field('list_service', 'option');
+    $style_service      = get_field('style_service', 'option') ?? '1';
+    $background_button  = get_field('background_button', 'option') ?? '';
 ?>
-    <!-- lv_service_style_2 -->
-    <div class="lv_container">
-        <section class="lv_service lv_service_style_<?php echo $style_service; ?>">
+    <div class="<?php echo $prefix; ?>_container">
+        <section class="<?php echo $prefix; ?>_service <?php echo $prefix; ?>_service_style_<?php echo $style_service; ?>">
+
             <?php if ($title_service) : ?>
-                <h2 class="lv_service_title text_center"><?php echo esc_html($title_service); ?></h2>
+                <h2 class="<?php echo $prefix; ?>_service_title text_center">
+                    <?php echo esc_html($title_service); ?>
+                </h2>
             <?php endif; ?>
 
             <?php if ($list_service) : ?>
-                <div class="lv_service_list">
+                <div class="<?php echo $prefix; ?>_service_list">
+
                     <?php foreach ($list_service as $row) :
                         $link = $row['link'];
                         $icon = $row['icon'];
+
                         if ($link) : ?>
                             <a href="<?php echo esc_url($link['url']); ?>"
-                                class="lv_service_item"
+                                class="<?php echo $prefix; ?>_service_item"
                                 target="<?php echo esc_attr($link['target'] ?: '_self'); ?>">
-                                <?php echo $style_service == 2 && $icon ? wp_get_attachment_image($icon, 'full', false, ['class' => 'lv_service_item_icon']) : ''; ?>
+
+                                <?php
+                                echo ($style_service == 2 && $icon)
+                                    ? wp_get_attachment_image($icon, 'full', false, ['class' => $prefix . '_service_item_icon'])
+                                    : '';
+                                ?>
 
                                 <?php if ($style_service == '4') : ?>
-                                    <img class="lv_service_item_bg" src="<?php echo $background_button; ?>" alt="background_button">
+                                    <img class="<?php echo $prefix; ?>_service_item_bg"
+                                        src="<?php echo $background_button; ?>"
+                                        alt="background_button">
                                 <?php endif; ?>
 
-                                <span class="lv_service_item_text">
+                                <span class="<?php echo $prefix; ?>_service_item_text">
                                     <?php echo $link['title']; ?>
                                 </span>
                             </a>
                         <?php endif; ?>
+
                     <?php endforeach; ?>
+
                 </div>
             <?php endif; ?>
+
         </section>
     </div>
-
-
 
     <?php
     return ob_get_clean();
@@ -448,42 +479,50 @@ add_shortcode('lv_service', 'lv_service_shortcode');
 // Shortcode hiển thị FAQ Block từ ACF Options
 function shortcode_lv_faq_block()
 {
-    $faqs = get_field('list_faqs', 'option'); // lấy từ ACF Options
-    $faqs_title = get_field('faqs_title', 'option');
-    $style_faqs = get_field('style_faqs', 'option') ?? '1';
-    $faqs_content = get_field('faqs_content', 'option') ?? '';
+    $prefix        = get_field('prefix', 'option') ?? 'lv';
+    $faqs          = get_field('list_faqs', 'option');
+    $faqs_title    = get_field('faqs_title', 'option');
+    $style_faqs    = get_field('style_faqs', 'option') ?? '1';
+    $faqs_content  = get_field('faqs_content', 'option') ?? '';
 
     if ($faqs && is_array($faqs)) {
         ob_start(); ?>
 
-        <div class="lv_container">
+        <div class="<?php echo $prefix; ?>_container">
 
             <?php if ($faqs_title) : ?>
-                <h2 class="lv_faq_title text_center">
+                <h2 class="<?php echo $prefix; ?>_faq_title text_center">
                     <?php echo $faqs_title; ?>
                 </h2>
             <?php endif; ?>
 
             <?php if ($faqs_content) : ?>
-                <div class="lv_faq_content">
+                <div class="<?php echo $prefix; ?>_faq_content">
                     <?php echo $faqs_content; ?>
                 </div>
             <?php endif; ?>
 
-            <div class="lv_faq_block lv_faq_block_style_<?php echo $style_faqs; ?>">
+            <div class="<?php echo $prefix; ?>_faq_block <?php echo $prefix; ?>_faq_block_style_<?php echo $style_faqs; ?>">
                 <?php foreach ($faqs as $faq) :
                     $title   = $faq['title'] ?? '';
                     $content = $faq['content'] ?? '';
                 ?>
+
                     <?php if ($title || $content) : ?>
-                        <div class="lv_faq_item">
+                        <div class="<?php echo $prefix; ?>_faq_item">
+
                             <?php if ($title) : ?>
-                                <div class="lv_faq_item_question"><?php echo $title; ?></div>
+                                <div class="<?php echo $prefix; ?>_faq_item_question">
+                                    <?php echo $title; ?>
+                                </div>
                             <?php endif; ?>
 
                             <?php if ($content) : ?>
-                                <div class="lv_faq_item_answer"><?php echo $content; ?></div>
+                                <div class="<?php echo $prefix; ?>_faq_item_answer">
+                                    <?php echo $content; ?>
+                                </div>
                             <?php endif; ?>
+
                         </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
@@ -493,12 +532,15 @@ function shortcode_lv_faq_block()
     <?php
         return ob_get_clean();
     }
-    return ''; // không có dữ liệu thì trả về rỗng
+    return '';
 }
 add_shortcode('lv_faq_block', 'shortcode_lv_faq_block');
 
 // add_latest_posts
 add_shortcode('lv_latest_posts', function () {
+
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     // Lấy setting từ ACF Options
     $list_title = get_field('list_of_articles_title', 'option');
     $num_posts  = (int) get_field('number_of_posts', 'option');
@@ -514,7 +556,7 @@ add_shortcode('lv_latest_posts', function () {
     $show_date     = (int) get_field('show_post_date', 'option');
     $show_button   = (int) get_field('show_button_post', 'option');
     $show_excerpt  = (int) get_field('show_excerpt_post', 'option');
-    $layout_post   = get_field('layout_post', 'option') ?? "grid"; // grid | slider | list  // ADDED (chỉ ghi chú)
+    $layout_post   = get_field('layout_post', 'option') ?? "grid";
 
     // Query bài viết
     $args = [
@@ -532,65 +574,80 @@ add_shortcode('lv_latest_posts', function () {
 
     ob_start(); ?>
 
-    <div class="lv_container">
-        <?php
-        if ($layout_post == 'grid' || $layout_post == 'slider' || $layout_post == 'list') :
-        ?>
-            <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
+    <div class="<?php echo $prefix; ?>_container">
+
+        <?php if (in_array($layout_post, ['grid', 'slider', 'list'])) : ?>
+
+            <div class="<?php echo $prefix; ?>_latest_posts_wrap <?php echo $prefix; ?>_latest_posts_wrap_<?php echo $layout_post; ?>">
+
                 <?php if (!empty($list_title)): ?>
-                    <h2 class="lv_latest_posts_heading text_center">
+                    <h2 class="<?php echo $prefix; ?>_latest_posts_heading text_center">
                         <?php echo $list_title; ?>
                     </h2>
                 <?php endif; ?>
 
-                <div class="<?php echo $layout_post === 'slider' ? 'lv_latest_posts_slider' : 'lv_latest_posts_grid lv_cols_' . $num_cols; ?>">
+                <div class="
+                    <?php
+                    echo $layout_post === 'slider'
+                        ? $prefix . '_latest_posts_slider'
+                        : $prefix . '_latest_posts_grid ' . $prefix . '_cols_' . $num_cols;
+                    ?>
+                ">
                     <?php while ($q->have_posts()): $q->the_post();
                         $url   = get_permalink();
                         $title = get_the_title();
                         $date  = get_the_date('d/m/Y');
                         $desc  = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get_the_content()), 22);
                     ?>
-                        <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="lv_latest_posts_slide_item">' : ''; ?>
-                        <article class="lv_latest_posts_card">
+
+                        <?php echo $layout_post === 'slider' ? '<div><div data-mh="slide_item" class="' . $prefix . '_latest_posts_slide_item">' : ''; ?>
+
+                        <article class="<?php echo $prefix; ?>_latest_posts_card">
+
                             <?php if (has_post_thumbnail()): ?>
-                                <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
+                                <a class="<?php echo $prefix; ?>_latest_posts_thumb" href="<?php echo $url; ?>">
                                     <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
                                 </a>
                             <?php endif; ?>
 
-                            <div class="lv_latest_posts_content">
+                            <div class="<?php echo $prefix; ?>_latest_posts_content">
+
                                 <?php if (!empty($title)): ?>
-                                    <h3 class="lv_latest_posts_title">
+                                    <h3 class="<?php echo $prefix; ?>_latest_posts_title">
                                         <a href="<?php echo $url; ?>"><?php echo $title; ?></a>
                                     </h3>
                                 <?php endif; ?>
 
                                 <?php if ($show_date && !empty($date)): ?>
-                                    <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                                    <div class="<?php echo $prefix; ?>_latest_posts_date"><?php echo $date; ?></div>
                                 <?php endif; ?>
 
                                 <?php if ($show_excerpt && !empty($desc) && $layout_post != 'list'): ?>
-                                    <div class="lv_latest_posts_desc"><?php echo $desc; ?></div>
+                                    <div class="<?php echo $prefix; ?>_latest_posts_desc"><?php echo $desc; ?></div>
                                 <?php endif; ?>
 
                                 <?php if ($show_button && $layout_post != 'list'): ?>
-                                    <a class="lv_latest_posts_btn" href="<?php echo $url; ?>">
-                                        <?php echo 'Xem thêm'; ?>
+                                    <a class="<?php echo $prefix; ?>_latest_posts_btn" href="<?php echo $url; ?>">
+                                        Xem thêm
                                     </a>
                                 <?php endif; ?>
+
                             </div>
                         </article>
+
                         <?php echo $layout_post === 'slider' ? '</div></div>' : ''; ?>
+
                     <?php endwhile;
                     wp_reset_postdata(); ?>
+
                 </div>
 
-                <?php if ($layout_post === 'grid' && !empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
+                <?php if ($layout_post === 'grid' && !empty($see_more) && !empty($see_more['url'])):
                     $sm_url    = $see_more['url'];
                     $sm_title  = $see_more['title'] ?: 'Xem thêm';
                     $sm_target = $see_more['target'] ?: '_self'; ?>
-                    <div class="lv_latest_posts_footer">
-                        <a class="lv_latest_posts_btn lv_latest_posts_btn_more"
+                    <div class="<?php echo $prefix; ?>_latest_posts_footer">
+                        <a class="<?php echo $prefix; ?>_latest_posts_btn <?php echo $prefix; ?>_latest_posts_btn_more"
                             href="<?php echo $sm_url; ?>"
                             target="<?php echo $sm_target; ?>"
                             <?php if ($sm_target === '_blank') echo 'rel="noopener noreferrer"'; ?>>
@@ -598,37 +655,51 @@ add_shortcode('lv_latest_posts', function () {
                         </a>
                     </div>
                 <?php endif; ?>
+
             </div>
+
         <?php elseif ($layout_post == 'box') : ?>
-            <div class="lv_latest_posts_wrap <?php echo 'lv_latest_posts_wrap_' . $layout_post; ?>">
+
+            <div class="<?php echo $prefix; ?>_latest_posts_wrap <?php echo $prefix; ?>_latest_posts_wrap_<?php echo $layout_post; ?>">
+
                 <?php if (!empty($list_title)): ?>
-                    <h2 class="lv_latest_posts_heading text_center">
+                    <h2 class="<?php echo $prefix; ?>_latest_posts_heading text_center">
                         <?php echo $list_title; ?>
                     </h2>
                 <?php endif; ?>
 
-                <div class="lv_latest_posts_box_wrap">
+                <div class="<?php echo $prefix; ?>_latest_posts_box_wrap">
+
                     <?php
                     $background_post = get_field('background_post', 'option');
-                    echo wp_get_attachment_image($background_post, 'full', false, ['class' => 'lv_latest_posts_box_bg'])
+                    echo wp_get_attachment_image(
+                        $background_post,
+                        'full',
+                        false,
+                        ['class' => $prefix . '_latest_posts_box_bg']
+                    );
                     ?>
 
-                    <div class="lv_latest_posts_box">
+                    <div class="<?php echo $prefix; ?>_latest_posts_box">
+
                         <?php while ($q->have_posts()): $q->the_post();
                             $url   = get_permalink();
                             $title = get_the_title();
                             $date  = get_the_date('d/m/Y');
                         ?>
-                            <article class="lv_latest_posts_card">
+
+                            <article class="<?php echo $prefix; ?>_latest_posts_card">
+
                                 <?php if (has_post_thumbnail()): ?>
-                                    <a class="lv_latest_posts_thumb" href="<?php echo $url; ?>">
+                                    <a class="<?php echo $prefix; ?>_latest_posts_thumb" href="<?php echo $url; ?>">
                                         <?php echo get_the_post_thumbnail(get_the_ID(), 'large', ['loading' => 'lazy']); ?>
                                     </a>
                                 <?php endif; ?>
 
-                                <div class="lv_latest_posts_content">
+                                <div class="<?php echo $prefix; ?>_latest_posts_content">
+
                                     <?php if (!empty($title)): ?>
-                                        <h3 class="lv_latest_posts_title">
+                                        <h3 class="<?php echo $prefix; ?>_latest_posts_title">
                                             <a href="<?php echo $url; ?>">
                                                 <?php echo $title; ?>
                                             </a>
@@ -636,19 +707,19 @@ add_shortcode('lv_latest_posts', function () {
                                     <?php endif; ?>
 
                                     <?php if (!empty($date)): ?>
-                                        <div class="lv_latest_posts_date"><?php echo $date; ?></div>
+                                        <div class="<?php echo $prefix; ?>_latest_posts_date"><?php echo $date; ?></div>
                                     <?php endif; ?>
+
                                 </div>
                             </article>
+
                         <?php endwhile;
                         wp_reset_postdata(); ?>
+
                     </div>
 
-                    <?php
-                    if (!empty($see_more) && is_array($see_more) && !empty($see_more['url'])):
-                        $sm_url    = $see_more['url'];
-                    ?>
-                        <a class="lv_latest_posts_next" href="<?php echo $sm_url; ?>">
+                    <?php if (!empty($see_more) && !empty($see_more['url'])): ?>
+                        <a class="<?php echo $prefix; ?>_latest_posts_next" href="<?php echo $see_more['url']; ?>">
                             BÀI VIẾT TIẾP THEO
                         </a>
                     <?php endif; ?>
@@ -664,12 +735,16 @@ add_shortcode('lv_latest_posts', function () {
 
 
 add_shortcode('lv_menu_bottom', function () {
+
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     $items = get_field('menu_bottom', 'option');
 
     ob_start();
 
     if ($items && is_array($items)) : ?>
-        <nav class="lv_footer_menu" aria-label="Footer quick actions">
+        <nav class="<?php echo $prefix; ?>_footer_menu" aria-label="Footer quick actions">
+
             <?php foreach ($items as $row) :
                 $icon  = isset($row['icon']) ? $row['icon'] : 0;
                 $link  = isset($row['link']) && is_array($row['link']) ? $row['link'] : [];
@@ -679,29 +754,34 @@ add_shortcode('lv_menu_bottom', function () {
                 $target = isset($link['target']) && $link['target'] ? $link['target'] : '_self';
 
                 if (!$icon && !$title) {
-                    continue; // bỏ qua nếu trống hết
+                    continue;
                 }
             ?>
-                <a class="lv_footer_menu_item"
+
+                <a class="<?php echo $prefix; ?>_footer_menu_item"
                     href="<?php echo $url; ?>"
                     target="<?php echo $target; ?>"
                     rel="noopener nofollow sponsored">
-                    <span class="lv_footer_menu_icon" aria-hidden="true">
+
+                    <span class="<?php echo $prefix; ?>_footer_menu_icon" aria-hidden="true">
                         <?php
                         if ($icon) {
                             echo wp_get_attachment_image(
                                 $icon,
                                 'thumbnail',
                                 false,
-                                ['class' => 'lv_footer_menu_icon_image']
+                                ['class' => $prefix . '_footer_menu_icon_image']
                             );
                         } else {
-                            echo '<span class="lv_footer_menu_icon_placeholder"></span>';
+                            echo '<span class="' . $prefix . '_footer_menu_icon_placeholder"></span>';
                         }
                         ?>
                     </span>
+
                     <?php if ($title) : ?>
-                        <span class="lv_footer_menu_label"><?php echo $title; ?></span>
+                        <span class="<?php echo $prefix; ?>_footer_menu_label">
+                            <?php echo $title; ?>
+                        </span>
                     <?php endif; ?>
                 </a>
             <?php endforeach; ?>
@@ -713,43 +793,45 @@ add_shortcode('lv_menu_bottom', function () {
 
 function lv_countdown_shortcode()
 {
+    // Prefix từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     // Lấy ngày giờ hiện tại
     $current_date = new DateTime();
-    $current_time = $current_date->format('H:i'); // Lấy giờ phút hiện tại
+    $current_time = $current_date->format('H:i');
 
     // Xác định thời gian đếm ngược
     $target_date = clone $current_date;
-    $target_date->setTime(18, 30); // Đặt thời gian đếm ngược là 18:30
+    $target_date->setTime(18, 30);
 
-    // Nếu giờ hiện tại đã qua 18:30, thì chọn 18:30 ngày hôm sau
     if ($current_time > '18:30') {
         $target_date->modify('+1 day');
     }
 
-    // Lấy ngày giờ đếm ngược theo định dạng Y-m-d H:i:s cho JavaScript
+    // Format cho JS
     $formatted_date = $target_date->format('Y-m-d\TH:i:s');
 
-    // HTML động cấu trúc countdown
-    ob_start();  // Bắt đầu ghi đệm nội dung
-    ?>
-    <div class="lv_timer_countdown">
-        <div class="lv_timer_countdown_item lv_timer_countdown_hours">
-            <span class="lv_timer_countdown_value" id="hours">0</span>
-            <span class="lv_timer_countdown_label">HOURS</span>
+    ob_start(); ?>
+
+    <div class="<?php echo $prefix; ?>_timer_countdown">
+        <div class="<?php echo $prefix; ?>_timer_countdown_item <?php echo $prefix; ?>_timer_countdown_hours">
+            <span class="<?php echo $prefix; ?>_timer_countdown_value" id="hours">0</span>
+            <span class="<?php echo $prefix; ?>_timer_countdown_label">HOURS</span>
         </div>
-        <div class="lv_timer_countdown_item lv_timer_countdown_minutes">
-            <span class="lv_timer_countdown_value" id="minutes">0</span>
-            <span class="lv_timer_countdown_label">MIN</span>
+
+        <div class="<?php echo $prefix; ?>_timer_countdown_item <?php echo $prefix; ?>_timer_countdown_minutes">
+            <span class="<?php echo $prefix; ?>_timer_countdown_value" id="minutes">0</span>
+            <span class="<?php echo $prefix; ?>_timer_countdown_label">MIN</span>
         </div>
-        <div class="lv_timer_countdown_item lv_timer_countdown_seconds">
-            <span class="lv_timer_countdown_value" id="seconds">0</span>
-            <span class="lv_timer_countdown_label">SEC</span>
+
+        <div class="<?php echo $prefix; ?>_timer_countdown_item <?php echo $prefix; ?>_timer_countdown_seconds">
+            <span class="<?php echo $prefix; ?>_timer_countdown_value" id="seconds">0</span>
+            <span class="<?php echo $prefix; ?>_timer_countdown_label">SEC</span>
         </div>
     </div>
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
-            // Định dạng ngày đích cho countdown
             var targetDate = new Date('<?php echo $formatted_date; ?>');
 
             function updateCountdown() {
@@ -757,7 +839,6 @@ function lv_countdown_shortcode()
                 var timeRemaining = targetDate - now;
 
                 if (timeRemaining <= 0) {
-                    // Nếu thời gian đếm ngược đã kết thúc, tính toán lại đếm ngược cho ngày hôm sau
                     targetDate.setDate(targetDate.getDate() + 1);
                     timeRemaining = targetDate - now;
                 }
@@ -771,140 +852,157 @@ function lv_countdown_shortcode()
                 document.getElementById('seconds').innerHTML = seconds;
             }
 
-            // Cập nhật countdown mỗi giây
-            var countdownInterval = setInterval(updateCountdown, 1000);
+            setInterval(updateCountdown, 1000);
         });
     </script>
     <?php
-    // Lấy toàn bộ nội dung đã ghi đệm và trả về
     return ob_get_clean();
 }
 add_shortcode('lv_countdown', 'lv_countdown_shortcode');
 
 function lv_card_category_shortcode($atts)
 {
-    // Get the ACF fields
-    $style_category = get_field('style_category', 'option'); // Get the selected style
-    $list_category = get_field('list_category', 'option'); // Get the list of categories
-    $title_category = get_field('title_category', 'option'); // Get the list of categories
+    // Prefix từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
 
-    // Start output buffering
+    // Get the ACF fields
+    $style_category  = get_field('style_category', 'option');
+    $list_category   = get_field('list_category', 'option');
+    $title_category  = get_field('title_category', 'option');
+
     ob_start();
 
     if ($list_category) {
-        echo '<div class="lv_container">';
+
+        echo '<div class="' . $prefix . '_container">';
+
         if (!empty($title_category)): ?>
-            <h2 class="lv_block_card_category_title text_center">
+            <h2 class="<?php echo $prefix; ?>_block_card_category_title text_center">
                 <?php echo $title_category; ?>
             </h2>
         <?php endif;
 
         if ($style_category == '1' || $style_category == '2') : ?>
-            <!-- Add the dynamic class for style category if selected -->
-            <div class="lv_block_card_category <?php echo $style_category ? 'lv_block_card_category_style_' . $style_category : ''; ?>">
-                <?php foreach ($list_category as $category) : ?>
-                    <?php
-                    // Extract the values from the ACF repeater sub-fields
-                    $link = $category['link']; // Get the link
-                    $description = $category['description']; // Get the description
-                    $image_id = $category['image']; // Get the image ID
-                    $background_color = $category['background_color']; // Get the background color
 
-                    // Check if the link exists
-                    $link_url = !empty($link) ? $link['url'] : '#';
-                    $link_title = !empty($link) ? $link['title'] : '';
-                    $link_target = !empty($link) ? $link['target'] : '';
+            <div class="<?php
+                        echo $prefix . '_block_card_category ';
+                        echo $style_category ? $prefix . '_block_card_category_style_' . $style_category : '';
+                        ?>">
+                <?php foreach ($list_category as $category) :
 
-                    // Set the default background color if not provided
-                    $background_color = !empty($background_color) ? $background_color : '#2563EB';
+                    $link            = $category['link'];
+                    $description     = $category['description'];
+                    $image_id        = $category['image'];
+                    $background_color = $category['background_color'] ?: '#2563EB';
 
-                    // Check if an image exists and get its HTML
-                    $image_html = '';
-                    if (!empty($image_id)) {
-                        $image_html = wp_get_attachment_image($image_id, 'medium'); // Get image HTML using default WP function
-                    }
-                    ?>
+                    $link_url    = $link['url'] ?? '#';
+                    $link_title  = $link['title'] ?? '';
+                    $link_target = $link['target'] ?? '';
+                    $image_html  = $image_id ? wp_get_attachment_image($image_id, 'medium') : '';
+                ?>
 
-                    <!-- Check if the description exists, if not, skip the card -->
-                    <a target="<?php echo $link_target; ?>" href="<?php echo $link_url; ?>" class="lv_block_card_category_card" style="background-color:<?php echo $background_color; ?>;">
+                    <a target="<?php echo $link_target; ?>"
+                        href="<?php echo $link_url; ?>"
+                        class="<?php echo $prefix; ?>_block_card_category_card"
+                        style="background-color:<?php echo $background_color; ?>;">
 
-                        <?php if ($style_category == '2') : ?>
-                            <div class="lv_block_card_category_inner">
+                        <?php if ($style_category == '2'): ?>
+                            <div class="<?php echo $prefix; ?>_block_card_category_inner">
                             <?php endif; ?>
 
-                            <?php if ($image_html) : ?>
-                                <div class="lv_block_card_category_icon"><?php echo $image_html; ?></div>
+                            <?php if ($image_html): ?>
+                                <div class="<?php echo $prefix; ?>_block_card_category_icon"><?php echo $image_html; ?></div>
                             <?php endif; ?>
 
-                            <?php if ($style_category == '2') : ?>
-                                <div class="lv_block_card_category_content">
+                            <?php if ($style_category == '2'): ?>
+                                <div class="<?php echo $prefix; ?>_block_card_category_content">
                                 <?php endif; ?>
 
-                                <?php echo $link_title ? '<div class="lv_block_card_category_title">' . $link_title . '</div>' : ''; ?>
-                                <?php echo $description ? '<div class="lv_block_card_category_desc">' . $description . '</div>' : ''; ?>
+                                <?php echo $link_title ? '<div class="' . $prefix . '_block_card_category_title">' . $link_title . '</div>' : ''; ?>
+                                <?php echo $description ? '<div class="' . $prefix . '_block_card_category_desc">' . $description . '</div>' : ''; ?>
 
-                                <?php if ($style_category == '2') : ?>
-                                </div> <!-- End of lv_block_card_category_content -->
-                            </div> <!-- End of lv_block_card_category_inner -->
+                                <?php if ($style_category == '2'): ?>
+                                </div> <!-- close content -->
+                            </div> <!-- close inner -->
 
-                            <div class="lv_block_card_category_right">
+                            <div class="<?php echo $prefix; ?>_block_card_category_right">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                                     <path d="M566.6 342.6C579.1 330.1 579.1 309.8 566.6 297.3L406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3C348.8 149.8 348.8 170.1 361.3 182.6L466.7 288L96 288C78.3 288 64 302.3 64 320C64 337.7 78.3 352 96 352L466.7 352L361.3 457.4C348.8 469.9 348.8 490.2 361.3 502.7C373.8 515.2 394.1 515.2 406.6 502.7L566.6 342.7z" />
                                 </svg>
                             </div>
                         <?php endif; ?>
-                    </a> <!-- End of card -->
+
+                    </a>
                 <?php endforeach; ?>
-            </div> <!-- End of card category container -->
+            </div>
+
         <?php elseif ($style_category == '3') : ?>
-            <section class="lv_category_list lv_category_list_<?php echo $style_category; ?>">
-                <div class="lv_category_list_wrapper">
-                    <?php foreach ($list_category as $item) :
-                        $link = $item['link'];
-                        $image_id = $item['image'];
+
+            <section class="<?php echo $prefix; ?>_category_list <?php echo $prefix; ?>_category_list_<?php echo $style_category; ?>">
+                <div class="<?php echo $prefix; ?>_category_list_wrapper">
+
+                    <?php foreach ($list_category as $item):
+                        $link        = $item['link'];
+                        $image_id    = $item['image'];
                         $description = $item['description'];
                     ?>
-                        <?php if ($link && $image_id) : ?>
-                            <div class="lv_category_list_item">
-                                <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'lv_category_list_item_img', 'loading' => 'lazy']); ?>
-                                <div class="lv_category_list_item_overlay">
-                                    <h3 class="lv_category_list_item_title"><?php echo $link['title']; ?></h3>
+                        <?php if ($link && $image_id): ?>
+                            <div class="<?php echo $prefix; ?>_category_list_item">
+                                <?php echo wp_get_attachment_image($image_id, 'full', false, [
+                                    'class' => $prefix . '_category_list_item_img',
+                                    'loading' => 'lazy'
+                                ]); ?>
 
-                                    <?php if ($style_category != 3 && $description) : ?>
-                                        <p class="lv_category_list_item_desc"><?php echo $description; ?></p>
+                                <div class="<?php echo $prefix; ?>_category_list_item_overlay">
+                                    <h3 class="<?php echo $prefix; ?>_category_list_item_title"><?php echo $link['title']; ?></h3>
+
+                                    <?php if ($style_category != 3 && $description): ?>
+                                        <p class="<?php echo $prefix; ?>_category_list_item_desc"><?php echo $description; ?></p>
                                     <?php endif; ?>
 
-                                    <a href="<?php echo $link['url']; ?>" target="<?php echo $link['target']; ?>" class="lv_category_list_item_btn">
+                                    <a href="<?php echo $link['url']; ?>"
+                                        target="<?php echo $link['target']; ?>"
+                                        class="<?php echo $prefix; ?>_category_list_item_btn">
                                         Chơi Ngay
                                     </a>
                                 </div>
                             </div>
                         <?php endif; ?>
                     <?php endforeach; ?>
+
                 </div>
             </section>
+
         <?php elseif ($style_category == '4'): ?>
-            <section class="lv_category_list lv_category_list_<?php echo $style_category; ?>">
-                <div class="lv_category_list_wrapper">
-                    <?php
-                    foreach ($list_category as $item) :
-                        $link = $item['link'] ?? [];
+
+            <section class="<?php echo $prefix; ?>_category_list <?php echo $prefix; ?>_category_list_<?php echo $style_category; ?>">
+                <div class="<?php echo $prefix; ?>_category_list_wrapper">
+
+                    <?php foreach ($list_category as $item):
+
+                        $link     = $item['link'] ?? [];
                         $image_id = $item['image'];
                     ?>
-                        <?php if ($image_id) : ?>
-                            <a target="<?php echo $link['target']; ?>" href="<?php echo $link['url'] ?? 'javascript:void(0);'; ?>" class="lv_category_list_item">
-                                <?php echo wp_get_attachment_image($image_id, 'full', false, ['class' => 'lv_category_list_item_img', 'loading' => 'lazy']); ?>
+                        <?php if ($image_id): ?>
+                            <a target="<?php echo $link['target']; ?>"
+                                href="<?php echo $link['url'] ?? 'javascript:void(0);'; ?>"
+                                class="<?php echo $prefix; ?>_category_list_item">
+                                <?php echo wp_get_attachment_image($image_id, 'full', false, [
+                                    'class' => $prefix . '_category_list_item_img',
+                                    'loading' => 'lazy'
+                                ]); ?>
                             </a>
                         <?php endif; ?>
                     <?php endforeach; ?>
+
                 </div>
             </section>
-    <?php
-        endif;
+
+    <?php endif;
+
         echo '</div>';
     }
 
-    // Return the output
     return ob_get_clean();
 }
 
@@ -912,77 +1010,79 @@ add_shortcode('lv_card_category', 'lv_card_category_shortcode');
 
 function lv_testimonial_shortcode()
 {
-    // Lấy giá trị của các trường ACF
-    $style = get_field('style_testimonial', 'option'); // Style testimonial (1, 2, 3)
-    $testimonial_title = get_field('testimonial_title', 'option'); // Tiêu đề testimonial
-    $testimonials = get_field('testimonials', 'option'); // Danh sách testimonials (repeater)
+    // Prefix động từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
 
-    // Kiểm tra xem có testimonial nào không
+    // Lấy giá trị của các trường ACF
+    $style = get_field('style_testimonial', 'option');
+    $testimonial_title = get_field('testimonial_title', 'option');
+    $testimonials = get_field('testimonials', 'option');
+
     if (empty($testimonials)) {
-        return ''; // Không có testimonial, không hiển thị gì
+        return '';
     }
 
-    // Khởi tạo output của shortcode
     $output = '';
 
-    $output .= '<div class="lv_container">';
+    $output .= '<div class="' . $prefix . '_container">';
 
-    // Hiển thị tiêu đề nếu có
+    // Tiêu đề
     if (!empty($testimonial_title)) {
         $output .= '<h2 class="testimonial_title text_center">' . $testimonial_title . '</h2>';
     }
 
-    // Bắt đầu phần testimonial
-    $output .= '<div class="lv_testimonial_section lv_testimonial_section_style_' . esc_attr($style) . '">';
+    // Wrapper
+    $output .= '<div class="' . $prefix . '_testimonial_section ' . $prefix . '_testimonial_section_style_' . esc_attr($style) . '">';
 
-    // Lặp qua các testimonial và tạo HTML
     foreach ($testimonials as $testimonial) {
-        $title = $testimonial['title']; // Tiêu đề testimonial
-        $content = $testimonial['content']; // Nội dung testimonial
-        $avatar_id = $testimonial['avatar']; // Avatar (ID ảnh)
-        $avatar_url = wp_get_attachment_url($avatar_id); // Lấy URL của ảnh từ ID
 
-        // Kiểm tra style và hiển thị theo kiểu tương ứng
+        $title      = $testimonial['title'];
+        $content    = $testimonial['content'];
+        $avatar_id  = $testimonial['avatar'];
+        $avatar_url = wp_get_attachment_url($avatar_id);
+
         if ($style == 1) {
-            // Style 1: Hiển thị dạng bình thường
-            $output .= '<div class="lv_testimonial_item">';
-            $output .= '<p class="lv_testimonial_text">"' . esc_html($content) . '"</p>';
-            $output .= '<p class="lv_testimonial_author">' . esc_html($title) . '</p>';
+
+            $output .= '<div class="' . $prefix . '_testimonial_item">';
+            $output .= '<p class="' . $prefix . '_testimonial_text">"' . esc_html($content) . '"</p>';
+            $output .= '<p class="' . $prefix . '_testimonial_author">' . esc_html($title) . '</p>';
             $output .= '</div>';
         } elseif ($style == 2) {
-            // Style 2: Hiển thị ảnh và nội dung dạng hình tròn
-            $output .= '<div class="lv_testimonial_item">';
-            $output .= '<p class="lv_testimonial_text">"' . esc_html($content) . '"</p>';
-            $output .= '<p class="lv_testimonial_author">' . esc_html($title) . '</p>';
+
+            $output .= '<div class="' . $prefix . '_testimonial_item">';
+            $output .= '<p class="' . $prefix . '_testimonial_text">"' . esc_html($content) . '"</p>';
+            $output .= '<p class="' . $prefix . '_testimonial_author">' . esc_html($title) . '</p>';
+
             if ($avatar_url) {
-                $output .= '<img class="lv_testimonial_author_img" src="' . esc_url($avatar_url) . '" alt="' . esc_attr($title) . '">';
+                $output .= '<img class="' . $prefix . '_testimonial_author_img" src="' . esc_url($avatar_url) . '" alt="' . esc_attr($title) . '">';
             }
+
             $output .= '</div>';
         } elseif ($style == 3) {
-            // Style 3: Hiển thị ảnh và nội dung theo layout ngang
-            $output .= '<div class="lv_testimonial_item">';
+
+            $output .= '<div class="' . $prefix . '_testimonial_item">';
+
             if ($avatar_url) {
-                $output .= '<div class="lv_testimonial_icon">';
-                $output .= '<img src="' . esc_url($avatar_url) . '" alt="' . esc_attr($title) . '" />';
+                $output .= '<div class="' . $prefix . '_testimonial_icon">';
+                $output .= '<img src="' . esc_url($avatar_url) . '" alt="' . esc_attr($title) . '">';
                 $output .= '</div>';
             }
-            $output .= '<div class="lv_testimonial_item_content">';
-            $output .= '<p class="lv_testimonial_text">"' . esc_html($content) . '"</p>';
-            $output .= '<p class="lv_testimonial_author">' . esc_html($title) . '</p>';
+
+            $output .= '<div class="' . $prefix . '_testimonial_item_content">';
+            $output .= '<p class="' . $prefix . '_testimonial_text">"' . esc_html($content) . '"</p>';
+            $output .= '<p class="' . $prefix . '_testimonial_author">' . esc_html($title) . '</p>';
             $output .= '</div>';
+
             $output .= '</div>';
         }
     }
 
-    // Đóng phần testimonial
-    $output .= '</div>';
-    $output .= '</div>';
+    $output .= '</div>'; // close testimonial section
+    $output .= '</div>'; // close container
 
-    // Trả về output để hiển thị
     return $output;
 }
 
-// Đăng ký shortcode
 add_shortcode('lv_testimonial', 'lv_testimonial_shortcode');
 
 add_shortcode('lv_cta', function () {
@@ -991,13 +1091,15 @@ add_shortcode('lv_cta', function () {
         return '';
     }
 
+    // Prefix động từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     // Lấy dữ liệu từ ACF Options
     $title   = get_field('title_cta', 'option');
     $desc    = get_field('description_cta', 'option');
-    $button  = get_field('button_cta', 'option');        // array: url, title, target
-    $bg_id   = get_field('background_cta', 'option');    // image ID
+    $button  = get_field('button_cta', 'option');
+    $bg_id   = get_field('background_cta', 'option');
 
-    // Kiểm tra có gì để hiển thị không
     $has_btn = (is_array($button) && !empty($button['url']) && !empty($button['title']));
     $has_bg  = !empty($bg_id);
     $has_any = ($title || $desc || $has_btn || $has_bg);
@@ -1006,87 +1108,102 @@ add_shortcode('lv_cta', function () {
         return '';
     }
 
-    // Ảnh nền
     $bg_img_url = $has_bg ? wp_get_attachment_url($bg_id) : '';
 
-    // Button
     $btn_url    = $has_btn ? $button['url'] : '';
     $btn_title  = $has_btn ? $button['title'] : '';
     $btn_target = ($has_btn && !empty($button['target'])) ? $button['target'] : '_self';
 
     ob_start();
     ?>
-    <section class="lv_cta" <?php if ($title) { ?> aria-labelledby="lv_cta_title" <?php } ?>>
+    <section class="<?php echo $prefix; ?>_cta"
+        <?php if ($title) { ?> aria-labelledby="<?php echo $prefix; ?>_cta_title" <?php } ?>>
+
         <?php if ($has_bg) : ?>
-            <div class="lv_cta_bg" style="background-image: url('<?php echo $bg_img_url; ?>');">
-            </div>
+            <div class="<?php echo $prefix; ?>_cta_bg"
+                style="background-image: url('<?php echo $bg_img_url; ?>');"></div>
         <?php endif; ?>
 
-        <div class="lv_cta_overlay" aria-hidden="true"></div>
+        <div class="<?php echo $prefix; ?>_cta_overlay" aria-hidden="true"></div>
 
-        <div class="lv_cta_container">
-            <div class="lv_cta_content">
+        <div class="<?php echo $prefix; ?>_cta_container">
+            <div class="<?php echo $prefix; ?>_cta_content">
+
                 <?php if ($title) : ?>
-                    <h2 id="lv_cta_title" class="lv_cta_title"><?php echo $title; ?></h2>
+                    <h2 id="<?php echo $prefix; ?>_cta_title"
+                        class="<?php echo $prefix; ?>_cta_title">
+                        <?php echo $title; ?>
+                    </h2>
                 <?php endif; ?>
 
                 <?php if ($desc) : ?>
-                    <p class="lv_cta_desc"><?php echo $desc; ?></p>
+                    <p class="<?php echo $prefix; ?>_cta_desc"><?php echo $desc; ?></p>
                 <?php endif; ?>
 
                 <?php if ($has_btn) : ?>
-                    <a class="lv_cta_button lv_cta_button_primary" href="<?php echo $btn_url; ?>" target="<?php echo $btn_target; ?>">
+                    <a class="<?php echo $prefix; ?>_cta_button <?php echo $prefix; ?>_cta_button_primary"
+                        href="<?php echo $btn_url; ?>"
+                        target="<?php echo $btn_target; ?>">
                         <?php echo $btn_title; ?>
                     </a>
                 <?php endif; ?>
+
             </div>
         </div>
     </section>
     <?php
-    // Return the output
+
     return ob_get_clean();
 });
 
 function lv_partner_shortcode()
 {
-    // Lấy dữ liệu từ ACF
-    $title_partner = get_field('title_partner', 'option'); // Lấy tiêu đề đối tác
-    $list_partner = get_field('list_partner', 'option'); // Lấy danh sách đối tác
+    // Prefix lấy từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
 
-    // Kiểm tra xem có dữ liệu trong list_partner không
+    // Lấy dữ liệu từ ACF
+    $title_partner = get_field('title_partner', 'option');
+    $list_partner  = get_field('list_partner', 'option');
+
     if ($list_partner):
-        ob_start(); // Bắt đầu ghi dữ liệu vào bộ đệm đầu ra
+        ob_start();
     ?>
-        <div class="lv_partner_container">
-            <?php if ($title_partner): // Kiểm tra nếu có tiêu đề thì mới hiển thị 
-            ?>
-                <h2 class="lv_partner_title text_center"><?php echo $title_partner; ?></h2>
+        <div class="<?php echo $prefix; ?>_partner_container">
+
+            <?php if ($title_partner): ?>
+                <h2 class="<?php echo $prefix; ?>_partner_title text_center">
+                    <?php echo $title_partner; ?>
+                </h2>
             <?php endif; ?>
-            <div class="lv_partner">
-                <?php
-                // Duyệt qua danh sách đối tác
-                foreach ($list_partner as $partner):
-                    $title = $partner['title']; // Lấy tiêu đề đối tác
-                    $logo_id = $partner['logo']; // Lấy ID hình ảnh logo
-                    $logo_html = wp_get_attachment_image($logo_id, 'medium'); // Lấy HTML của hình ảnh logo
+
+            <div class="<?php echo $prefix; ?>_partner">
+                <?php foreach ($list_partner as $partner):
+                    $title    = $partner['title'];
+                    $logo_id  = $partner['logo'];
+                    $logo_html = wp_get_attachment_image($logo_id, 'medium');
                 ?>
-                    <div class="lv_partner_item_wrapper">
-                        <div class="lv_partner_item" data-mh="lv_partner_item">
+                    <div class="<?php echo $prefix; ?>_partner_item_wrapper">
+                        <div class="<?php echo $prefix; ?>_partner_item"
+                            data-mh="<?php echo $prefix; ?>_partner_item">
+
                             <?php if ($logo_html): ?>
-                                <?php echo $logo_html; // Hiển thị HTML hình ảnh 
-                                ?>
+                                <?php echo $logo_html; ?>
                             <?php endif; ?>
-                            <p class="lv_partner_text"><?php echo $title; ?></p>
+
+                            <p class="<?php echo $prefix; ?>_partner_text">
+                                <?php echo $title; ?>
+                            </p>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
         </div>
     <?php
-        return ob_get_clean(); // Trả về nội dung bộ đệm đầu ra
+        return ob_get_clean();
     endif;
 
-    return ''; // Nếu không có dữ liệu trong list_partner, trả về chuỗi rỗng
+    return '';
 }
 
 // Đăng ký shortcode
@@ -1094,10 +1211,13 @@ add_shortcode('lv_partner', 'lv_partner_shortcode');
 
 function lv_award_shortcode()
 {
+    // Prefix lấy từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     // Lấy group 'award' từ trang Options
     $award = function_exists('get_field') ? get_field('award', 'option') : null;
 
-    // Nếu không có gì để hiển thị thì trả về rỗng
+    // Không có dữ liệu → return rỗng
     if (
         empty($award) ||
         (empty($award['image']) && empty($award['title']) && empty($award['price']) && empty($award['background']))
@@ -1107,248 +1227,176 @@ function lv_award_shortcode()
 
     ob_start();
     ?>
-    <div class="lv_award">
-        <?php
-        // Background image (nếu có)
-        if (!empty($award['background'])) {
-            echo wp_get_attachment_image($award['background'], 'full', false, array(
-                'class' => 'lv_award_bg'
-            ));
-        }
-        ?>
-        <div class="lv_award_inner">
+    <div class="<?php echo $prefix; ?>_award">
+
+        <?php if (!empty($award['background'])): ?>
+            <?php echo wp_get_attachment_image(
+                $award['background'],
+                'full',
+                false,
+                ['class' => $prefix . '_award_bg']
+            ); ?>
+        <?php endif; ?>
+
+        <div class="<?php echo $prefix; ?>_award_inner">
+
             <?php if (!empty($award['image']) || !empty($award['title'])): ?>
-                <div class="lv_award_header">
+                <div class="<?php echo $prefix; ?>_award_header">
+
                     <?php if (!empty($award['image'])): ?>
-                        <div class="lv_award_header_img_wrap">
-                            <?php
-                            echo wp_get_attachment_image($award['image'], 'medium', false, array(
-                                'class' => 'lv_award_header_img'
-                            ));
-                            ?>
+                        <div class="<?php echo $prefix; ?>_award_header_img_wrap">
+                            <?php echo wp_get_attachment_image(
+                                $award['image'],
+                                'medium',
+                                false,
+                                ['class' => $prefix . '_award_header_img']
+                            ); ?>
                         </div>
                     <?php endif; ?>
 
                     <?php if (!empty($award['title'])): ?>
-                        <div class="lv_award_game_name"><?php echo $award['title']; ?></div>
+                        <div class="<?php echo $prefix; ?>_award_game_name">
+                            <?php echo $award['title']; ?>
+                        </div>
                     <?php endif; ?>
+
                 </div>
             <?php endif; ?>
 
             <?php if (!empty($award['price'])): ?>
-                <div class="lv_award_body">
-                    <div class="lv_award_value">
+                <div class="<?php echo $prefix; ?>_award_body">
+                    <div class="<?php echo $prefix; ?>_award_value">
                         <?php echo $award['price']; ?>
-                        <span class="lv_award_value_currency">VND</span>
+                        <span class="<?php echo $prefix; ?>_award_value_currency">VND</span>
                     </div>
                 </div>
             <?php endif; ?>
 
-            <div class="lv_award_footer">
-                <div class="lv_award_timer_label">THỜI GIAN CÒN LẠI:</div>
-                <div class="lv_award_timer">
-                    <span class="lv_award_timer_digit" id="timer-hours">00</span>
-                    <span class="lv_award_timer_separator">:</span>
-                    <span class="lv_award_timer_digit" id="timer-minutes">00</span>
-                    <span class="lv_award_timer_separator">:</span>
-                    <span class="lv_award_timer_digit" id="timer-seconds">00</span>
+            <div class="<?php echo $prefix; ?>_award_footer">
+                <div class="<?php echo $prefix; ?>_award_timer_label">THỜI GIAN CÒN LẠI:</div>
+                <div class="<?php echo $prefix; ?>_award_timer">
+                    <span class="<?php echo $prefix; ?>_award_timer_digit" id="<?php echo $prefix; ?>_timer-hours">00</span>
+                    <span class="<?php echo $prefix; ?>_award_timer_separator">:</span>
+                    <span class="<?php echo $prefix; ?>_award_timer_digit" id="<?php echo $prefix; ?>_timer-minutes">00</span>
+                    <span class="<?php echo $prefix; ?>_award_timer_separator">:</span>
+                    <span class="<?php echo $prefix; ?>_award_timer_digit" id="<?php echo $prefix; ?>_timer-seconds">00</span>
                 </div>
             </div>
+
         </div>
     </div>
     <?php
+
     return ob_get_clean();
 }
 add_shortcode('lv_award', 'lv_award_shortcode');
 
-function wp_breadcrumbs()
-{
-    $delimiter = '
-	<span class="icon">
-		<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18.3337 10.5013C18.3337 12.7114 17.4557 14.8311 15.8929 16.3939C14.3301 17.9567 12.2105 18.8346 10.0003 18.8346C8.90598 18.8346 7.82234 18.6191 6.8113 18.2003C5.80025 17.7815 4.88159 17.1677 4.10777 16.3939C2.54497 14.8311 1.66699 12.7114 1.66699 10.5013C1.66699 8.29116 2.54497 6.17155 4.10777 4.60875C5.67057 3.04594 7.79019 2.16797 10.0003 2.16797C11.0947 2.16797 12.1783 2.38352 13.1894 2.80231C14.2004 3.2211 15.1191 3.83492 15.8929 4.60875C16.6667 5.38257 17.2805 6.30123 17.6993 7.31227C18.1181 8.32332 18.3337 9.40695 18.3337 10.5013ZM5.00033 11.3346H11.667L8.75033 14.2513L9.93366 15.4346L14.867 10.5013L9.93366 5.56797L8.75033 6.7513L11.667 9.66797H5.00033V11.3346Z" fill="white"/>
-        </svg>
-	</span>
-	';
-
-    $home = __('Home', 'basetheme');
-    $before = '<span class="current">';
-    $after = '</span>';
-    if (!is_admin() && !is_home() && (!is_front_page() || is_paged())) {
-
-        global $post;
-
-        echo '<nav>';
-        echo '<div id="breadcrumbs" class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">';
-
-        $homeLink = home_url();
-        echo '<a href="' . $homeLink . '">' . $home . '</a>' . $delimiter . ' ';
-
-        switch (true) {
-            case is_category() || is_archive():
-                $cat_obj = get_queried_object();
-                echo $before . $cat_obj->name . $after;
-                break;
-
-            case is_single() && !is_attachment():
-                $post_type = $post->post_type;
-
-                if ($post_type == 'post') {
-                    $categories = get_the_category($post->ID);
-
-                    if (!empty($categories)) {
-                        $first_category = $categories[0];
-                        echo '<a aria-label="' . $first_category->name . '" href="' . get_category_link($first_category->term_id) . '">' . $first_category->name . '</a>' . $delimiter . ' ';
-                    }
-                }
-
-                if ($post_type == 'product') {
-                    $categories = get_the_terms($post->ID, 'product_cat');
-
-                    if (!empty($categories)) {
-                        $first_category = $categories[0];
-                        echo '<a aria-label="' . $first_category->name . '" href="' . get_term_link($first_category->term_id, 'product_cat') . '">' . $first_category->name . '</a>' . $delimiter . ' ';
-                    }
-                }
-
-                echo $before . $post->post_title . $after;
-                break;
-
-            case is_page():
-                if ($post->post_parent) {
-                    $parent_id = $post->ID;
-                    echo generate_page_parent($parent_id, $delimiter);
-                }
-
-                echo $before . get_the_title() . $after;
-                break;
-
-            case is_search():
-                echo $before . 'Search' . $after;
-                break;
-
-            case is_404():
-                echo $before . 'Error 404' . $after;
-                break;
-        }
-
-        echo '</div>';
-        echo '</nav>';
-    }
-} // end wp_breadcrumbs()
-
-// Generate breadcrumbs ancestor page
-function generate_page_parent($parent_id, $delimiter)
-{
-    $breadcrumbs = [];
-    $output = '';
-
-    while ($parent_id) {
-        $page = get_post($parent_id);
-        $breadcrumbs[] = '<a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a>';
-        $parent_id = $page->post_parent;
-    }
-
-
-    $breadcrumbs = array_reverse($breadcrumbs);
-    array_pop($breadcrumbs);
-
-    foreach ($breadcrumbs as $crumb) {
-        $output .= $crumb . $delimiter;
-    }
-
-    return rtrim($output);
-}
-
 function lv_about_us()
 {
+    // Lấy prefix từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     ob_start();
 
-    // Lấy dữ liệu từ ACF
-    $about_us_group = get_field('about_us', 'option'); // 'option' để lấy giá trị từ options page
+    // Lấy dữ liệu từ ACF Options
+    $about_us_group = get_field('about_us', 'option');
+
     if ($about_us_group) {
-        // Kiểm tra xem có dữ liệu không
-        $title = isset($about_us_group['title']) ? $about_us_group['title'] : '';
-        $content = isset($about_us_group['content']) ? $about_us_group['content'] : '';
-        $list = isset($about_us_group['list']) ? $about_us_group['list'] : [];
 
+        $title = $about_us_group['title'] ?? '';
+        $content = $about_us_group['content'] ?? '';
+        $list = $about_us_group['list'] ?? [];
     ?>
-        <div class="lv_container">
-            <div class="lv_aboutUs">
-                <!-- Hiển thị tiêu đề nếu có -->
+        <div class="<?php echo $prefix; ?>_container">
+            <div class="<?php echo $prefix; ?>_aboutUs">
+
                 <?php if (!empty($title)) : ?>
-                    <h2 class="lv_aboutUs__title text_center"><?php echo $title; ?></h2>
+                    <h2 class="<?php echo $prefix; ?>_aboutUs__title text_center">
+                        <?php echo $title; ?>
+                    </h2>
                 <?php endif; ?>
 
-                <!-- Hiển thị nội dung nếu có -->
                 <?php if (!empty($content)) : ?>
-                    <p class="lv_aboutUs__description"><?php echo $content; ?></p>
+                    <p class="<?php echo $prefix; ?>_aboutUs__description">
+                        <?php echo $content; ?>
+                    </p>
                 <?php endif; ?>
 
-                <div class="lv_aboutUs__boxes">
-                    <?php
-                    // Hiển thị danh sách nếu có
-                    if (!empty($list)) :
+                <div class="<?php echo $prefix; ?>_aboutUs__boxes">
+                    <?php if (!empty($list)) :
                         foreach ($list as $item) :
-                            $item_title = isset($item['title']) ? $item['title'] : '';
-                            $item_description = isset($item['description']) ? $item['description'] : '';
+                            $item_title = $item['title'] ?? '';
+                            $item_description = $item['description'] ?? '';
                     ?>
-                            <div class="lv_aboutUs__box">
+                            <div class="<?php echo $prefix; ?>_aboutUs__box">
+
                                 <?php if (!empty($item_title)) : ?>
-                                    <h3 class="lv_aboutUs__boxTitle"><?php echo $item_title; ?></h3>
+                                    <h3 class="<?php echo $prefix; ?>_aboutUs__boxTitle">
+                                        <?php echo $item_title; ?>
+                                    </h3>
                                 <?php endif; ?>
 
                                 <?php if (!empty($item_description)) : ?>
-                                    <p class="lv_aboutUs__boxContent"><?php echo $item_description; ?></p>
+                                    <p class="<?php echo $prefix; ?>_aboutUs__boxContent">
+                                        <?php echo $item_description; ?>
+                                    </p>
                                 <?php endif; ?>
+
                             </div>
                     <?php
                         endforeach;
-                    endif;
-                    ?>
+                    endif; ?>
                 </div>
+
             </div>
         </div>
     <?php
     }
+
     return ob_get_clean();
 }
 add_shortcode('lv_about_us', 'lv_about_us');
 
 function lv_box_content_shortcode()
 {
-    // Get values from ACF option page
+    // Lấy prefix từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
+    // Lấy dữ liệu từ ACF option page
     $box_content = get_field('box_content', 'option');
 
-    // Check if box content is set
     if (!$box_content) {
-        return ''; // If no content, return empty string
+        return '';
     }
 
-    // Initialize output
+    // Bắt đầu sinh output
     $output = '';
 
-    // Check if title is set and append to output
+    // Title
     if (!empty($box_content['title'])) {
-        $output .= '<h2 class="lv_contentBox__title text_center">' . $box_content['title'] . '</h2>';
+        $output .= '<h2 class="' . $prefix . '_contentBox__title text_center">' . $box_content['title'] . '</h2>';
     }
 
-    // Check if content is set and append to output
+    // Description
     if (!empty($box_content['content'])) {
-        $output .= '<div class="lv_contentBox__description">' . $box_content['content'] . '</div>';
+        $output .= '<div class="' . $prefix . '_contentBox__description">' . $box_content['content'] . '</div>';
     }
 
-    // Check if list is set and append each item
+    // List items
     if (!empty($box_content['list'])) {
-        $output .= '<section class="lv_section__contentBox">';
+        $output .= '<section class="' . $prefix . '_section__contentBox">';
 
         foreach ($box_content['list'] as $item) {
-            // Check if the list item has the necessary values
             if (!empty($item['title']) && !empty($item['description'])) {
-                $background_color = !empty($item['background_color']) ? $item['background_color'] : '#ffffff';
-                $output .= '<div class="lv_contentBox__item" style="background-color: ' . $background_color . '">';
-                $output .= '<h3 class="lv_contentBox__text text_center">' . $item['title'] . '</h3>';
-                $output .= '<div class="lv_contentBox__description">' . $item['description'] . '</div>';
+
+                $background_color = $item['background_color'] ?? '#ffffff';
+
+                $output .= '<div class="' . $prefix . '_contentBox__item" style="background-color:' . $background_color . '">';
+
+                $output .= '<h3 class="' . $prefix . '_contentBox__text text_center">' . $item['title'] . '</h3>';
+
+                $output .= '<div class="' . $prefix . '_contentBox__description">' . $item['description'] . '</div>';
+
                 $output .= '</div>';
             }
         }
@@ -1362,37 +1410,46 @@ add_shortcode('lv_box_content', 'lv_box_content_shortcode');
 
 function lv_promo_banner_shortcode($atts)
 {
-    // Retrieve ACF settings for the Promo Banner
-    $promo_banner = get_field('promo_banner', 'option'); // Assuming the 'promo_banner' field is under the 'option' page
+    // Lấy prefix từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
 
-    // Fallbacks for when no ACF value is set
-    $messages = isset($promo_banner['messages']) ? $promo_banner['messages'] : '';
-    $button_url = isset($promo_banner['link']) ? $promo_banner['link']['url'] : '';
-    $button_title = isset($promo_banner['link']) ? $promo_banner['link']['title'] : ''; // Title of the button
-    $button_target = isset($promo_banner['link']) ? $promo_banner['link']['target'] : '_self'; // Target attribute for the button
+    // Lấy dữ liệu từ ACF Options
+    $promo_banner = get_field('promo_banner', 'option');
 
-    // Split messages by the pipe symbol
-    $raw_msgs = trim($messages);
-    $has_button = isset($button_url) && $button_url !== '';
+    // Fallback
+    $messages       = $promo_banner['messages'] ?? '';
+    $button_url     = $promo_banner['link']['url'] ?? '';
+    $button_title   = $promo_banner['link']['title'] ?? '';
+    $button_target  = $promo_banner['link']['target'] ?? '_self';
+
+    $raw_msgs  = trim($messages);
+    $has_btn   = !empty($button_url);
 
     ob_start();
 
-    if ($messages || $has_button) : ?>
-        <div class="lv_promoBanner__page">
-            <div class="lv_promoBanner__pill" role="region">
+    if ($messages || $has_btn) : ?>
+        <div class="<?php echo $prefix; ?>_promoBanner__page">
+            <div class="<?php echo $prefix; ?>_promoBanner__pill" role="region">
+
                 <?php if ($messages) : ?>
-                    <div class="lv_promoBanner__ticker" aria-hidden="false">
-                        <div class="lv_promoBanner__marquee" aria-hidden="true">
-                            <div class="lv_promoBanner__marqueeItem"><?php echo $raw_msgs; ?></div>
+                    <div class="<?php echo $prefix; ?>_promoBanner__ticker" aria-hidden="false">
+                        <div class="<?php echo $prefix; ?>_promoBanner__marquee" aria-hidden="true">
+                            <div class="<?php echo $prefix; ?>_promoBanner__marqueeItem">
+                                <?php echo $raw_msgs; ?>
+                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
 
-                <?php if ($has_button) : ?>
-                    <a href="<?php echo $button_url; ?>" class="lv_promoBanner__button" role="link" target="<?php echo $button_target; ?>">
-                        <?php echo $button_title; ?>
+                <?php if ($has_btn) : ?>
+                    <a href="<?php echo esc_url($button_url); ?>"
+                        class="<?php echo $prefix; ?>_promoBanner__button"
+                        role="link"
+                        target="<?php echo esc_attr($button_target); ?>">
+                        <?php echo esc_html($button_title); ?>
                     </a>
                 <?php endif; ?>
+
             </div>
         </div>
     <?php endif;
@@ -1405,155 +1462,177 @@ add_shortcode('lv_promo_banner', 'lv_promo_banner_shortcode');
 // Tạo shortcode 'list_image_shortcode' để hiển thị danh sách hình ảnh
 function list_image_shortcode()
 {
-    // Lấy dữ liệu từ ACF
-    $list_image = get_field('list_image', 'option'); // Lấy nhóm các trường từ options page
-    $list_image_title = get_field('list_image_title', 'option'); // Lấy nhóm các trường từ options page
-    $layout = get_field('list_image_layout', 'option') ?: '1';
-    $pc_column = isset($list_image['pc_column']) ? $list_image['pc_column'] : 5; // Số cột trên PC
-    $sp_column = isset($list_image['sp_column']) ? $list_image['sp_column'] : 5; // Số cột trên mobile
-    $list = isset($list_image['list']) ? $list_image['list'] : array(); // Danh sách hình ảnh
+    // Lấy prefix động
+    $prefix = get_field('prefix', 'option') ?? 'lv';
 
-    if (!empty($list_image_title)):
-    ?>
-        <h2 class="lv_block_card_category_title text_center">
-            <?php echo $list_image_title; ?>
+    // ACF data
+    $list_image       = get_field('list_image', 'option');
+    $list_image_title = get_field('list_image_title', 'option');
+    $layout           = get_field('list_image_layout', 'option') ?: '1';
+
+    $pc_column = $list_image['pc_column'] ?? 5;
+    $sp_column = $list_image['sp_column'] ?? 5;
+    $list      = $list_image['list'] ?? [];
+
+    ob_start();
+
+    // Tiêu đề
+    if (!empty($list_image_title)) : ?>
+        <h2 class="<?php echo $prefix; ?>_block_card_category_title text_center">
+            <?php echo esc_html($list_image_title); ?>
         </h2>
-        <?php
+    <?php
     endif;
 
-    // Bắt đầu HTML cho Shortcode
+    // Start output
     $output = '';
+
+    /* -------------------------------------
+        LAYOUT 1 – GRID
+    ------------------------------------- */
     if ($layout == '1') {
-        $output .= '<div class="lv_imageList" style="--columns: ' . $pc_column . '; --columns-mobile: ' . $sp_column . ';">';
+
+        $output .= '<div class="' . $prefix . '_imageList" style="--columns:' . $pc_column . '; --columns-mobile:' . $sp_column . ';">';
 
         if (!empty($list)) {
             foreach ($list as $item) {
-                $image_url = wp_get_attachment_image_url($item['image'], 'full'); // Lấy URL của ảnh
-                $url = isset($item['url']) ? esc_url($item['url']) : '#'; // Lấy URL (nếu có, nếu không sẽ là #)
-                $output .= '<div class="lv_imageList__item">';
-                $output .= '<a href="' . $url . '"><img src="' . $image_url . '" alt="Image"></a>';
+                $img = wp_get_attachment_image_url($item['image'], 'full');
+                $url = !empty($item['url']) ? esc_url($item['url']) : '#';
+
+                $output .= '<div class="' . $prefix . '_imageList__item">';
+                $output .= '<a href="' . $url . '"><img src="' . $img . '" alt=""></a>';
                 $output .= '</div>';
             }
         }
 
-        // Close the lv_imageList div
         $output .= '</div>';
-    } else if ($layout == '2') {
-        $output .= '<div class="lv_catSlider">';
+    }
 
-        // Check if there is a list of images and iterate through them for the slider
+    /* -------------------------------------
+        LAYOUT 2 – SLIDER
+    ------------------------------------- */ elseif ($layout == '2') {
+
+        $output .= '<div class="' . $prefix . '_catSlider">';
+
         if (!empty($list)) {
             foreach ($list as $item) {
-                $image_url = wp_get_attachment_image_url($item['image'], 'full'); // Lấy URL của ảnh
-                $url = isset($item['url']) ? esc_url($item['url']) : '#'; // Lấy URL (nếu có, nếu không sẽ là #)
+                $img = wp_get_attachment_image_url($item['image'], 'full');
+                $url = !empty($item['url']) ? esc_url($item['url']) : '#';
 
-                $output .= '<div class="lv_catSlider__slickSlide">';
+                $output .= '<div class="' . $prefix . '_catSlider__slickSlide">';
                 $output .= '<a href="' . $url . '">';
-                $output .= '<img src="' . $image_url . '" alt="Item Image" />';
+                $output .= '<img src="' . $img . '" alt="">';
                 $output .= '</a>';
                 $output .= '</div>';
             }
         }
 
-        // Closing the div for the slider
         $output .= '</div>';
     }
 
-    // Return the final HTML
-    return $output; // Trả về HTML để hiển thị
+    echo $output;
+
+    return ob_get_clean();
 }
 add_shortcode('lv_list_image', 'list_image_shortcode');
 
 
 function lv_content_image_shortcode($atts)
 {
+    // Lấy prefix động từ ACF Options
+    $prefix = get_field('prefix', 'option') ?? 'lv';
+
     ob_start();
 
     // Lấy dữ liệu từ ACF
     $layout = get_field('layout_content_image', 'options') ?: '1';
     $content_images = get_field('content_image', 'options');
 
-    // Kiểm tra nếu có dữ liệu
     if ($content_images):
-        echo '<div class="lv_content_section_container lv_container lv_content_section_layout_' . $layout . '">';  // Mở thẻ container
 
-        // Duyệt qua mảng dữ liệu bằng vòng lặp foreach
-        foreach ($content_images as $index => $image_data):
-            $image_id = $image_data['image']; // ID của hình ảnh
-            $title = $image_data['title'];
-            $content = $image_data['content'];
-            $button = $image_data['button'];
-            $button_url = isset($button['url']) ? $button['url'] : '#';
-            $button_text = isset($button['title']) ? $button['title'] : 'Xem thêm';
-            $target = isset($button['target']) ? $button['target'] : '';
-            $image_title = $image_data['image_title'];
+        echo '<div class="' . $prefix . '_content_section_container ' . $prefix . '_container ' . $prefix . '_content_section_layout_' . $layout . '">';
 
+        foreach ($content_images as $index => $img):
+
+            $image_id     = $img['image'];
+            $title        = $img['title'];
+            $content      = $img['content'];
+            $button       = $img['button'];
+            $button_url   = $button['url'] ?? '#';
+            $button_text  = $button['title'] ?? 'Xem thêm';
+            $target       = $button['target'] ?? '';
+            $image_title  = $img['image_title'];
+
+            // --- HÀNG CHẴN ---
             if ($index % 2 == 0):
-        ?>
-                <div class="lv_content_section">
-                    <div class="lv_content_section__image">
-                        <?php
-                        echo wp_get_attachment_image($image_id, 'full');
-                        ?>
-                    </div>
-                    <div class="lv_content_section__text">
-                        <?php if ($layout == '1' && $title) : ?>
-                            <h2 class="lv_content_section__heading"><?php echo $title; ?></h2>
-                        <?php endif; ?>
 
-                        <?php if ($layout == '2' && $image_title) : ?>
-                            <a href="<?php echo $button_url; ?>" target="<?php echo $target; ?>" class="lv_content_section_image_title">
-                                <?php
-                                echo wp_get_attachment_image($image_title, 'full');
-                                ?>
-                            </a>
-                        <?php endif; ?>
+                echo '<div class="' . $prefix . '_content_section">';
 
-                        <?php if ($content) : ?>
-                            <div class="lv_content_section__description"><?php echo $content; ?></div>
-                        <?php endif; ?>
+                echo '<div class="' . $prefix . '_content_section__image">';
+                echo wp_get_attachment_image($image_id, 'full');
+                echo '</div>';
 
-                        <?php if ($layout == '1' && $button_url && $button_text) : ?>
-                            <a target="<?php echo $target; ?>" href="<?php echo $button_url; ?>" class="lv_content_section__link"><?php echo $button_text; ?></a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            <?php
+                echo '<div class="' . $prefix . '_content_section__text">';
+
+                if ($layout == '1' && $title) {
+                    echo '<h2 class="' . $prefix . '_content_section__heading">' . $title . '</h2>';
+                }
+
+                if ($layout == '2' && $image_title) {
+                    echo '<a href="' . $button_url . '" target="' . $target . '" class="' . $prefix . '_content_section_image_title">';
+                    echo wp_get_attachment_image($image_title, 'full');
+                    echo '</a>';
+                }
+
+                if ($content) {
+                    echo '<div class="' . $prefix . '_content_section__description">' . $content . '</div>';
+                }
+
+                if ($layout == '1' && $button_text) {
+                    echo '<a href="' . $button_url . '" target="' . $target . '" class="' . $prefix . '_content_section__link">' . $button_text . '</a>';
+                }
+
+                echo '</div>'; // text
+                echo '</div>'; // section
+
+            // --- HÀNG LẺ ---
             else:
-            ?>
-                <div class="lv_content_section">
-                    <div class="lv_content_section__text">
-                        <?php if ($layout == '1' && $title) : ?>
-                            <h2 class="lv_content_section__heading"><?php echo $title; ?></h2>
-                        <?php endif; ?>
 
-                        <?php if ($layout == '2' && $image_title) : ?>
-                            <a href="<?php echo $button_url; ?>" target="<?php echo $target; ?>" class="lv_content_section_image_title">
-                                <?php
-                                echo wp_get_attachment_image($image_title, 'full');
-                                ?>
-                            </a>
-                        <?php endif; ?>
+                echo '<div class="' . $prefix . '_content_section">';
 
-                        <?php if ($content) : ?>
-                            <div class="lv_content_section__description"><?php echo $content; ?></div>
-                        <?php endif; ?>
+                echo '<div class="' . $prefix . '_content_section__text">';
 
-                        <?php if ($layout == '1' && $button_url && $button_text) : ?>
-                            <a target="<?php echo $target; ?>" href="<?php echo $button_url; ?>" class="lv_content_section__link"><?php echo $button_text; ?></a>
-                        <?php endif; ?>
-                    </div>
-                    <div class="lv_content_section__image">
-                        <?php
-                        echo wp_get_attachment_image($image_id, 'full');
-                        ?>
-                    </div>
-                </div>
-        <?php
-            endif; // End kiểm tra chẵn/lẻ
+                if ($layout == '1' && $title) {
+                    echo '<h2 class="' . $prefix . '_content_section__heading">' . $title . '</h2>';
+                }
+
+                if ($layout == '2' && $image_title) {
+                    echo '<a href="' . $button_url . '" target="' . $target . '" class="' . $prefix . '_content_section_image_title">';
+                    echo wp_get_attachment_image($image_title, 'full');
+                    echo '</a>';
+                }
+
+                if ($content) {
+                    echo '<div class="' . $prefix . '_content_section__description">' . $content . '</div>';
+                }
+
+                if ($layout == '1' && $button_text) {
+                    echo '<a href="' . $button_url . '" target="' . $target . '" class="' . $prefix . '_content_section__link">' . $button_text . '</a>';
+                }
+
+                echo '</div>'; // text
+
+                echo '<div class="' . $prefix . '_content_section__image">';
+                echo wp_get_attachment_image($image_id, 'full');
+                echo '</div>';
+
+                echo '</div>'; // section
+
+            endif;
+
         endforeach;
 
-        echo '</div>';  // Đóng thẻ container
+        echo '</div>'; // container
     endif;
 
     return ob_get_clean();
@@ -1562,29 +1641,45 @@ add_shortcode('lv_content_image', 'lv_content_image_shortcode');
 
 function shortcode_tabs_category()
 {
+    // Lấy prefix động từ ACF Options
+    $prefix = get_field('prefix', 'option') ?: 'lv';
+
     ob_start();
 
-    // Lấy dữ liệu từ ACF Options
+    // Lấy dữ liệu từ ACF
     $tabs_category = get_field('tabs_category', 'option');
 
     if (!empty($tabs_category) && !empty($tabs_category['list'])) :
-        ?>
-        <div class="lv_tabs_wrapper">
-            <!-- Tabs -->
-            <ul class="lv_tabs_nav">
+    ?>
+
+        <div class="<?php echo $prefix; ?>_tabs_wrapper">
+
+            <!-- TABS NAV -->
+            <ul class="<?php echo $prefix; ?>_tabs_nav">
                 <?php
                 $first = true;
+
                 foreach ($tabs_category['list'] as $index => $tab) :
                     if (!empty($tab['title'])) :
-                        $tab_id = 'tab' . $index;
+                        $tab_id = $prefix . '_tab' . $index;
                 ?>
-                        <li class="lv_tabs_navItem <?php echo $first ? 'active' : ''; ?>" data-tab="<?php echo $tab_id; ?>">
+                        <li class="<?php echo $prefix; ?>_tabs_navItem <?php echo $first ? 'active' : ''; ?>"
+                            data-tab="<?php echo $tab_id; ?>">
+
                             <?php
                             if (!empty($tab['title_icon'])) {
-                                echo wp_get_attachment_image($tab['title_icon'], 'large', false, ['class' => 'lv_tabs_icon']);
+                                echo wp_get_attachment_image(
+                                    $tab['title_icon'],
+                                    'large',
+                                    false,
+                                    ['class' => $prefix . '_tabs_icon']
+                                );
                             }
                             ?>
-                            <span class="lv_tabs_text"><?php echo $tab['title']; ?></span>
+
+                            <span class="<?php echo $prefix; ?>_tabs_text">
+                                <?php echo esc_html($tab['title']); ?>
+                            </span>
                         </li>
                 <?php
                         $first = false;
@@ -1593,25 +1688,33 @@ function shortcode_tabs_category()
                 ?>
             </ul>
 
-            <!-- Content -->
-            <div class="lv_tabs_content">
+            <!-- CONTENT -->
+            <div class="<?php echo $prefix; ?>_tabs_content">
                 <?php
                 $first = true;
+
                 foreach ($tabs_category['list'] as $index => $tab) :
                     if (!empty($tab['title']) && !empty($tab['list_item'])) :
-                        $tab_id = 'tab' . $index;
+
+                        $tab_id = $prefix . '_tab' . $index;
                 ?>
-                        <div id="<?php echo $tab_id; ?>" class="lv_tabs_cat_panel <?php echo $first ? 'active' : ''; ?>">
-                            <div class="lv_tabs_grid">
-                                <?php foreach ($tab['list_item'] as $item) :
+                        <div id="<?php echo $tab_id; ?>"
+                            class="<?php echo $prefix; ?>_tabs_cat_panel <?php echo $first ? 'active' : ''; ?>">
+
+                            <div class="<?php echo $prefix; ?>_tabs_grid">
+                                <?php
+                                foreach ($tab['list_item'] as $item) :
                                     if (!empty($item['image'])) :
                                         $url = !empty($item['url']) ? $item['url'] : '#';
                                 ?>
-                                        <a href="<?php echo $url; ?>" class="lv_tabs_item">
+                                        <a href="<?php echo esc_url($url); ?>"
+                                            class="<?php echo $prefix; ?>_tabs_item">
                                             <?php echo wp_get_attachment_image($item['image'], 'medium'); ?>
                                         </a>
-                                <?php endif;
-                                endforeach; ?>
+                                <?php
+                                    endif;
+                                endforeach;
+                                ?>
                             </div>
                         </div>
                 <?php
@@ -1620,7 +1723,9 @@ function shortcode_tabs_category()
                 endforeach;
                 ?>
             </div>
+
         </div>
+
 <?php
     endif;
 
