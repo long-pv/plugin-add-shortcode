@@ -1,5 +1,5 @@
 (function ($, window) {
-	var prefix = "a8kbet"; // 👉 CHỈ SỬA Ở ĐÂY ĐỂ ĐỔI PREFIX
+	var prefix = "on8kbet23_f19ac0d2"; // 👉 CHỈ SỬA Ở ĐÂY ĐỂ ĐỔI PREFIX
 
 	$("." + prefix + "_faq_item_question").on("click", function () {
 		let $this = $(this);
